@@ -23,6 +23,10 @@ namespace Your.Namespace
             RequireLowercase = requireLowercase;
             RequireDigit = requireDigit;
             RequireSpecialCharacter = requireSpecialCharacter;
+            MinNumberOfUppercase = minUpper;
+            MinNumberOfLowercase = minLower;
+            MinNumberOfDigit = minDigit;
+            MinNumberOfSpecialCharacter = minSpecialCharacter;
         }
 
         private static string GetRegexPattern(int minLength, bool upper, int minUpper, bool lower, int minLower, bool digit, int minDigit, bool special, int minSpecialCharacter)
