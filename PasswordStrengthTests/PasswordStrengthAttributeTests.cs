@@ -13,8 +13,11 @@ namespace PasswordStrengthTests
         [InlineData("Password1!!!", false)]
         public void MaxNoOfSameConsecutiveCharacters(string passwordToTest, bool expectedResult)
         {
-            var attribute = new PasswordStrengthAttribute(requireMaxNoOfSameConsecutiveCharacters: true, 
-                                                            maxNoOfSameConsecutiveCharacters: 2);
+            var attribute = new PasswordStrengthAttribute
+            {
+                RequireMaxNoOfSameConsecutiveCharacters = true,
+                MaxNoOfSameConsecutiveCharacters = 2
+            };
 
             var result = attribute.GetValidationResult(passwordToTest, new ValidationContext(passwordToTest));
 
