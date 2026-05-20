@@ -29,6 +29,7 @@ namespace PasswordStrengthTests
         [InlineData("PASSWORD1!", false)] // No lowercase letter
         [InlineData("Password!!", false)] // No digit
         [InlineData("Password11", false)] // No special character
+        [InlineData("Pwd11", false)] // Less than minimum length
         public void Miscellaneous(string passwordToTest, bool expectedResult)
         {
             var attribute = new PasswordStrengthAttribute();
