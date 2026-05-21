@@ -8,7 +8,9 @@ namespace PasswordStrengthTests
         [Theory]
         [InlineData("Password1!", true)]
         [InlineData("Passworrd1!", true)]
+        [InlineData("Passwordss1!", true)]        
         [InlineData("Passsword1!", false)]
+        [InlineData("Passwordsss1!", false)]
         [InlineData("Password111!", false)]
         [InlineData("Password1!!!", false)]
         public void MaxNoOfSameConsecutiveCharacters(string passwordToTest, bool expectedResult)
