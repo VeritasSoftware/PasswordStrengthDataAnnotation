@@ -65,6 +65,7 @@ You can use the Validator class to create a custom data annotation attribute for
 ### Sample data annotation
 
 ```csharp
+using MyPasswordStrength;
 using System.ComponentModel.DataAnnotations;
 
 namespace YourNamespace
