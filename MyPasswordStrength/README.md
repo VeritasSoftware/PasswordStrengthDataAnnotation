@@ -1,4 +1,4 @@
-# MyPasswordStrength
+﻿# MyPasswordStrength
 
 Define your password strength complexity requirements with ease using the library. 
 
