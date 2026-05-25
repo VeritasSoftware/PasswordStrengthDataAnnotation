@@ -1,5 +1,4 @@
 ﻿using MyPasswordStrength;
-using System.ComponentModel.DataAnnotations;
 
 namespace PasswordStrengthTests
 {
@@ -15,11 +14,22 @@ namespace PasswordStrengthTests
         [InlineData("Password1!!!", false)]
         public void MaxNoOfSameConsecutiveCharacters(string passwordToTest, bool expectedResult)
         {
-            PasswordStrengthValidator.RequireMaxNoOfSameConsecutiveCharacters = true;
-            PasswordStrengthValidator.MaxNoOfSameConsecutiveCharacters = 2;
-
-            var result = passwordToTest.PasswordStrength();
-
+            var validator = new PasswordStrengthValidator
+            {
+                MinimumLength = 8,
+                RequireUppercase = true,
+                MinUppercase = 1,
+                RequireLowercase = true,
+                MinLowercase = 1,
+                RequireDigit = true,
+                MinDigit = 1,
+                RequireSpecialCharacter = true,
+                MinSpecialCharacter = 1,
+                SpecialCharacters = "!@#$%^&*()",
+                RequireMaxNoOfSameConsecutiveCharacters = true,
+                MaxNoOfSameConsecutiveCharacters = 2
+            };
+            var result = validator.PasswordStrength(passwordToTest);
             Assert.True(result == expectedResult);
         }
 
@@ -28,14 +38,17 @@ namespace PasswordStrengthTests
         [InlineData("PassWORD1!", false)] // No uppercase letter        
         public void MinNoOfLowerCase(string passwordToTest, bool expectedResult)
         {
-            PasswordStrengthValidator.RequireDigit = false;
-            PasswordStrengthValidator.RequireSpecialCharacter = false;
-            PasswordStrengthValidator.RequireMaxNoOfSameConsecutiveCharacters = false;
-            PasswordStrengthValidator.RequireUppercase = false;
-            PasswordStrengthValidator.RequireLowercase = true;
-            PasswordStrengthValidator.MinLowercase = 5;
+            var validator = new PasswordStrengthValidator
+            {
+                RequireDigit = false,
+                RequireSpecialCharacter = false,
+                RequireMaxNoOfSameConsecutiveCharacters = false,
+                RequireUppercase = false,
+                RequireLowercase = true,
+                MinLowercase = 5
+            };
 
-            var result = passwordToTest.PasswordStrength();
+            var result = validator.PasswordStrength(passwordToTest);
 
             Assert.True(result == expectedResult);
         }
@@ -45,14 +58,17 @@ namespace PasswordStrengthTests
         [InlineData("PaSSwoRd1!", false)]
         public void MinNoOfUpperCase(string passwordToTest, bool expectedResult)
         {
-            PasswordStrengthValidator.RequireDigit = false;
-            PasswordStrengthValidator.RequireSpecialCharacter = false;
-            PasswordStrengthValidator.RequireMaxNoOfSameConsecutiveCharacters = false;            
-            PasswordStrengthValidator.RequireLowercase = false;
-            PasswordStrengthValidator.RequireUppercase = true;
-            PasswordStrengthValidator.MinUppercase = 5;
+            var validator = new PasswordStrengthValidator
+            {
+                RequireDigit = false,
+                RequireSpecialCharacter = false,
+                RequireMaxNoOfSameConsecutiveCharacters = false,
+                RequireLowercase = false,
+                RequireUppercase = true,
+                MinUppercase = 5
+            };
 
-            var result = passwordToTest.PasswordStrength();
+            var result = validator.PasswordStrength(passwordToTest);
 
             Assert.True(result == expectedResult);
         }
@@ -61,15 +77,18 @@ namespace PasswordStrengthTests
         [InlineData("Passw0rD1!", true)] // Valid password
         [InlineData("PaSSwoRd1!", false)]
         public void MinNoOfDigits(string passwordToTest, bool expectedResult)
-        {            
-            PasswordStrengthValidator.RequireSpecialCharacter = false;
-            PasswordStrengthValidator.RequireMaxNoOfSameConsecutiveCharacters = false;
-            PasswordStrengthValidator.RequireLowercase = false;
-            PasswordStrengthValidator.RequireUppercase = false;
-            PasswordStrengthValidator.RequireDigit = true;
-            PasswordStrengthValidator.MinDigit = 2;
+        {
+            var validator = new PasswordStrengthValidator
+            {
+                RequireSpecialCharacter = false,
+                RequireMaxNoOfSameConsecutiveCharacters = false,
+                RequireLowercase = false,
+                RequireUppercase = false,
+                RequireDigit = true,
+                MinDigit = 2
+            };
 
-            var result = passwordToTest.PasswordStrength();
+            var result = validator.PasswordStrength(passwordToTest);
 
             Assert.True(result == expectedResult);
         }
@@ -79,14 +98,17 @@ namespace PasswordStrengthTests
         [InlineData("PaSSwoRd1!", false)]
         public void MinNoOfSpecialCharacters(string passwordToTest, bool expectedResult)
         {            
-            PasswordStrengthValidator.RequireMaxNoOfSameConsecutiveCharacters = false;
-            PasswordStrengthValidator.RequireLowercase = false;
-            PasswordStrengthValidator.RequireUppercase = false;
-            PasswordStrengthValidator.RequireDigit = false;
-            PasswordStrengthValidator.RequireSpecialCharacter = true;
-            PasswordStrengthValidator.MinSpecialCharacter = 2;
+            var validator = new PasswordStrengthValidator
+            {
+                RequireMaxNoOfSameConsecutiveCharacters = false,
+                RequireLowercase = false,
+                RequireUppercase = false,
+                RequireDigit = false,
+                RequireSpecialCharacter = true,
+                MinSpecialCharacter = 2
+            };
 
-            var result = passwordToTest.PasswordStrength();
+            var result = validator.PasswordStrength(passwordToTest);
 
             Assert.True(result == expectedResult);
         }
@@ -98,9 +120,11 @@ namespace PasswordStrengthTests
         [InlineData("Password!!", false)] // No digit
         [InlineData("Password11", false)] // No special character
         [InlineData("Pwd11", false)] // Less than minimum length
-        public void Miscellaneous(string passwordToTest, bool expectedResult)
+        public void Defaults(string passwordToTest, bool expectedResult)
         {
-            var result = passwordToTest.PasswordStrength();
+            var validator = new PasswordStrengthValidator();
+
+            var result = validator.PasswordStrength(passwordToTest);
 
             Assert.True(result == expectedResult);
         }

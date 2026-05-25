@@ -8,9 +8,9 @@ The package provides a Validator class that you can use to validate passwords pr
 
 You can validate passwords programmatically using the `PasswordStrengthValidator` class provided in the package.
 
-You can set the password strength requirements through the static properties of the `PasswordStrengthValidator` class, 
+You can set the password strength requirements through the properties of the `PasswordStrengthValidator` class, 
 
-and then call the `PasswordStrength` extension method to check if a given password meets those requirements.
+and then call the `PasswordStrength` method to check if a given password meets those requirements.
 
 The `PasswordStrength` method returns a boolean indicating whether the password is valid according to the configured requirements.
 
@@ -18,22 +18,25 @@ The `PasswordStrength` method returns a boolean indicating whether the password 
 
 ```csharp
 // Configure password strength requirements
-PasswordStrengthValidator.MinimumLength = 8;
-PasswordStrengthValidator.RequireUppercase = true;
-PasswordStrengthValidator.MinUppercase = 2;
-PasswordStrengthValidator.RequireLowercase = true;
-PasswordStrengthValidator.MinLowercase = 3;
-PasswordStrengthValidator.RequireDigit = true;
-PasswordStrengthValidator.MinDigit = 2;
-PasswordStrengthValidator.RequireSpecialCharacter = true;
-PasswordStrengthValidator.MinSpecialCharacter = 2;
-PasswordStrengthValidator.RequireMaxNoOfSameConsecutiveCharacters = true;
-PasswordStrengthValidator.MaxNoOfSameConsecutiveCharacters = 2;
+var passwordStrengthValidator = new PasswordStrengthValidator
+{
+    MinimumLength = 8,
+    RequireUppercase = true,
+    MinUppercase = 2,
+    RequireLowercase = true,
+    MinLowercase = 3,
+    RequireDigit = true,
+    MinDigit = 2,
+    RequireSpecialCharacter = true,
+    MinSpecialCharacter = 2,
+    RequireMaxNoOfSameConsecutiveCharacters = true,
+    MaxNoOfSameConsecutiveCharacters = 2
+};
 
 var password = "P@Ssw0rd1!";
 
 // Validate the password
-bool isValid = password.PasswordStrength();
+bool isValid =  passwordStrengthValidator.PasswordStrength(password);
 
 if (isValid)
 {

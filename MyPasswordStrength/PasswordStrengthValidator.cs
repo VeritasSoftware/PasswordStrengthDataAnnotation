@@ -2,21 +2,20 @@
 
 namespace MyPasswordStrength
 {
-    public static class PasswordStrengthValidator
+    public class PasswordStrengthValidator
     {
-        public static int MinimumLength { get; set; }
-        public static bool RequireUppercase { get; set; } = true;
-        public static int MinUppercase { get; set; } = 1;
-        public static bool RequireLowercase { get; set; } = true;
-        public static int MinLowercase { get; set; } = 1;
-        public static bool RequireDigit { get; set; } = true;
-        public static int MinDigit { get; set; } = 1;
-        public static bool RequireSpecialCharacter { get; set; } = true;
-        public static int MinSpecialCharacter { get; set; } = 1;
-        public static string SpecialCharacters { get; set; } = @"@$!%*?&";
-        public static bool RequireMaxNoOfSameConsecutiveCharacters { get; set; } = true;
-        public static int MaxNoOfSameConsecutiveCharacters { get; set; } = 2;
-
+        public int MinimumLength { get; set; }
+        public bool RequireUppercase { get; set; } = true;
+        public int MinUppercase { get; set; } = 1;
+        public bool RequireLowercase { get; set; } = true;
+        public int MinLowercase { get; set; } = 1;
+        public bool RequireDigit { get; set; } = true;
+        public int MinDigit { get; set; } = 1;
+        public bool RequireSpecialCharacter { get; set; } = true;
+        public int MinSpecialCharacter { get; set; } = 1;
+        public string SpecialCharacters { get; set; } = @"@$!%*?&";
+        public bool RequireMaxNoOfSameConsecutiveCharacters { get; set; } = true;
+        public int MaxNoOfSameConsecutiveCharacters { get; set; } = 2;
         public static string GetRegexPattern(int minLength, bool upper, int minUpper, bool lower, int minLower, 
                                                 bool digit, int minDigit, bool special, int minSpecialCharacter, string specialCharacters, 
                                                 bool requireMaxNoOfSameConsecutiveCharacters, int maxNoOfSameConsecutiveCharacters)
@@ -36,7 +35,7 @@ namespace MyPasswordStrength
             return pattern;
         }
 
-        public static bool PasswordStrength(this string password)
+        public bool PasswordStrength(string password)
         {
             if (string.IsNullOrEmpty(password))
                 return false;
@@ -47,5 +46,5 @@ namespace MyPasswordStrength
 
             return Regex.IsMatch(password, regexPattern);
         }
-    }
+    }  
 }
