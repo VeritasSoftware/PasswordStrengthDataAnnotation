@@ -2,7 +2,7 @@
 
 |Packages|Version|Downloads|
 |---------------------------|:---:|:---:|
-|**MyPasswordStrength**|[![Nuget Version](https://img.shields.io/nuget/v/MyPasswordStrength)](https://www.nuget.org/packages/MyPasswordStrength)|[![Downloads count](https://img.shields.io/nuget/dt/MyPasswordStrength)](https://www.nuget.org/packages/MyPasswordStrength)|
+|*MyPasswordStrength*|[![Nuget Version](https://img.shields.io/nuget/v/MyPasswordStrength)](https://www.nuget.org/packages/MyPasswordStrength)|[![Downloads count](https://img.shields.io/nuget/dt/MyPasswordStrength)](https://www.nuget.org/packages/MyPasswordStrength)|
 
 [![Build & Test](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/dotnet.yml/badge.svg)](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/dotnet.yml)
 
