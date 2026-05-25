@@ -24,7 +24,7 @@ The `PasswordStrength` method returns a boolean indicating whether the password 
 
 ```csharp
 // Configure password strength requirements
-var passwordStrengthValidator = new PasswordStrengthValidator
+var validator = new PasswordStrengthValidator
 {
     MinimumLength = 8,
     RequireUppercase = true,
@@ -42,7 +42,7 @@ var passwordStrengthValidator = new PasswordStrengthValidator
 var password = "P@Ssw0rd1!";
 
 // Validate the password
-bool isValid =  passwordStrengthValidator.PasswordStrength(password);
+bool isValid =  validator.PasswordStrength(password);
 
 if (isValid)
 {
