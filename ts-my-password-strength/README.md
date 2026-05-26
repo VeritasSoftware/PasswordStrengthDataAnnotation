@@ -20,7 +20,7 @@ The `PasswordStrength` method returns a boolean indicating whether the password 
 
 ```typescript
 // Configure password strength requirements
-var validator = new PasswordStrengthValidator();
+let validator = new PasswordStrengthValidator();
 
 validator.minimumLength = 8;
 validator.requireUppercase = true;
