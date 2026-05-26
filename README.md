@@ -1,11 +1,11 @@
 # MyPasswordStrength
 
+[![.NET Build & Test](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/dotnet.yml/badge.svg)](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/dotnet.yml)
+[![TypeScript Build & Test](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/node.js.yml/badge.svg)](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/node.js.yml)
+
 |Packages|Version|Downloads|
 |---------------------------|:---:|:---:|
 |*MyPasswordStrength*|[![Nuget Version](https://img.shields.io/nuget/v/MyPasswordStrength)](https://www.nuget.org/packages/MyPasswordStrength)|[![Downloads count](https://img.shields.io/nuget/dt/MyPasswordStrength)](https://www.nuget.org/packages/MyPasswordStrength)|
-
-[![.NET Build & Test](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/dotnet.yml/badge.svg)](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/dotnet.yml)
-[![TypeScript Build & Test](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/node.js.yml/badge.svg)](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/node.js.yml)
 
 Define your password strength complexity requirements with ease using the library. 
 
