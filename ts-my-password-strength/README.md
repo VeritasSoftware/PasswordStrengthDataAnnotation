@@ -1,5 +1,7 @@
 # ts-my-password-strength
 
+[![TypeScript Build & Test](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/node.js.yml/badge.svg)](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/node.js.yml)
+
 Define your password strength complexity requirements with ease using the library. 
 
 The package provides a Validator class that you can use to validate passwords programmatically.
