@@ -2,6 +2,10 @@
 
 [![Angular Build & Test](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/angular.node.js.yml/badge.svg)](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/angular.node.js.yml)
 
+|**Packages**|Version|Downloads|
+|---------------------------|:---:|:---:|
+|*angular-my-password-strength*|[![NPM Version](https://img.shields.io/npm/v/angular-my-password-strength)](https://www.npmjs.com/package/angular-my-password-strength)|[![Downloads count](https://img.shields.io/npm/dy/angular-my-password-strength)](https://www.npmjs.com/package/angular-my-password-strength)|
+
 Define your password strength complexity requirements with ease using the library. 
 
 The package provides a `passwordStrengthValidator` function that you can use to validate passwords in your reactive forms.

@@ -8,6 +8,7 @@
 |---------------------------|:---:|:---:|
 |*MyPasswordStrength*|[![Nuget Version](https://img.shields.io/nuget/v/MyPasswordStrength)](https://www.nuget.org/packages/MyPasswordStrength)|[![Downloads count](https://img.shields.io/nuget/dt/MyPasswordStrength)](https://www.nuget.org/packages/MyPasswordStrength)|
 |*ts-my-password-strength*|[![NPM Version](https://img.shields.io/npm/v/ts-my-password-strength)](https://www.npmjs.com/package/ts-my-password-strength)|[![Downloads count](https://img.shields.io/npm/dy/ts-my-password-strength)](https://www.npmjs.com/package/ts-my-password-strength)|
+|*angular-my-password-strength*|[![NPM Version](https://img.shields.io/npm/v/angular-my-password-strength)](https://www.npmjs.com/package/angular-my-password-strength)|[![Downloads count](https://img.shields.io/npm/dy/angular-my-password-strength)](https://www.npmjs.com/package/angular-my-password-strength)|
 
 Define your password strength complexity requirements with ease using the library. 
 

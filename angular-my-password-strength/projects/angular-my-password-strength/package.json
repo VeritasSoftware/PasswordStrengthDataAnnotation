@@ -1,6 +1,10 @@
 {
   "name": "angular-my-password-strength",
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "keywords": ["password", "strength", "complexity", "validation", "angular", "reactive forms"],
+  "description": "An Angular library for validating password strength based on customizable complexity requirements.",
+  "author": "Shantanu",
+  "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^19.2.0",
     "@angular/core": "^19.2.0",
