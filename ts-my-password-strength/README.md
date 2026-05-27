@@ -20,7 +20,19 @@ and then call the `PasswordStrength` method to check if a given password meets t
 
 The `PasswordStrength` method returns a boolean indicating whether the password is valid according to the configured requirements.
 
+The special characters considered in the validation are: @$!%*?&. 
+
+You can modify this set of special characters by setting the `specialCharacters` property to a custom string of special characters.
+
 ### Sample Usage
+
+First import the validator.
+
+```typescript
+import { PasswordStrengthValidator } from 'ts-my-password-strength';
+```
+
+Then, use it as shown below.
 
 ```typescript
 // Configure password strength requirements
@@ -34,9 +46,9 @@ validator.minimumLowercase = 3;
 validator.requireDigit = true;
 validator.minimumDigit = 2;
 validator.requireSpecialCharacter = true;
-validator.minSpecialCharacter = 2;
+validator.minimumSpecialCharacter = 2;
 validator.requireMaxNoOfSameConsecutiveCharacters = true;
-validator.maxNoOfSameConsecutiveCharacters = 2;
+validator.maximumNoOfSameConsecutiveCharacters = 2;
 
 let password = "P@ssw0rD1!";
 
@@ -52,7 +64,3 @@ else
 	console.log("Password does not meet the strength requirements.");
 }
 ```
-
-The special characters considered in the validation are: @$!%*?&. 
-
-You can modify this set of special characters by setting the `specialCharacters` property to a custom string of special characters.
