@@ -12,7 +12,7 @@ You can set the password strength requirements through the properties of the `My
 
 The special characters considered in the validation are: @$!%*?&. 
 
-You can modify this set of special characters by setting the `SpecialCharacters` property of the options to a custom string of special characters.
+You can modify this set of special characters by setting the `specialCharacters` property of the options to a custom string of special characters.
 
 ### Sample Usage
 
