@@ -10,8 +10,7 @@
 |*ts-my-password-strength*|[![NPM Version](https://img.shields.io/npm/v/ts-my-password-strength)](https://www.npmjs.com/package/ts-my-password-strength)|[![Downloads count](https://img.shields.io/npm/dy/ts-my-password-strength)](https://www.npmjs.com/package/ts-my-password-strength)|
 |*angular-my-password-strength*|[![NPM Version](https://img.shields.io/npm/v/angular-my-password-strength)](https://www.npmjs.com/package/angular-my-password-strength)|[![Downloads count](https://img.shields.io/npm/dy/angular-my-password-strength)](https://www.npmjs.com/package/angular-my-password-strength)|
 
-[**Typescript Library**](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/tree/master/ts-my-password-strength)   [**Angular Library**](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/tree/master/angular-my-password-strength)   
-[**ReactJS Library**](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/tree/master/react-my-password-strength)
+[**Typescript Library**](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/tree/master/ts-my-password-strength)   [**Angular Library**](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/tree/master/angular-my-password-strength)   [**ReactJS Library**](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/tree/master/react-my-password-strength)
 
 Define your password strength complexity requirements with ease using the library. 
 
