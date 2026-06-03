@@ -6,8 +6,7 @@ interface Props {
   styleOptions?: React.CSSProperties,
   errorStyleOptions?: React.CSSProperties,
   name?: string,
-  onValidation: (name:string, value:string, isValid:boolean) => void,
-  touched?: boolean,
+  onValidation: (name:string, value:string, isValid:boolean) => void
 }
 
 export const PasswordStrength = ({ name = "password", 
