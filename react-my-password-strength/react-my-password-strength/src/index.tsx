@@ -2,7 +2,7 @@ import * as React from 'react'
 import { PasswordStrengthValidator } from 'ts-my-password-strength'
 
 interface Props {
-  passwordStrengthOptions: MyPasswordStrengthOptions,
+  strengthOptions: MyPasswordStrengthOptions,
   styleOptions?: React.CSSProperties,
   errorStyleOptions?: React.CSSProperties,
   name?: string,
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const PasswordStrength = ({ name = "password", 
-                                    passwordStrengthOptions = new MyPasswordStrengthOptions(), 
+                                    strengthOptions = new MyPasswordStrengthOptions(), 
                                     styleOptions = {
                                       border: "1px solid #ccc"
                                     },
@@ -26,18 +26,18 @@ export const PasswordStrength = ({ name = "password",
     
     let validator = new PasswordStrengthValidator();
 
-    validator.minimumLength = passwordStrengthOptions.minimumLength;
-    validator.requireUppercase = passwordStrengthOptions.requireUppercase;
-    validator.minimumUppercase = passwordStrengthOptions.minimumUppercase;
-    validator.requireLowercase = passwordStrengthOptions.requireLowercase;
-    validator.minimumLowercase = passwordStrengthOptions.minimumLowercase;
-    validator.requireDigit = passwordStrengthOptions.requireDigit;
-    validator.minimumDigit = passwordStrengthOptions.minimumDigit;
-    validator.requireSpecialCharacter = passwordStrengthOptions.requireSpecialCharacter;
-    validator.minimumSpecialCharacter = passwordStrengthOptions.minimumSpecialCharacter;
-    validator.specialCharacters = passwordStrengthOptions.specialCharacters;
-    validator.requireMaxNoOfSameConsecutiveCharacters = passwordStrengthOptions.requireMaxNoOfSameConsecutiveCharacters;
-    validator.maximumNoOfSameConsecutiveCharacters = passwordStrengthOptions.maximumNoOfSameConsecutiveCharacters;
+    validator.minimumLength = strengthOptions.minimumLength;
+    validator.requireUppercase = strengthOptions.requireUppercase;
+    validator.minimumUppercase = strengthOptions.minimumUppercase;
+    validator.requireLowercase = strengthOptions.requireLowercase;
+    validator.minimumLowercase = strengthOptions.minimumLowercase;
+    validator.requireDigit = strengthOptions.requireDigit;
+    validator.minimumDigit = strengthOptions.minimumDigit;
+    validator.requireSpecialCharacter = strengthOptions.requireSpecialCharacter;
+    validator.minimumSpecialCharacter = strengthOptions.minimumSpecialCharacter;
+    validator.specialCharacters = strengthOptions.specialCharacters;
+    validator.requireMaxNoOfSameConsecutiveCharacters = strengthOptions.requireMaxNoOfSameConsecutiveCharacters;
+    validator.maximumNoOfSameConsecutiveCharacters = strengthOptions.maximumNoOfSameConsecutiveCharacters;
 
     console.log("Validator configuration: ", validator);
 

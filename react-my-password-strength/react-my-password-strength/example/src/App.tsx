@@ -35,7 +35,7 @@ const App = () => {
             </label>
             <PasswordStrength
                 name='password' 
-                passwordStrengthOptions={getOptions()} 
+                strengthOptions={getOptions()} 
                 styleOptions={styleOptions} 
                 errorStyleOptions={errorStyleOptions}
                 onValidation={handleOnValidation}
