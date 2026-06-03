@@ -10,7 +10,14 @@ interface Props {
   touched?: boolean,
 }
 
-export const PasswordStrength = ({ name, passwordStrengthOptions, styleOptions, errorStyleOptions, onValidation }: Props) => {
+export const PasswordStrength = ({ name = "password", 
+                                    passwordStrengthOptions = new MyPasswordStrengthOptions(), 
+                                    styleOptions = {
+                                      border: "1px solid #ccc"
+                                    },
+                                    errorStyleOptions = {
+                                      border:"1px solid red"
+                                    }, onValidation }: Props) => {
   const [isValid, setIsValid] = React.useState(false);
 
   const validatePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +47,7 @@ export const PasswordStrength = ({ name, passwordStrengthOptions, styleOptions, 
 
     setIsValid(isValid);
 
-    onValidation(name || "", password, isValid);
+    onValidation(name, password, isValid);
 
     return "";
   };
