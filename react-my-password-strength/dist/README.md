@@ -108,8 +108,6 @@ const errorStyleOptions={
 }
 ```
 
-![Password Strength](ReactPasswordStrength.jpeg)
-
 ## License
 
 MIT © [VeritasSoftware](https://github.com/VeritasSoftware)
