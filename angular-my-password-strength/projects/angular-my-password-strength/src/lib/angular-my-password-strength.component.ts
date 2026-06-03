@@ -4,7 +4,6 @@ import { PasswordStrengthValidator } from 'ts-my-password-strength';
 export function passwordStrengthValidator(options: MyPasswordStrengthOptions = new MyPasswordStrengthOptions(),
                                           errorKey: string = "Invalid"): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
-    console.log("Validating password strength for value: ", control.value);
 
     if (!control.value) return null; // don't validate empty values here
 
