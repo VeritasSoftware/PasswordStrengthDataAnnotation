@@ -4,7 +4,17 @@
   "description": "A React library for validating password strength based on customizable complexity requirements.",
   "author": "VeritasSoftware",
   "license": "MIT",
-  "repository": "VeritasSoftware/PasswordStrengthDataAnnotation",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation.git"
+  },
+  "keywords": [
+    "password",
+    "strength",
+    "complexity",
+    "validation",
+    "react"
+  ],
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.tsx",
@@ -50,6 +60,7 @@
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-standard": "^4.0.1",
     "gh-pages": "^2.2.0",
+    "microbundle": "^0.15.1",
     "microbundle-crl": "^0.13.10",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.4",
@@ -60,8 +71,5 @@
   },
   "files": [
     "dist"
-  ],
-  "dependencies": {
-    
-  }
+  ]
 }

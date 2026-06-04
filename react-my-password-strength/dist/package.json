@@ -1,6 +1,6 @@
 {
   "name": "react-my-password-strength",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A React library for validating password strength based on customizable complexity requirements.",
   "author": "VeritasSoftware",
   "license": "MIT",
@@ -8,6 +8,13 @@
     "type": "git",
     "url": "git+https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation.git"
   },
+  "keywords": [
+    "password",
+    "strength",
+    "complexity",
+    "validation",
+    "react"
+  ],
   "main": "index.js",
   "module": "index.modern.js",
   "engines": {
@@ -50,9 +57,11 @@
     "typescript": "^3.7.5"
   },
   "files": [
-    "./README.md",
-    "./index.d.ts",
-    "./index.js",
-    "./index.modern.js"
+    "README.md",
+    "index.d.ts",
+    "index.js",
+    "index.modern.js",
+    "index.modern.js.map",
+    "index.js.map"
   ]
 }

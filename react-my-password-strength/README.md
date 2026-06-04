@@ -1,5 +1,9 @@
 # react-my-password-strength
 
+|**Packages**|Version|Downloads|
+|---------------------------|:---:|:---:|
+|*react-my-password-strength*|[![NPM Version](https://img.shields.io/npm/v/react-my-password-strength)](https://www.npmjs.com/package/react-my-password-strength)|[![Downloads count](https://img.shields.io/npm/dy/react-my-password-strength)](https://www.npmjs.com/package/react-my-password-strength)|
+
 > A React library for validating password strength based on customizable complexity requirements.
 
 ## Install
@@ -7,6 +11,8 @@
 ```bash
 npm install --save react-my-password-strength
 ```
+
+Use `--force` option with the above command if you get any version issues.
 
 ## Background
 

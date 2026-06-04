@@ -8,6 +8,8 @@
 npm install --save react-my-password-strength
 ```
 
+Use `--force` option with the above command if you get any version issues.
+
 ## Background
 
 Define your password strength complexity requirements with ease using the library. 
