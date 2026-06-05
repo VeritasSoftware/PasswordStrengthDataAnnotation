@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Versioning;
+using MyPasswordStrength.Validator;
 
 namespace MyPasswordStrength
 {

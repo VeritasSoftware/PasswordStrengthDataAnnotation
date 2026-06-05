@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace MyPasswordStrength
+namespace MyPasswordStrength.Validator
 {
     public class PasswordStrengthValidator
     {
