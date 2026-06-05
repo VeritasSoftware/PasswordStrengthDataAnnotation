@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Versioning;
 
-namespace MyPasswordStrength.NET.MAUI
+namespace MyPasswordStrength
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage(
         "Interoperability",
@@ -16,10 +16,10 @@ namespace MyPasswordStrength.NET.MAUI
         private readonly PasswordStrengthValidator _validator;
         private readonly Action<string, bool> _onValidation;        
 
-        public PasswordStrengthEntry(Action<string, bool> OnValidation, MyPasswordStrengthOptions? strengthOptions = null,
+        public PasswordStrengthEntry(Action<string, bool> onValidation, MyPasswordStrengthOptions? strengthOptions = null,
                                         string? placeholder = "Enter password") 
         {
-            _onValidation = OnValidation;
+            _onValidation = onValidation;
             _strengthOptions = strengthOptions ?? new MyPasswordStrengthOptions();
 
             Placeholder = placeholder;

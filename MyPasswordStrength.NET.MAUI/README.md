@@ -20,10 +20,10 @@ You can modify this set of special characters by setting the `SpecialCharacters`
 
 ```c#
 using Microsoft.Maui.Controls.Shapes;
-using MyPasswordStrength.NET.MAUI;
+using MyPasswordStrength;
 using System.Runtime.Versioning;
 
-namespace YourNamespace.Pages;
+namespace MyTestMAUIAPP.Pages;
 
 [SupportedOSPlatform("android")]
 [SupportedOSPlatform("ios")]
