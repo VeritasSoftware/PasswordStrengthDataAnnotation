@@ -8,9 +8,9 @@
 
 Define your password strength complexity requirements with ease using the library. 
 
-The package provides a `PasswordStrengthEntry` entry that you can use to validate passwords in your .NET MAUI forms.
+The package provides a `PasswordStrengthEntry` Entry that you can use to validate passwords in your .NET MAUI applications.
 
-You can set the password strength requirements through the properties of the `MyPasswordStrengthOptions` class and pass the options to the function.
+You can set the password strength requirements through the properties of the `MyPasswordStrengthOptions` class and pass the options to the Entry.
 
 The special characters considered in the validation are: @$!%*?&. 
 
