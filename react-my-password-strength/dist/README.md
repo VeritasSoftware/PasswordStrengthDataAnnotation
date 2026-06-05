@@ -1,5 +1,7 @@
 # react-my-password-strength
 
+[![ReactJS Build & Test](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/react.node.js.yml/badge.svg)](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/react.node.js.yml)
+
 > A React library for validating password strength based on customizable complexity requirements.
 
 ## Install
