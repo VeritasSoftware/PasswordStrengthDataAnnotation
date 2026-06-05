@@ -23,7 +23,7 @@ using Microsoft.Maui.Controls.Shapes;
 using MyPasswordStrength;
 using System.Runtime.Versioning;
 
-namespace MyTestMAUIAPP.Pages;
+namespace YourNamespace.Pages;
 
 [SupportedOSPlatform("android")]
 [SupportedOSPlatform("ios")]
