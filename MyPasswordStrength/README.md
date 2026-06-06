@@ -32,9 +32,9 @@ var validator = new PasswordStrengthValidator
     RequireMaxNoOfSameConsecutiveCharacters = true,
     MaxNoOfSameConsecutiveCharacters = 2,
     RequireMaxNoOfConsecutiveAscendingDigits = true,
-    MaxNoOfConsecutiveAscendingDigits = MaximumNoOfConsecutiveDigits.Three,
+    MaxNoOfConsecutiveAscendingDigits = MaxNoOfConsecutiveDigits.Three,
     RequireMaxNoOfConsecutiveDescendingDigits = true,
-    MaxNoOfConsecutiveDescendingDigits = MaximumNoOfConsecutiveDigits.Three
+    MaxNoOfConsecutiveDescendingDigits = MaxNoOfConsecutiveDigits.Three
 };
 
 var password = "P@Ssw0rd12!";
