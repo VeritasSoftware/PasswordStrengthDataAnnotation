@@ -27,10 +27,13 @@ namespace MyPasswordStrength
         public int MaxNoOfSameConsecutiveCharacters { get; set; } = 2;
         public bool RequireMaxNoOfConsecutiveAscendingDigits { get; set; } = true;
         public MaxNoOfConsecutiveDigits MaxNoOfConsecutiveAscendingDigits { get; set; } = MaxNoOfConsecutiveDigits.Two;
+        public bool RequireMaxNoOfConsecutiveDescendingDigits { get; set; } = true;
+        public MaxNoOfConsecutiveDigits MaxNoOfConsecutiveDescendingDigits { get; set; } = MaxNoOfConsecutiveDigits.Two;
         public static string GetRegexPattern(int minLength, bool upper, int minUpper, bool lower, int minLower,
                                                 bool digit, int minDigit, bool special, int minSpecialCharacter, string specialCharacters,
                                                 bool requireMaxNoOfSameConsecutiveCharacters, int maxNoOfSameConsecutiveCharacters,
-                                                bool requireMaxNoOfConsecutiveAscendingDigits, MaxNoOfConsecutiveDigits maxNoOfConsecutiveAscendingDigits)
+                                                bool requireMaxNoOfConsecutiveAscendingDigits, MaxNoOfConsecutiveDigits maxNoOfConsecutiveAscendingDigits,
+                                                bool requireMaxNoOfConsecutiveDescendingDigits, MaxNoOfConsecutiveDigits maxNoOfConsecutiveDescendingDigits)
         {
             string pattern = "^";
             if (upper)
@@ -45,6 +48,8 @@ namespace MyPasswordStrength
                 pattern += "(?=^((?<currentChar>.)(?!\\k<currentChar>{" + maxNoOfSameConsecutiveCharacters + "}))+$)"; //max no of same consecutive characters
             if (requireMaxNoOfConsecutiveAscendingDigits)
                 pattern += "(?!^(.*?\\d(" + GetMaxConsecutiveAscendingDigitsPattern((int)maxNoOfConsecutiveAscendingDigits) + "+))+)"; // Max no of consecutive ascending digits
+            if (requireMaxNoOfConsecutiveDescendingDigits)
+                pattern += "(?!^(.*?\\d(" + GetMaxConsecutiveDescendingDigitsPattern((int)maxNoOfConsecutiveDescendingDigits) + "+))+)"; // Max no of consecutive ascending digits
             pattern += $".{{{minLength},}}$"; // Minimum length
             return pattern;
         }        
@@ -57,7 +62,8 @@ namespace MyPasswordStrength
             var regexPattern = GetRegexPattern(MinimumLength, RequireUppercase, MinUppercase, RequireLowercase, MinLowercase, 
                                                 RequireDigit, MinDigit, RequireSpecialCharacter, MinSpecialCharacter, SpecialCharacters,
                                                 RequireMaxNoOfSameConsecutiveCharacters, MaxNoOfSameConsecutiveCharacters,
-                                                RequireMaxNoOfConsecutiveAscendingDigits, MaxNoOfConsecutiveAscendingDigits);
+                                                RequireMaxNoOfConsecutiveAscendingDigits, MaxNoOfConsecutiveAscendingDigits,
+                                                RequireMaxNoOfConsecutiveDescendingDigits, MaxNoOfConsecutiveDescendingDigits);
 
             return Regex.IsMatch(password, regexPattern);
         }
@@ -66,6 +72,17 @@ namespace MyPasswordStrength
         {
             var sequences = Enumerable.Range(0, 9).Select(st => string.Concat(
                                           Enumerable.Range(st, length) // consecutive digits
+                                      ));
+
+            var result = string.Join("|", sequences);
+
+            return result;
+        }
+
+        private static string GetMaxConsecutiveDescendingDigitsPattern(int length)
+        {
+            var sequences = Enumerable.Range(0, 9).Reverse().Select(st => string.Concat(
+                                          Enumerable.Range(st, length).Reverse() // consecutive digits
                                       ));
 
             var result = string.Join("|", sequences);

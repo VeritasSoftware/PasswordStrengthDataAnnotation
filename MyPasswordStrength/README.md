@@ -30,10 +30,14 @@ var validator = new PasswordStrengthValidator
     RequireSpecialCharacter = true,
     MinSpecialCharacter = 2,
     RequireMaxNoOfSameConsecutiveCharacters = true,
-    MaxNoOfSameConsecutiveCharacters = 2
+    MaxNoOfSameConsecutiveCharacters = 2,
+    RequireMaxNoOfConsecutiveAscendingDigits = true,
+    MaxNoOfConsecutiveAscendingDigits = MaximumNoOfConsecutiveDigits.Three,
+    RequireMaxNoOfConsecutiveDescendingDigits = true,
+    MaxNoOfConsecutiveDescendingDigits = MaximumNoOfConsecutiveDigits.Three
 };
 
-var password = "P@Ssw0rd1!";
+var password = "P@Ssw0rd12!";
 
 // Validate the password
 bool isValid =  validator.PasswordStrength(password);
@@ -66,15 +70,19 @@ namespace YourNamespace
 {
     public class PasswordStrengthAttribute : RegularExpressionAttribute
     {
-        public PasswordStrengthAttribute(int minimumLength = 6, bool requireUppercase = true, int minUppercase = 1, 
-                                            bool requireLowercase = true, int minLowercase = 1, bool requireDigit = true, int minDigit = 1, 
+        public PasswordStrengthAttribute(int minimumLength = 6, bool requireUppercase = true, int minUppercase = 1,
+                                            bool requireLowercase = true, int minLowercase = 1, bool requireDigit = true, int minDigit = 1,
                                             bool requireSpecialCharacter = true, int minSpecialCharacter = 1, string specialCharacters = @"@$!%*?&",
-                                            bool requireMaxNoOfSameConsecutiveCharacters = true, int maxNoOfSameConsecutiveCharacters = 2)
-            : base(PasswordStrengthValidator.GetRegexPattern(minimumLength, requireUppercase, minUppercase, requireLowercase, minLowercase, 
-                                                                requireDigit, minDigit, requireSpecialCharacter, minSpecialCharacter, specialCharacters, 
-                                                                requireMaxNoOfSameConsecutiveCharacters, maxNoOfSameConsecutiveCharacters))
+                                            bool requireMaxNoOfSameConsecutiveCharacters = true, int maxNoOfSameConsecutiveCharacters = 2,
+                                            bool requireMaxNoOfConsecutiveAscendingDigits = true, MaxNoOfConsecutiveDigits maxNoOfConsecutiveAscendingDigits = MaxNoOfConsecutiveDigits.Two,
+                                            bool requireMaxNoOfConsecutiveDescendingDigits = true, MaxNoOfConsecutiveDigits maxNoOfConsecutiveDescendingDigits = MaxNoOfConsecutiveDigits.Two)
+            : base(PasswordStrengthValidator.GetRegexPattern(minimumLength, requireUppercase, minUppercase, requireLowercase, minLowercase,
+                                                                requireDigit, minDigit, requireSpecialCharacter, minSpecialCharacter, specialCharacters,
+                                                                requireMaxNoOfSameConsecutiveCharacters, maxNoOfSameConsecutiveCharacters,
+                                                                requireMaxNoOfConsecutiveAscendingDigits, maxNoOfConsecutiveAscendingDigits,
+                                                                requireMaxNoOfConsecutiveDescendingDigits, maxNoOfConsecutiveDescendingDigits))
         {
-        }               
+        }
     }
 }
 ```
@@ -82,12 +90,14 @@ namespace YourNamespace
 ### Sample Usage
 
 ```csharp
-[PasswordStrength(minimumLength: 8,
+[PasswordStrength(minimumLength: 9,
 				  minUppercase: 2,
 				  minLowercase: 3,
 				  minDigit: 2,
 				  minSpecialCharacter: 2,
 				  maxNoOfSameConsecutiveCharacters: 2,
-				  ErrorMessage = "Password must be at least 8 characters long and contain at least two uppercase letters, three lowercase letters, two numbers, and two special characters (@$!%*?&), with a maximum of 2 same consecutive characters.")]
+                  maxNoOfConsecutiveAscendingDigits: MaxNoOfConsecutiveDigits.Three,
+                  maxNoOfConsecutiveDescendingDigits: MaxNoOfConsecutiveDigits.Three,
+				  ErrorMessage = "Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars, no more than 3 consecutive ascending digits, no more than 3 consecutive descending digits.")]
 public string? Password { get; set; }
 ```

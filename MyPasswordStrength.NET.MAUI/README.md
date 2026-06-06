@@ -23,7 +23,7 @@ using Microsoft.Maui.Controls.Shapes;
 using MyPasswordStrength;
 using System.Runtime.Versioning;
 
-namespace YourNamespace.Pages;
+namespace MyTestMAUIAPP.Pages;
 
 [SupportedOSPlatform("android")]
 [SupportedOSPlatform("ios")]
@@ -65,7 +65,7 @@ public class Registration : ContentPage
 
         _errorLabel = new Label
         {
-            Text = "Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars",
+            Text = "Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars, no more than 3 consecutive ascending digits, no more than 3 consecutive descending digits",
             TextColor = Colors.Red,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
@@ -91,8 +91,12 @@ public class Registration : ContentPage
         options.MinimumDigit = 2;
         options.RequireSpecialCharacter = true;
         options.MinimumSpecialCharacter = 2;
-        options.RequireMaxNoOfSameConsecutiveCharacters = true;
+        options.RequireMaximumNoOfSameConsecutiveCharacters = true;
         options.MaximumNoOfSameConsecutiveCharacters = 2;
+        options.RequireMaximumNoOfConsecutiveAscendingDigits = true;
+        options.MaximumNoOfConsecutiveAscendingDigits = MaximumNoOfConsecutiveDigits.Three;
+        options.RequireMaximumNoOfConsecutiveDescendingDigits = true;
+        options.MaximumNoOfConsecutiveDescendingDigits = MaximumNoOfConsecutiveDigits.Three;
 
         return options;
     }
@@ -112,10 +116,17 @@ public class Registration : ContentPage
     }
 }
 ```
+### Initial
 
-![Password Strength Invalid](PasswordStrengthError.jpeg)
+![Initial](PasswordStrengthInitial.jpeg)
 
-![Password Strength Valid](PasswordStrength.jpeg)
+### Invalid
+
+![Invalid](PasswordStrengthError.jpeg)
+
+### Valid
+
+![Valid](PasswordStrength.jpeg)
 
 ## License
 

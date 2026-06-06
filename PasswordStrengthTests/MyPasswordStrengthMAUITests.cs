@@ -54,8 +54,87 @@ namespace PasswordStrengthTests
                 RequireSpecialCharacter = true,
                 MinimumSpecialCharacter = 1,
                 SpecialCharacters = "!@#$%^&*()",
-                RequireMaxNoOfSameConsecutiveCharacters = true,
+                RequireMaximumNoOfSameConsecutiveCharacters = true,
                 MaximumNoOfSameConsecutiveCharacters = 2
+            };
+
+            bool? result = null;
+
+            var entry = new PasswordStrengthEntry((pwd, isValid) =>
+            {
+                result = isValid;
+            }, options);
+
+            // Set the entry text so the entry runs.
+            entry.Text = passwordToTest;
+
+            Assert.True(result.HasValue);   
+            Assert.True(result.Value == expectedResult);
+        }
+
+        [Theory]
+        [InlineData("Password1!", MaximumNoOfConsecutiveDigits.Two, true)]
+        [InlineData("Password12!", MaximumNoOfConsecutiveDigits.Two, true)]
+        [InlineData("Pa56word12!", MaximumNoOfConsecutiveDigits.Two, true)]
+        [InlineData("Pa56word123!", MaximumNoOfConsecutiveDigits.Three, true)]
+        [InlineData("Pa567word123!", MaximumNoOfConsecutiveDigits.Three, true)]
+        [InlineData("Password123!", MaximumNoOfConsecutiveDigits.Two, false)]
+        [InlineData("Pa567word12!", MaximumNoOfConsecutiveDigits.Two, false)]
+        [InlineData("Pa56word123!", MaximumNoOfConsecutiveDigits.Two, false)]
+        [InlineData("Pa567word123!", MaximumNoOfConsecutiveDigits.Two, false)]
+        [InlineData("Pa567word1234!", MaximumNoOfConsecutiveDigits.Three, false)]
+        public void MaxNoOfConsecutiveAscendingDigits(string passwordToTest, MaximumNoOfConsecutiveDigits maxConsecutiveDigits, bool expectedResult)
+        {
+            var options = new MyPasswordStrengthOptions
+            {
+                MinimumLength = 8,
+                RequireUppercase = false,
+                RequireLowercase = false,
+                RequireDigit = false,
+                RequireSpecialCharacter = false,
+                RequireMaximumNoOfSameConsecutiveCharacters = false,
+                RequireMaximumNoOfConsecutiveAscendingDigits = true,
+                MaximumNoOfConsecutiveAscendingDigits = maxConsecutiveDigits
+            };
+
+            bool? result = null;
+
+            var entry = new PasswordStrengthEntry((pwd, isValid) =>
+            {
+                result = isValid;
+            }, options);
+
+            // Set the entry text so the entry runs.
+            entry.Text = passwordToTest;
+
+            Assert.True(result.HasValue);
+            Assert.True(result.Value == expectedResult);
+        }
+
+        [Theory]
+        [InlineData("Password1!", MaximumNoOfConsecutiveDigits.Two, true)]
+        [InlineData("Password21!", MaximumNoOfConsecutiveDigits.Two, true)]
+        [InlineData("Pa65word21!", MaximumNoOfConsecutiveDigits.Two, true)]
+        [InlineData("Pa65word321!", MaximumNoOfConsecutiveDigits.Three, true)]
+        [InlineData("Pa765word321!", MaximumNoOfConsecutiveDigits.Three, true)]
+        [InlineData("Password321!", MaximumNoOfConsecutiveDigits.Two, false)]
+        [InlineData("Pa765word21!", MaximumNoOfConsecutiveDigits.Two, false)]
+        [InlineData("Pa65word321!", MaximumNoOfConsecutiveDigits.Two, false)]
+        [InlineData("Pa765word321!", MaximumNoOfConsecutiveDigits.Two, false)]
+        [InlineData("Pa765word4321!", MaximumNoOfConsecutiveDigits.Three, false)]
+        public void MaxNoOfConsecutiveDescendingDigits(string passwordToTest, MaximumNoOfConsecutiveDigits maxConsecutiveDigits, bool expectedResult)
+        {
+            var options = new MyPasswordStrengthOptions
+            {
+                MinimumLength = 8,
+                RequireUppercase = false,
+                RequireLowercase = false,
+                RequireDigit = false,
+                RequireSpecialCharacter = false,
+                RequireMaximumNoOfSameConsecutiveCharacters = false,
+                RequireMaximumNoOfConsecutiveAscendingDigits = false,
+                RequireMaximumNoOfConsecutiveDescendingDigits = true,
+                MaximumNoOfConsecutiveDescendingDigits = maxConsecutiveDigits
             };
 
             bool? result = null;
@@ -81,7 +160,7 @@ namespace PasswordStrengthTests
             {
                 RequireDigit = false,
                 RequireSpecialCharacter = false,
-                RequireMaxNoOfSameConsecutiveCharacters = false,
+                RequireMaximumNoOfSameConsecutiveCharacters = false,
                 RequireUppercase = false,
                 RequireLowercase = true,
                 MinimumLowercase = 5
@@ -110,7 +189,7 @@ namespace PasswordStrengthTests
             {
                 RequireDigit = false,
                 RequireSpecialCharacter = false,
-                RequireMaxNoOfSameConsecutiveCharacters = false,
+                RequireMaximumNoOfSameConsecutiveCharacters = false,
                 RequireLowercase = false,
                 RequireUppercase = true,
                 MinimumUppercase = 5
@@ -138,7 +217,7 @@ namespace PasswordStrengthTests
             var options = new MyPasswordStrengthOptions
             {
                 RequireSpecialCharacter = false,
-                RequireMaxNoOfSameConsecutiveCharacters = false,
+                RequireMaximumNoOfSameConsecutiveCharacters = false,
                 RequireLowercase = false,
                 RequireUppercase = false,
                 RequireDigit = true,
@@ -166,7 +245,7 @@ namespace PasswordStrengthTests
         {
             var options = new MyPasswordStrengthOptions
             {
-                RequireMaxNoOfSameConsecutiveCharacters = false,
+                RequireMaximumNoOfSameConsecutiveCharacters = false,
                 RequireLowercase = false,
                 RequireUppercase = false,
                 RequireDigit = false,

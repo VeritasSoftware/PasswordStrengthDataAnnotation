@@ -37,8 +37,12 @@ namespace MyPasswordStrength
             validator.RequireSpecialCharacter = _strengthOptions.RequireSpecialCharacter;
             validator.MinSpecialCharacter = _strengthOptions.MinimumSpecialCharacter;
             validator.SpecialCharacters = _strengthOptions.SpecialCharacters;
-            validator.RequireMaxNoOfSameConsecutiveCharacters = _strengthOptions.RequireMaxNoOfSameConsecutiveCharacters;
+            validator.RequireMaxNoOfSameConsecutiveCharacters = _strengthOptions.RequireMaximumNoOfSameConsecutiveCharacters;
             validator.MaxNoOfSameConsecutiveCharacters = _strengthOptions.MaximumNoOfSameConsecutiveCharacters;
+            validator.RequireMaxNoOfConsecutiveAscendingDigits = _strengthOptions.RequireMaximumNoOfConsecutiveAscendingDigits;
+            validator.MaxNoOfConsecutiveAscendingDigits = _strengthOptions.MaximumNoOfConsecutiveAscendingDigits;
+            validator.RequireMaxNoOfConsecutiveDescendingDigits = _strengthOptions.RequireMaximumNoOfConsecutiveDescendingDigits;
+            validator.MaxNoOfConsecutiveDescendingDigits = _strengthOptions.MaximumNoOfConsecutiveDescendingDigits;
 
             _validator = validator;
 
@@ -68,7 +72,19 @@ namespace MyPasswordStrength
         public string SpecialCharacters { get; set; } = "@$!%*?&";
         public bool RequireUppercase { get; set; } = true;
         public int MinimumUppercase { get; set; } = 1;
-        public bool RequireMaxNoOfSameConsecutiveCharacters { get; set; } = true;
+        public bool RequireMaximumNoOfSameConsecutiveCharacters { get; set; } = true;
         public int MaximumNoOfSameConsecutiveCharacters { get; set; } = 2;
+        public bool RequireMaximumNoOfConsecutiveAscendingDigits { get; set; } = true;
+        public MaximumNoOfConsecutiveDigits MaximumNoOfConsecutiveAscendingDigits { get; set; } = MaximumNoOfConsecutiveDigits.Two;
+        public bool RequireMaximumNoOfConsecutiveDescendingDigits { get; set; } = true;
+        public MaximumNoOfConsecutiveDigits MaximumNoOfConsecutiveDescendingDigits { get; set; } = MaximumNoOfConsecutiveDigits.Two;
+    }
+
+    public enum MaximumNoOfConsecutiveDigits
+    {
+        Two = 2,
+        Three = 3,
+        Four = 4,
+        Five = 5
     }
 }
