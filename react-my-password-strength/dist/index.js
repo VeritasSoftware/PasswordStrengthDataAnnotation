@@ -4,8 +4,14 @@ var tsMyPasswordStrength = require('ts-my-password-strength');
 var PasswordStrength = function PasswordStrength(_ref) {
   var _ref$name = _ref.name,
     name = _ref$name === void 0 ? "password" : _ref$name,
+    _ref$placeholder = _ref.placeholder,
+    placeholder = _ref$placeholder === void 0 ? "Enter your password" : _ref$placeholder,
     _ref$strengthOptions = _ref.strengthOptions,
     strengthOptions = _ref$strengthOptions === void 0 ? new MyPasswordStrengthOptions() : _ref$strengthOptions,
+    _ref$initialStyleOpti = _ref.initialStyleOptions,
+    initialStyleOptions = _ref$initialStyleOpti === void 0 ? {
+      border: "1px solid #ccc"
+    } : _ref$initialStyleOpti,
     _ref$styleOptions = _ref.styleOptions,
     styleOptions = _ref$styleOptions === void 0 ? {
       border: "1px solid #ccc"
@@ -15,12 +21,17 @@ var PasswordStrength = function PasswordStrength(_ref) {
       border: "1px solid red"
     } : _ref$errorStyleOption,
     onValidation = _ref.onValidation;
-  var _React$useState = React.useState(false),
+  var _React$useState = React.useState(null),
     isValid = _React$useState[0],
     setIsValid = _React$useState[1];
   var validatePassword = function validatePassword(e) {
     var password = e.target.value;
-    if (!password) return "Password is required";
+    if (!password || password === '') {
+      console.log("Password is empty, skipping validation.");
+      setIsValid(null);
+      onValidation(name, password, null);
+      return;
+    }
     var validator = new tsMyPasswordStrength.PasswordStrengthValidator();
     validator.minimumLength = strengthOptions.minimumLength;
     validator.requireUppercase = strengthOptions.requireUppercase;
@@ -41,12 +52,14 @@ var PasswordStrength = function PasswordStrength(_ref) {
     onValidation(name, password, isValid);
     return "";
   };
+  console.log("Rendering PasswordStrength component with isValid: ", isValid);
   return React.createElement("input", {
     id: name,
     name: name,
+    placeholder: placeholder,
     type: "password",
     onChange: validatePassword,
-    style: isValid ? styleOptions : errorStyleOptions
+    style: isValid == null ? initialStyleOptions : isValid ? styleOptions : errorStyleOptions
   });
 };
 var MyPasswordStrengthOptions = function MyPasswordStrengthOptions() {

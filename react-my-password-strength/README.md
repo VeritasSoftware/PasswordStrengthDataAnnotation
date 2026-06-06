@@ -40,12 +40,19 @@ const App = () => {
 
   const [error, setError] = useState("");
 
-  const handleOnValidation = (name:string, value:string, isValid:boolean) => {
+  const handleOnValidation = (name:string, value:string, isValid:boolean|null) => {
+    if (!isValid && (value === null || value === '')) {
+      console.log("Password is empty, skipping validation.");
+      setError("");
+      setFormValid(false);
+      return;
+    }
+
     setError(isValid ? "" : "Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars");
 
     setFormData((prev) => ({ ...prev, [name]: value }));
     // Check if all fields are valid
-    setFormValid(isValid && Object.values(formData).every((v) => v));
+    setFormValid(isValid === true && Object.values(formData).every((v) => v));
   };
 
   const handleSubmit = (e: { preventDefault: () => void; }) => {
@@ -68,9 +75,11 @@ const App = () => {
             </label>
             <br />
             <PasswordStrength
-                name='password' 
-                strengthOptions={getOptions()} 
-                styleOptions={styleOptions} 
+                name='password'
+                placeholder='Please enter your password'
+                strengthOptions={getOptions()}
+                initialStyleOptions={initialStyleOptions} 
+                styleOptions={styleOptions}                 
                 errorStyleOptions={errorStyleOptions}
                 onValidation={handleOnValidation}
             />
@@ -106,6 +115,12 @@ function getOptions(): MyPasswordStrengthOptions {
   return options;
 }
 
+const initialStyleOptions={
+  border: "1px solid #ccc",
+  padding: "8px",
+  width: "100%"
+}
+
 const styleOptions={
   border: "2px solid green",
   padding: "8px",
@@ -119,7 +134,11 @@ const errorStyleOptions={
 }
 ```
 
-![Password Strength](ReactPasswordStrength.jpeg)
+![Initial](ReactPasswordStrengthInitial.jpeg)
+
+![Invalid](ReactPasswordStrength.jpeg)
+
+![Valid](ReactPasswordStrengthValid.jpeg)
 
 ## License
 

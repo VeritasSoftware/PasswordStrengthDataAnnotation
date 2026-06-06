@@ -1,12 +1,14 @@
 import * as React from 'react';
 interface Props {
     strengthOptions: MyPasswordStrengthOptions;
+    initialStyleOptions?: React.CSSProperties;
     styleOptions?: React.CSSProperties;
     errorStyleOptions?: React.CSSProperties;
     name?: string;
-    onValidation: (name: string, value: string, isValid: boolean) => void;
+    placeholder?: string;
+    onValidation: (name: string, value: string, isValid: boolean | null) => void;
 }
-export declare const PasswordStrength: ({ name, strengthOptions, styleOptions, errorStyleOptions, onValidation }: Props) => React.JSX.Element;
+export declare const PasswordStrength: ({ name, placeholder, strengthOptions, initialStyleOptions, styleOptions, errorStyleOptions, onValidation }: Props) => React.JSX.Element;
 export declare class MyPasswordStrengthOptions {
     minimumLength: number;
     requireLowercase: boolean;

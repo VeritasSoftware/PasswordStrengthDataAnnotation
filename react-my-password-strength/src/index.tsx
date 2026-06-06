@@ -3,26 +3,38 @@ import { PasswordStrengthValidator } from 'ts-my-password-strength'
 
 interface Props {
   strengthOptions: MyPasswordStrengthOptions,
+  initialStyleOptions?: React.CSSProperties,
   styleOptions?: React.CSSProperties,
   errorStyleOptions?: React.CSSProperties,
   name?: string,
-  onValidation: (name:string, value:string, isValid:boolean) => void
+  placeholder?: string,
+  onValidation: (name:string, value:string, isValid:boolean|null) => void
 }
 
-export const PasswordStrength = ({ name = "password", 
-                                    strengthOptions = new MyPasswordStrengthOptions(), 
+export const PasswordStrength = ({ name = "password",
+                                    placeholder = "Enter your password", 
+                                    strengthOptions = new MyPasswordStrengthOptions(),
+                                    initialStyleOptions = {
+                                      border: "1px solid #ccc"
+                                    }, 
                                     styleOptions = {
                                       border: "1px solid #ccc"
                                     },
                                     errorStyleOptions = {
                                       border:"1px solid red"
                                     }, onValidation }: Props) => {
-  const [isValid, setIsValid] = React.useState(false);
-
+  const [isValid, setIsValid] = React.useState<boolean | null>(null);
+                                      
   const validatePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     const password = e.target.value;
 
-    if (!password) return "Password is required";
+    // Consider empty password as valid, as it can be handled separately (e.g. required field validation)
+    if (!password || password==='') {
+        console.log("Password is empty, skipping validation.");
+        setIsValid(null); // Set to null to indicate no validation performed
+        onValidation(name, password, null); // Consider empty password as valid for onValidation callback
+        return;
+    } 
     
     let validator = new PasswordStrengthValidator();
 
@@ -51,12 +63,15 @@ export const PasswordStrength = ({ name = "password",
     return "";
   };
 
+  console.log("Rendering PasswordStrength component with isValid: ", isValid);
+
   return <input
             id={name}
             name={name}
+            placeholder={placeholder}
             type="password"
             onChange={validatePassword}
-            style={isValid ? styleOptions : errorStyleOptions}
+            style={ isValid == null ? initialStyleOptions : (isValid ? styleOptions : errorStyleOptions)}
         />
 }
 
