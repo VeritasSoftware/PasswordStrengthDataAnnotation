@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { PasswordStrength, MyPasswordStrengthOptions } from 'react-my-password-strength'
-import 'react-my-password-strength/dist/index.css'
 
 const App = () => {
   const [formData, setFormData] = useState({});
@@ -29,10 +28,12 @@ const App = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-        <div>
+        <div style={{padding: "20px" }}>
+          <div style={{marginRight: "20px" }}>
             <label htmlFor="password" style={{ display: "block", fontWeight: "bold" }}>
               Password
             </label>
+            <br />
             <PasswordStrength
                 name='password' 
                 strengthOptions={getOptions()} 
@@ -41,10 +42,11 @@ const App = () => {
                 onValidation={handleOnValidation}
             />
             <span style={{ color: "red", fontSize: "12px" }}>{error}</span>
-            <br />
-            <button type="submit" disabled={!formValid} style={{ marginTop: "10px", padding: "8px 16px" }}>
-              Submit
-            </button>
+          </div>            
+          <br />
+          <button type="submit" disabled={!formValid} style={{ marginTop: "10px", padding: "8px 16px" }}>
+            Submit
+          </button>
         </div>
     </form>
   )
@@ -72,13 +74,13 @@ function getOptions(): MyPasswordStrengthOptions {
 }
 
 const styleOptions={
-  border: "1px solid #ccc",
+  border: "2px solid green",
   padding: "8px",
-  width: "100%",
+  width: "100%"
 }
 
 const errorStyleOptions={
-  border:"1px solid red",
+  border:"2px solid red",
   padding: "8px",
-  width: "100%",
+  width: "100%"
 }
