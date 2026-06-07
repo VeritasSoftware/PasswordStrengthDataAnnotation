@@ -163,6 +163,7 @@ namespace PasswordStrengthTests
         [InlineData("Pa654word234!", MaximumNoOfConsecutiveDigits.Two, MaximumNoOfConsecutiveDigits.Two, false)]
         [InlineData("Pa56word321!", MaximumNoOfConsecutiveDigits.Two, MaximumNoOfConsecutiveDigits.Two, false)]
         [InlineData("Pa7654word12!", MaximumNoOfConsecutiveDigits.Two, MaximumNoOfConsecutiveDigits.Three, false)]
+        [InlineData("Password123765!", MaximumNoOfConsecutiveDigits.Two, MaximumNoOfConsecutiveDigits.Two, false)]
         public void MaxNoOfConsecutiveAscendingDescendingDigits(string passwordToTest, MaximumNoOfConsecutiveDigits maxConsecutiveAscendingDigits, 
                                                                     MaximumNoOfConsecutiveDigits maxConsecutiveDescendingDigits, bool expectedResult)
         {
