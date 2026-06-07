@@ -34,9 +34,9 @@ export class PasswordStrengthValidator {
         if (requireMaxNoOfSameConsecutiveCharacters)
             pattern += "(?=^((?<currentChar>.)(?!\\k<currentChar>{" + maxNoOfSameConsecutiveCharacters + "}))+$)"; //max no of same consecutive characters
         if (requireMaxNoOfConsecutiveAscendingDigits)
-            pattern += "(?!^(.*?\\d(" + this.getMaxConsecutiveAscendingDigitsPattern(<number>maxNoOfConsecutiveAscendingDigits) + "+))+)"; // Max no of consecutive ascending digits
+            pattern += "(?!^(.*?\\d(" + this.getMaxConsecutiveAscendingDigitsPattern(<number>maxNoOfConsecutiveAscendingDigits) + "))+)"; // Max no of consecutive ascending digits
         if (requireMaxNoOfConsecutiveDescendingDigits)
-            pattern += "(?!^(.*?\\d(" + this.getMaxConsecutiveDescendingDigitsPattern(<number>maxNoOfConsecutiveDescendingDigits) + "+))+)"; // Max no of consecutive descending digits
+            pattern += "(?!^(.*?\\d(" + this.getMaxConsecutiveDescendingDigitsPattern(<number>maxNoOfConsecutiveDescendingDigits) + "))+)"; // Max no of consecutive descending digits
         pattern += ".{" + minLength + ",}$"; // Minimum length
         return pattern;         
     }
