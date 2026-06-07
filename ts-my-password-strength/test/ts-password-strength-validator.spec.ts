@@ -119,13 +119,16 @@ describe('Max No Of Same Consecutive Characters', () => {
       ["Pasword12!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, true], // Valid password
       ["Pasword21!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, true], // Valid password
       ["Pa12word43!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, true], // Valid password
+      ["Password1243!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, true], // Valid password
+      ["Password123876!", MaxNoOfConsecutiveDigits.Three, MaxNoOfConsecutiveDigits.Three, true], // Valid password
       ["Pa45word87!", MaxNoOfConsecutiveDigits.Three, MaxNoOfConsecutiveDigits.Three, true], // Valid password
       ["Pa456word432!", MaxNoOfConsecutiveDigits.Three, MaxNoOfConsecutiveDigits.Three, true], // Valid password      
       ["Password123!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, false],
       ["Pa987word!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, false],
       ["Pa654word234!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, false],
       ["Pa56word321!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, false],
-      ["Pa7654word12!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Three, false]
+      ["Pa7654word12!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Three, false],
+      ["Password123654!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, false]
     ])(
       'passwordToTest: "%s" maxNoOfConsecutiveDigits: "%s" and expectedResult: %s',
       (passwordToTest, maxNoOfConsecutiveAscendingDigits, maxNoOfConsecutiveDescendingDigits, expectedResult) => {

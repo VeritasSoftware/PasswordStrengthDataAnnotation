@@ -95,6 +95,8 @@ namespace PasswordStrengthTests
         [InlineData("Pasword12!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, true)]
         [InlineData("Pasword21!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, true)]
         [InlineData("Pa12word43!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, true)]
+        [InlineData("Password1243!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, true)]
+        [InlineData("Password123876!", MaxNoOfConsecutiveDigits.Three, MaxNoOfConsecutiveDigits.Three, true)]
         [InlineData("Pa45word87!", MaxNoOfConsecutiveDigits.Three, MaxNoOfConsecutiveDigits.Three, true)]
         [InlineData("Pa456word432!", MaxNoOfConsecutiveDigits.Three, MaxNoOfConsecutiveDigits.Three, true)]
         [InlineData("Password123!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, false)]
@@ -103,6 +105,7 @@ namespace PasswordStrengthTests
         [InlineData("Pa56word321!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, false)]
         [InlineData("Pa7654word12!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Three, false)]
         [InlineData("Password123765!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, false)]
+        [InlineData("Password123654!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, false)]
         public void MaxNoOfConsecutiveAscendingDescendingDigits(string passwordToTest, MaxNoOfConsecutiveDigits maxConsecutiveAscendingDigits, 
                                                                     MaxNoOfConsecutiveDigits maxConsecutiveDescendingDigits, bool expectedResult)
         {
