@@ -51,7 +51,7 @@ var validator = new PasswordStrengthValidator
     MaxNoOfConsecutiveDescendingDigits = MaxNoOfConsecutiveDigits.Three
 };
 
-var password = "P@Ssw0rd12!";
+var password = "P@76w0rD12!";
 
 // Validate the password
 bool isValid =  validator.PasswordStrength(password);

@@ -49,8 +49,12 @@ validator.requireSpecialCharacter = true;
 validator.minimumSpecialCharacter = 2;
 validator.requireMaxNoOfSameConsecutiveCharacters = true;
 validator.maximumNoOfSameConsecutiveCharacters = 2;
+validator.requireMaxNoOfConsecutiveAscendingDigits = true;
+validator.maximumNoOfConsecutiveAscendingDigits = MaxNoOfConsecutiveDigits.Two;
+validator.requireMaxNoOfConsecutiveDescendingDigits = true;
+validator.maximumNoOfConsecutiveDescendingDigits = MaxNoOfConsecutiveDigits.Two;
 
-let password = "P@ssw0rD1!";
+let password = "P@76w0rD12!";
 
 // Validate the password
 let isValid: boolean =  validator.PasswordStrength(password);

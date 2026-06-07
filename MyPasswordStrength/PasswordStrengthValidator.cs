@@ -49,7 +49,7 @@ namespace MyPasswordStrength
             if (requireMaxNoOfConsecutiveAscendingDigits)
                 pattern += "(?!^(.*?\\d(" + GetMaxConsecutiveAscendingDigitsPattern((int)maxNoOfConsecutiveAscendingDigits) + "+))+)"; // Max no of consecutive ascending digits
             if (requireMaxNoOfConsecutiveDescendingDigits)
-                pattern += "(?!^(.*?\\d(" + GetMaxConsecutiveDescendingDigitsPattern((int)maxNoOfConsecutiveDescendingDigits) + "+))+)"; // Max no of consecutive ascending digits
+                pattern += "(?!^(.*?\\d(" + GetMaxConsecutiveDescendingDigitsPattern((int)maxNoOfConsecutiveDescendingDigits) + "+))+)"; // Max no of consecutive descending digits
             pattern += $".{{{minLength},}}$"; // Minimum length
             return pattern;
         }        

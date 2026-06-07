@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals';
-import { PasswordStrengthValidator } from '../src/password-strength-validator';
+import { MaxNoOfConsecutiveDigits, PasswordStrengthValidator } from '../src/password-strength-validator';
 
 describe('Defaults', () => {
   test.each([
@@ -16,12 +16,6 @@ describe('Defaults', () => {
     'passwordToTest: "%s" and expectedResult: %s',
     (passwordToTest, expectedResult) => {
         let validator = new PasswordStrengthValidator();
-
-        var pattern = validator.getRegexPattern(validator.minimumLength, validator.requireUppercase, validator.minimumUppercase,
-            validator.requireLowercase, validator.minimumLowercase, validator.requireSpecialCharacter, validator.minimumSpecialCharacter, validator.specialCharacters,
-            validator.requireDigit, validator.minimumDigit, validator.requireMaxNoOfSameConsecutiveCharacters, validator.maximumNoOfSameConsecutiveCharacters);
-
-        console.log("Regex Pattern: " + pattern);
 
         let isValid = validator.passwordStrength(passwordToTest);
 
@@ -44,11 +38,109 @@ describe('Max No Of Same Consecutive Characters', () => {
       (passwordToTest, expectedResult) => {
           let validator = new PasswordStrengthValidator();
   
-          var pattern = validator.getRegexPattern(validator.minimumLength, validator.requireUppercase, validator.minimumUppercase,
-              validator.requireLowercase, validator.minimumLowercase, validator.requireSpecialCharacter, validator.minimumSpecialCharacter, validator.specialCharacters,
-              validator.requireDigit, validator.minimumDigit, validator.requireMaxNoOfSameConsecutiveCharacters, validator.maximumNoOfSameConsecutiveCharacters);
+          let isValid = validator.passwordStrength(passwordToTest);
   
-          console.log("Regex Pattern: " + pattern);
+          expect(isValid).toBe(expectedResult);
+      }
+    );
+  });
+
+  describe('Max No Of Consecutive Ascending Digits', () => {
+    test.each([
+      ["Password1!", MaxNoOfConsecutiveDigits.Two, true], // Valid password
+      ["Pasword12!", MaxNoOfConsecutiveDigits.Two, true], // Valid password
+      ["Pa56word12!", MaxNoOfConsecutiveDigits.Two, true], // Valid password
+      ["Pa56word123!", MaxNoOfConsecutiveDigits.Three, true], // Valid password
+      ["Pa567word123!", MaxNoOfConsecutiveDigits.Three, true], // Valid password      
+      ["Password123!", MaxNoOfConsecutiveDigits.Two, false],
+      ["Pa567word12!", MaxNoOfConsecutiveDigits.Two, false],
+      ["Pa56word123!", MaxNoOfConsecutiveDigits.Two, false],
+      ["Pa567word123!", MaxNoOfConsecutiveDigits.Two, false],
+      ["Pa567word1234!", MaxNoOfConsecutiveDigits.Three, false]
+    ])(
+      'passwordToTest: "%s" maxNoOfConsecutiveDigits: "%s" and expectedResult: %s',
+      (passwordToTest, maxNoOfConsecutiveDigits, expectedResult) => {
+          let validator = new PasswordStrengthValidator();
+
+          validator.minimumLength = 8;
+          validator.requireUppercase = false;
+          validator.requireLowercase = false;
+          validator.requireDigit = false;
+          validator.requireSpecialCharacter = false;
+          validator.requireMaxNoOfSameConsecutiveCharacters = false;
+          validator.requireMaxNoOfConsecutiveDescendingDigits = false;
+          validator.requireMaxNoOfConsecutiveAscendingDigits = true;
+          validator.maximumNoOfConsecutiveAscendingDigits = maxNoOfConsecutiveDigits;
+  
+          let isValid = validator.passwordStrength(passwordToTest);
+  
+          expect(isValid).toBe(expectedResult);
+      }
+    );
+  });
+  
+  describe('Max No Of Consecutive Descending Digits', () => {
+    test.each([
+      ["Password1!", MaxNoOfConsecutiveDigits.Two, true], // Valid password
+      ["Password21!", MaxNoOfConsecutiveDigits.Two, true], // Valid password
+      ["Pa65word21!", MaxNoOfConsecutiveDigits.Two, true], // Valid password
+      ["Pa65word321!", MaxNoOfConsecutiveDigits.Three, true], // Valid password
+      ["Pa765word321!", MaxNoOfConsecutiveDigits.Three, true], // Valid password      
+      ["Password321!", MaxNoOfConsecutiveDigits.Two, false],
+      ["Pa765word21!", MaxNoOfConsecutiveDigits.Two, false],
+      ["Pa65word321!", MaxNoOfConsecutiveDigits.Two, false],
+      ["Pa765word321!", MaxNoOfConsecutiveDigits.Two, false],
+      ["Pa765word4321!", MaxNoOfConsecutiveDigits.Three, false]
+    ])(
+      'passwordToTest: "%s" maxNoOfConsecutiveDigits: "%s" and expectedResult: %s',
+      (passwordToTest, maxNoOfConsecutiveDigits, expectedResult) => {
+          let validator = new PasswordStrengthValidator();
+
+          validator.minimumLength = 8;
+          validator.requireUppercase = false;
+          validator.requireLowercase = false;
+          validator.requireDigit = false;
+          validator.requireSpecialCharacter = false;
+          validator.requireMaxNoOfSameConsecutiveCharacters = false;
+          validator.requireMaxNoOfConsecutiveAscendingDigits = false;
+          validator.requireMaxNoOfConsecutiveDescendingDigits = true;
+          validator.maximumNoOfConsecutiveDescendingDigits = maxNoOfConsecutiveDigits;
+  
+          let isValid = validator.passwordStrength(passwordToTest);
+  
+          expect(isValid).toBe(expectedResult);
+      }
+    );
+  });
+  
+  describe('Max No Of Consecutive Ascending & Descending Digits', () => {
+    test.each([
+      ["Password1!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, true], // Valid password
+      ["Pasword12!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, true], // Valid password
+      ["Pasword21!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, true], // Valid password
+      ["Pa12word43!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, true], // Valid password
+      ["Pa45word87!", MaxNoOfConsecutiveDigits.Three, MaxNoOfConsecutiveDigits.Three, true], // Valid password
+      ["Pa456word432!", MaxNoOfConsecutiveDigits.Three, MaxNoOfConsecutiveDigits.Three, true], // Valid password      
+      ["Password123!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, false],
+      ["Pa987word!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, false],
+      ["Pa654word234!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, false],
+      ["Pa56word321!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, false],
+      ["Pa7654word12!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Three, false]
+    ])(
+      'passwordToTest: "%s" maxNoOfConsecutiveDigits: "%s" and expectedResult: %s',
+      (passwordToTest, maxNoOfConsecutiveAscendingDigits, maxNoOfConsecutiveDescendingDigits, expectedResult) => {
+          let validator = new PasswordStrengthValidator();
+
+          validator.minimumLength = 8;
+          validator.requireUppercase = false;
+          validator.requireLowercase = false;
+          validator.requireDigit = false;
+          validator.requireSpecialCharacter = false;
+          validator.requireMaxNoOfSameConsecutiveCharacters = false;                    
+          validator.requireMaxNoOfConsecutiveAscendingDigits = true;
+          validator.maximumNoOfConsecutiveAscendingDigits = maxNoOfConsecutiveAscendingDigits;
+          validator.requireMaxNoOfConsecutiveDescendingDigits = true;
+          validator.maximumNoOfConsecutiveDescendingDigits = maxNoOfConsecutiveDescendingDigits;
   
           let isValid = validator.passwordStrength(passwordToTest);
   
@@ -73,12 +165,6 @@ describe('Max No Of Same Consecutive Characters', () => {
           validator.requireLowercase = true;
           validator.minimumLowercase = 5;
   
-          var pattern = validator.getRegexPattern(validator.minimumLength, validator.requireUppercase, validator.minimumUppercase,
-              validator.requireLowercase, validator.minimumLowercase, validator.requireSpecialCharacter, validator.minimumSpecialCharacter, validator.specialCharacters,
-              validator.requireDigit, validator.minimumDigit, validator.requireMaxNoOfSameConsecutiveCharacters, validator.maximumNoOfSameConsecutiveCharacters);
-  
-          console.log("Regex Pattern: " + pattern);
-  
           let isValid = validator.passwordStrength(passwordToTest);
   
           expect(isValid).toBe(expectedResult);
@@ -101,12 +187,6 @@ describe('Max No Of Same Consecutive Characters', () => {
           validator.requireLowercase = false;
           validator.requireUppercase = true;
           validator.minimumUppercase = 5;
-  
-          var pattern = validator.getRegexPattern(validator.minimumLength, validator.requireUppercase, validator.minimumUppercase,
-              validator.requireLowercase, validator.minimumLowercase, validator.requireSpecialCharacter, validator.minimumSpecialCharacter, validator.specialCharacters,
-              validator.requireDigit, validator.minimumDigit, validator.requireMaxNoOfSameConsecutiveCharacters, validator.maximumNoOfSameConsecutiveCharacters);
-  
-          console.log("Regex Pattern: " + pattern);
   
           let isValid = validator.passwordStrength(passwordToTest);
   
@@ -131,12 +211,6 @@ describe('Max No Of Same Consecutive Characters', () => {
           validator.requireDigit = true;
           validator.minimumDigit = 2;
   
-          var pattern = validator.getRegexPattern(validator.minimumLength, validator.requireUppercase, validator.minimumUppercase,
-              validator.requireLowercase, validator.minimumLowercase, validator.requireSpecialCharacter, validator.minimumSpecialCharacter, validator.specialCharacters,
-              validator.requireDigit, validator.minimumDigit, validator.requireMaxNoOfSameConsecutiveCharacters, validator.maximumNoOfSameConsecutiveCharacters);
-  
-          console.log("Regex Pattern: " + pattern);
-  
           let isValid = validator.passwordStrength(passwordToTest);
   
           expect(isValid).toBe(expectedResult);
@@ -159,12 +233,6 @@ describe('Max No Of Same Consecutive Characters', () => {
           validator.requireLowercase = false;
           validator.requireSpecialCharacter = true;
           validator.minimumSpecialCharacter = 2;
-  
-          var pattern = validator.getRegexPattern(validator.minimumLength, validator.requireUppercase, validator.minimumUppercase,
-              validator.requireLowercase, validator.minimumLowercase, validator.requireSpecialCharacter, validator.minimumSpecialCharacter, validator.specialCharacters,
-              validator.requireDigit, validator.minimumDigit, validator.requireMaxNoOfSameConsecutiveCharacters, validator.maximumNoOfSameConsecutiveCharacters);
-  
-          console.log("Regex Pattern: " + pattern);
   
           let isValid = validator.passwordStrength(passwordToTest);
   
