@@ -37,7 +37,7 @@ var validator = new PasswordStrengthValidator
     MaxNoOfConsecutiveDescendingDigits = MaxNoOfConsecutiveDigits.Three
 };
 
-var password = "P@Ssw0rd12!";
+var password = "P@76w0rD123!";
 
 // Validate the password
 bool isValid =  validator.PasswordStrength(password);
@@ -91,13 +91,13 @@ namespace YourNamespace
 
 ```csharp
 [PasswordStrength(minimumLength: 9,
-				  minUppercase: 2,
-				  minLowercase: 3,
-				  minDigit: 2,
-				  minSpecialCharacter: 2,
-				  maxNoOfSameConsecutiveCharacters: 2,
-                  maxNoOfConsecutiveAscendingDigits: MaxNoOfConsecutiveDigits.Three,
-                  maxNoOfConsecutiveDescendingDigits: MaxNoOfConsecutiveDigits.Three,
-				  ErrorMessage = "Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars, no more than 3 consecutive ascending digits, no more than 3 consecutive descending digits.")]
+                    minUppercase: 2,
+                    minLowercase: 3,
+                    minDigit: 2,
+                    minSpecialCharacter: 2,
+                    maxNoOfSameConsecutiveCharacters: 2,
+                    maxNoOfConsecutiveAscendingDigits: MaxNoOfConsecutiveDigits.Three,
+                    maxNoOfConsecutiveDescendingDigits: MaxNoOfConsecutiveDigits.Three,
+                    ErrorMessage = "Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars, no more than 3 consecutive ascending digits, no more than 3 consecutive descending digits.")]
 public string? Password { get; set; }
 ```
