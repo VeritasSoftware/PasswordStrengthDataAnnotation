@@ -49,6 +49,39 @@ const testBody = (strengthOptions: MyPasswordStrengthOptions, passwordToTest: st
   expect(isTestValid).toBe(expectedResult);
 };
 
+describe('All Together', () => {
+  test.each([
+    ["P@76w0rDe123!", true] // Valid password
+  ])(
+    'passwordToTest: "%s" and expectedResult: %s',
+    (passwordToTest, expectedResult) => {
+      // Configure password strength requirements
+      const getOptions = () : MyPasswordStrengthOptions => {
+        let options = new MyPasswordStrengthOptions();
+
+        options.minimumLength = 8;
+        options.requireUppercase = true;
+        options.minimumUppercase = 2;
+        options.requireLowercase = true;
+        options.minimumLowercase = 3;
+        options.requireDigit = true;
+        options.minimumDigit = 2;
+        options.requireSpecialCharacter = true;
+        options.minimumSpecialCharacter = 2;
+        options.requireMaxNoOfSameConsecutiveCharacters = true;
+        options.maximumNoOfSameConsecutiveCharacters = 2;
+        options.requireMaximumNoOfConsecutiveAscendingDigits = true;
+        options.maximumNoOfConsecutiveAscendingDigits = MaximumNoOfConsecutiveDigits.Three;
+        options.requireMaximumNoOfConsecutiveDescendingDigits = true;
+        options.maximumNoOfConsecutiveDescendingDigits = MaximumNoOfConsecutiveDigits.Three;
+        
+        return options;
+      };
+      testBody(getOptions(), passwordToTest, expectedResult);
+    }
+  );
+});
+
 describe('Defaults', () => {
   test.each([
     ["Password1!", true], // Valid password
