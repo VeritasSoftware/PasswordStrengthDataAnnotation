@@ -45,6 +45,10 @@ var PasswordStrength = function PasswordStrength(_ref) {
     validator.specialCharacters = strengthOptions.specialCharacters;
     validator.requireMaxNoOfSameConsecutiveCharacters = strengthOptions.requireMaxNoOfSameConsecutiveCharacters;
     validator.maximumNoOfSameConsecutiveCharacters = strengthOptions.maximumNoOfSameConsecutiveCharacters;
+    validator.requireMaxNoOfConsecutiveAscendingDigits = strengthOptions.requireMaximumNoOfConsecutiveAscendingDigits;
+    validator.maximumNoOfConsecutiveAscendingDigits = strengthOptions.maximumNoOfConsecutiveAscendingDigits;
+    validator.requireMaxNoOfConsecutiveDescendingDigits = strengthOptions.requireMaximumNoOfConsecutiveDescendingDigits;
+    validator.maximumNoOfConsecutiveDescendingDigits = strengthOptions.maximumNoOfConsecutiveDescendingDigits;
     console.log("Validator configuration: ", validator);
     var isValid = validator.passwordStrength(password);
     console.log("Password strength validation result: ", isValid);
@@ -75,7 +79,17 @@ var MyPasswordStrengthOptions = function MyPasswordStrengthOptions() {
   this.minimumUppercase = 1;
   this.requireMaxNoOfSameConsecutiveCharacters = true;
   this.maximumNoOfSameConsecutiveCharacters = 2;
+  this.requireMaximumNoOfConsecutiveAscendingDigits = true;
+  this.maximumNoOfConsecutiveAscendingDigits = exports.MaximumNoOfConsecutiveDigits.Two;
+  this.requireMaximumNoOfConsecutiveDescendingDigits = true;
+  this.maximumNoOfConsecutiveDescendingDigits = exports.MaximumNoOfConsecutiveDigits.Two;
 };
+(function (MaximumNoOfConsecutiveDigits) {
+  MaximumNoOfConsecutiveDigits[MaximumNoOfConsecutiveDigits["Two"] = 2] = "Two";
+  MaximumNoOfConsecutiveDigits[MaximumNoOfConsecutiveDigits["Three"] = 3] = "Three";
+  MaximumNoOfConsecutiveDigits[MaximumNoOfConsecutiveDigits["Four"] = 4] = "Four";
+  MaximumNoOfConsecutiveDigits[MaximumNoOfConsecutiveDigits["Five"] = 5] = "Five";
+})(exports.MaximumNoOfConsecutiveDigits || (exports.MaximumNoOfConsecutiveDigits = {}));
 
 exports.MyPasswordStrengthOptions = MyPasswordStrengthOptions;
 exports.PasswordStrength = PasswordStrength;

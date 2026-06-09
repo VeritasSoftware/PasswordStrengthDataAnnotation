@@ -1,0 +1,40 @@
+{
+  "name": "angular-my-password-strength",
+  "version": "2.0.0",
+  "keywords": [
+    "password",
+    "strength",
+    "complexity",
+    "validation",
+    "angular",
+    "reactive forms"
+  ],
+  "description": "An Angular library for validating password strength based on customizable complexity requirements.",
+  "author": "Shantanu",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation.git"
+  },
+  "homepage": "https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation",
+  "peerDependencies": {
+    "@angular/common": "^19.2.0",
+    "@angular/core": "^19.2.0",
+    "ts-my-password-strength": "^1.1.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false,
+  "module": "fesm2022/angular-my-password-strength.mjs",
+  "typings": "index.d.ts",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./fesm2022/angular-my-password-strength.mjs"
+    }
+  }
+}

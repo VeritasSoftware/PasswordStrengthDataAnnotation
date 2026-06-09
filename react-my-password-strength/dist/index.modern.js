@@ -45,6 +45,10 @@ var PasswordStrength = function PasswordStrength(_ref) {
     validator.specialCharacters = strengthOptions.specialCharacters;
     validator.requireMaxNoOfSameConsecutiveCharacters = strengthOptions.requireMaxNoOfSameConsecutiveCharacters;
     validator.maximumNoOfSameConsecutiveCharacters = strengthOptions.maximumNoOfSameConsecutiveCharacters;
+    validator.requireMaxNoOfConsecutiveAscendingDigits = strengthOptions.requireMaximumNoOfConsecutiveAscendingDigits;
+    validator.maximumNoOfConsecutiveAscendingDigits = strengthOptions.maximumNoOfConsecutiveAscendingDigits;
+    validator.requireMaxNoOfConsecutiveDescendingDigits = strengthOptions.requireMaximumNoOfConsecutiveDescendingDigits;
+    validator.maximumNoOfConsecutiveDescendingDigits = strengthOptions.maximumNoOfConsecutiveDescendingDigits;
     console.log("Validator configuration: ", validator);
     var isValid = validator.passwordStrength(password);
     console.log("Password strength validation result: ", isValid);
@@ -75,7 +79,18 @@ var MyPasswordStrengthOptions = function MyPasswordStrengthOptions() {
   this.minimumUppercase = 1;
   this.requireMaxNoOfSameConsecutiveCharacters = true;
   this.maximumNoOfSameConsecutiveCharacters = 2;
+  this.requireMaximumNoOfConsecutiveAscendingDigits = true;
+  this.maximumNoOfConsecutiveAscendingDigits = MaximumNoOfConsecutiveDigits.Two;
+  this.requireMaximumNoOfConsecutiveDescendingDigits = true;
+  this.maximumNoOfConsecutiveDescendingDigits = MaximumNoOfConsecutiveDigits.Two;
 };
+var MaximumNoOfConsecutiveDigits;
+(function (MaximumNoOfConsecutiveDigits) {
+  MaximumNoOfConsecutiveDigits[MaximumNoOfConsecutiveDigits["Two"] = 2] = "Two";
+  MaximumNoOfConsecutiveDigits[MaximumNoOfConsecutiveDigits["Three"] = 3] = "Three";
+  MaximumNoOfConsecutiveDigits[MaximumNoOfConsecutiveDigits["Four"] = 4] = "Four";
+  MaximumNoOfConsecutiveDigits[MaximumNoOfConsecutiveDigits["Five"] = 5] = "Five";
+})(MaximumNoOfConsecutiveDigits || (MaximumNoOfConsecutiveDigits = {}));
 
-export { MyPasswordStrengthOptions, PasswordStrength };
+export { MaximumNoOfConsecutiveDigits, MyPasswordStrengthOptions, PasswordStrength };
 //# sourceMappingURL=index.modern.js.map

@@ -23,7 +23,7 @@ using Microsoft.Maui.Controls.Shapes;
 using MyPasswordStrength;
 using System.Runtime.Versioning;
 
-namespace YourNamespace.Pages;
+namespace MyTestMAUIAPP.Pages;
 
 [SupportedOSPlatform("android")]
 [SupportedOSPlatform("ios")]
@@ -36,17 +36,17 @@ public class Registration : ContentPage
     private readonly Label _errorLabel;
 
     public Registration()
-	{
-		var content = new VerticalStackLayout
-		{
-			Children = {
-				new Label { 
-                    HorizontalOptions = LayoutOptions.Center, 
-                    VerticalOptions = LayoutOptions.Center, 
-                    Text = "Welcome to .NET MAUI!" 
+    {
+        var content = new VerticalStackLayout
+        {
+            Children = {
+                new Label {
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions = LayoutOptions.Center,
+                    Text = "Welcome to .NET MAUI!"
                 }
-			}
-		};
+            }
+        };
 
         _entry = new PasswordStrengthEntry(HandleOnValidation, GetOptions(), "Enter your password")
         {
@@ -76,7 +76,7 @@ public class Registration : ContentPage
         content.Children.Add(_errorLabel);
 
         Content = content;
-	}
+    }
 
     private MyPasswordStrengthOptions GetOptions()
     {
@@ -116,17 +116,6 @@ public class Registration : ContentPage
     }
 }
 ```
-### Initial
-
-![Initial](PasswordStrengthInitial.jpeg)
-
-### Invalid
-
-![Invalid](PasswordStrengthError.jpeg)
-
-### Valid
-
-![Valid](PasswordStrength.jpeg)
 
 ## License
 

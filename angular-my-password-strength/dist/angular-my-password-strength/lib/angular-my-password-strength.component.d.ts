@@ -1,14 +1,5 @@
-import * as React from 'react';
-interface Props {
-    strengthOptions: MyPasswordStrengthOptions;
-    initialStyleOptions?: React.CSSProperties;
-    styleOptions?: React.CSSProperties;
-    errorStyleOptions?: React.CSSProperties;
-    name?: string;
-    placeholder?: string;
-    onValidation: (name: string, value: string, isValid: boolean | null) => void;
-}
-export declare const PasswordStrength: ({ name, placeholder, strengthOptions, initialStyleOptions, styleOptions, errorStyleOptions, onValidation }: Props) => React.JSX.Element;
+import { ValidatorFn } from '@angular/forms';
+export declare function passwordStrengthValidator(options?: MyPasswordStrengthOptions, errorKey?: string): ValidatorFn;
 export declare class MyPasswordStrengthOptions {
     minimumLength: number;
     requireLowercase: boolean;
@@ -33,4 +24,3 @@ export declare enum MaximumNoOfConsecutiveDigits {
     Four = 4,
     Five = 5
 }
-export {};
