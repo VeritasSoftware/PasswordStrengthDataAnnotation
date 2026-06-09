@@ -243,3 +243,35 @@ describe('Max No Of Same Consecutive Characters', () => {
       }
     );
   });
+
+  describe('All Together', () => {
+    test.each([
+      ["P@76w0rDe123!", true] // Valid password
+    ])(
+      'passwordToTest: "%s" and expectedResult: %s',
+      (passwordToTest, expectedResult) => {
+
+        let validator = new PasswordStrengthValidator();
+    
+        validator.minimumLength = 8;
+        validator.requireUppercase = true;
+        validator.minimumUppercase = 2;
+        validator.requireLowercase = true;
+        validator.minimumLowercase = 3;
+        validator.requireDigit = true;
+        validator.minimumDigit = 2;
+        validator.requireSpecialCharacter = true;
+        validator.minimumSpecialCharacter = 2;
+        validator.requireMaxNoOfSameConsecutiveCharacters = true;
+        validator.maximumNoOfSameConsecutiveCharacters = 2;
+        validator.requireMaxNoOfConsecutiveAscendingDigits = true;
+        validator.maximumNoOfConsecutiveAscendingDigits = MaxNoOfConsecutiveDigits.Three;
+        validator.requireMaxNoOfConsecutiveDescendingDigits = true;
+        validator.maximumNoOfConsecutiveDescendingDigits = MaxNoOfConsecutiveDigits.Three;
+  
+        let isValid = validator.passwordStrength(passwordToTest);
+  
+        expect(isValid).toBe(expectedResult);
+      }
+    );
+  });
