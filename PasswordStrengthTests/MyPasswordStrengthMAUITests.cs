@@ -10,6 +10,43 @@ namespace PasswordStrengthTests
     public class MyPasswordStrengthMAUITests
     {
         [Theory]
+        [InlineData("P@76w0rDe123!", true)] // Valid password
+        public void AllTogether(string passwordToTest, bool expectedResult)
+        {
+            var options = new MyPasswordStrengthOptions
+            {
+                MinimumLength = 8,
+                RequireUppercase = true,
+                MinimumUppercase = 2,
+                RequireLowercase = true,
+                MinimumLowercase = 3,
+                RequireDigit = true,
+                MinimumDigit = 2,
+                RequireSpecialCharacter = true,
+                MinimumSpecialCharacter = 2,
+                RequireMaximumNoOfSameConsecutiveCharacters = true,
+                MaximumNoOfSameConsecutiveCharacters = 2,
+                RequireMaximumNoOfConsecutiveAscendingDigits = true,
+                MaximumNoOfConsecutiveAscendingDigits = MaximumNoOfConsecutiveDigits.Three,
+                RequireMaximumNoOfConsecutiveDescendingDigits = true,
+                MaximumNoOfConsecutiveDescendingDigits = MaximumNoOfConsecutiveDigits.Three
+            };
+
+            bool? result = null;
+
+            var entry = new PasswordStrengthEntry((pwd, isValid) =>
+            {
+                result = isValid;
+            }, options);
+
+            // Set the entry text so the entry runs.
+            entry.Text = passwordToTest;
+
+            Assert.True(result.HasValue);
+            Assert.True(result.Value == expectedResult);
+        }
+
+        [Theory]
         [InlineData("Password1!", true)] // Valid password
         [InlineData("password1!", false)] // No uppercase letter
         [InlineData("PASSWORD1!", false)] // No lowercase letter
