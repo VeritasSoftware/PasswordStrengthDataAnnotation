@@ -2,6 +2,10 @@
 
 [![.NET Build & Test](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/dotnet.yml/badge.svg)](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/dotnet.yml)
 
+|**Packages**|Version|Downloads|
+|---------------------------|:---:|:---:|
+|*MyPasswordStrength.NET.MAUI*|[![Nuget Version](https://img.shields.io/nuget/v/MyPasswordStrength.NET.MAUI)](https://www.nuget.org/packages/MyPasswordStrength.NET.MAUI)|[![Downloads count](https://img.shields.io/nuget/dt/MyPasswordStrength.NET.MAUI)](https://www.nuget.org/packages/MyPasswordStrength.NET.MAUI)|
+
 > A .NET MAUI library for validating password strength based on customizable complexity requirements.
 
 ## Background
