@@ -27,7 +27,7 @@ using Microsoft.Maui.Controls.Shapes;
 using MyPasswordStrength;
 using System.Runtime.Versioning;
 
-namespace MyTestMAUIAPP.Pages;
+namespace YourNamespace.Pages;
 
 [SupportedOSPlatform("android")]
 [SupportedOSPlatform("ios")]
@@ -120,6 +120,18 @@ public class Registration : ContentPage
     }
 }
 ```
+
+### Initial
+
+![Initial](PasswordStrengthInitial.jpeg)
+
+### Invalid
+
+![Invalid](PasswordStrengthError.jpeg)
+
+### Valid
+
+![Valid](PasswordStrength.jpeg)
 
 ## License
 
