@@ -222,5 +222,33 @@ namespace PasswordStrengthTests
 
             Assert.True(result == expectedResult);
         }
+
+        [Theory]
+        [InlineData("P@76w0rDe123!", true)] // Valid password
+        public void AllTogether(string passwordToTest, bool expectedResult)
+        {
+            var validator = new PasswordStrengthValidator
+            {
+                MinimumLength = 8,
+                RequireUppercase = true,
+                MinUppercase = 2,
+                RequireLowercase = true,
+                MinLowercase = 3,
+                RequireDigit = true,
+                MinDigit = 2,
+                RequireSpecialCharacter = true,
+                MinSpecialCharacter = 2,
+                RequireMaxNoOfSameConsecutiveCharacters = true,
+                MaxNoOfSameConsecutiveCharacters = 2,
+                RequireMaxNoOfConsecutiveAscendingDigits = true,
+                MaxNoOfConsecutiveAscendingDigits = MaxNoOfConsecutiveDigits.Three,
+                RequireMaxNoOfConsecutiveDescendingDigits = true,
+                MaxNoOfConsecutiveDescendingDigits = MaxNoOfConsecutiveDigits.Three
+            };
+
+            var result = validator.PasswordStrength(passwordToTest);
+
+            Assert.True(result == expectedResult);
+        }
     }
 }
