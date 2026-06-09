@@ -130,7 +130,7 @@ describe('Max No Of Same Consecutive Characters', () => {
       ["Pa7654word12!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Three, false],
       ["Password123654!", MaxNoOfConsecutiveDigits.Two, MaxNoOfConsecutiveDigits.Two, false]
     ])(
-      'passwordToTest: "%s" maxNoOfConsecutiveDigits: "%s" and expectedResult: %s',
+      'passwordToTest: "%s" maxNoOfConsecutiveAscendingDigits: "%s" maxNoOfConsecutiveDescendingDigits: "%s" and expectedResult: %s',
       (passwordToTest, maxNoOfConsecutiveAscendingDigits, maxNoOfConsecutiveDescendingDigits, expectedResult) => {
           let validator = new PasswordStrengthValidator();
 

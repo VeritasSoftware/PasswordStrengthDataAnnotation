@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { PasswordStrength, MyPasswordStrengthOptions } from 'react-my-password-strength'
+import { MaximumNoOfConsecutiveDigits, MyPasswordStrengthOptions, PasswordStrength } from 'react-my-password-strength'
 
 const App = () => {
   const [formData, setFormData] = useState({});
@@ -15,7 +15,7 @@ const App = () => {
       return;
     }
 
-    setError(isValid ? "" : "Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars");
+    setError(isValid ? "" : "Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars, no more than 3 consecutive ascending digits, no more than 3 consecutive descending digits");
 
     setFormData((prev) => ({ ...prev, [name]: value }));
     // Check if all fields are valid
@@ -78,6 +78,10 @@ function getOptions(): MyPasswordStrengthOptions {
   options.minimumSpecialCharacter = 2;
   options.requireMaxNoOfSameConsecutiveCharacters = true;
   options.maximumNoOfSameConsecutiveCharacters = 2;
+  options.requireMaximumNoOfConsecutiveAscendingDigits = true;
+  options.maximumNoOfConsecutiveAscendingDigits = MaximumNoOfConsecutiveDigits.Three;
+  options.requireMaximumNoOfConsecutiveDescendingDigits = true;
+  options.maximumNoOfConsecutiveDescendingDigits = MaximumNoOfConsecutiveDigits.Three;
 
   return options;
 }

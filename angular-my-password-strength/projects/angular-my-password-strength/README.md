@@ -2,6 +2,10 @@
 
 [![Angular Build & Test](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/angular.node.js.yml/badge.svg)](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/angular.node.js.yml)
 
+|**Packages**|Version|Downloads|
+|---------------------------|:---:|:---:|
+|*angular-my-password-strength*|[![NPM Version](https://img.shields.io/npm/v/angular-my-password-strength)](https://www.npmjs.com/package/angular-my-password-strength)|[![Downloads count](https://img.shields.io/npm/dy/angular-my-password-strength)](https://www.npmjs.com/package/angular-my-password-strength)|
+
 Define your password strength complexity requirements with ease using the library. 
 
 The package provides a `passwordStrengthValidator` function that you can use to validate passwords in your reactive forms.
@@ -21,7 +25,7 @@ You can modify this set of special characters by setting the `specialCharacters`
 First, import the validator in your component.
 
 ```typescript
-import { MyPasswordStrengthOptions, passwordStrengthValidator } from 'angular-my-password-strength';
+import { MaximumNoOfConsecutiveDigits, MyPasswordStrengthOptions, passwordStrengthValidator } from 'angular-my-password-strength';
 ```
 
 Then, use it as shown below.
@@ -42,6 +46,10 @@ getOptions(): MyPasswordStrengthOptions {
     options.minimumSpecialCharacter = 2;
     options.requireMaxNoOfSameConsecutiveCharacters = true;
     options.maximumNoOfSameConsecutiveCharacters = 2;
+    options.requireMaximumNoOfConsecutiveAscendingDigits = true;
+    options.maximumNoOfConsecutiveAscendingDigits = MaximumNoOfConsecutiveDigits.Three;
+    options.requireMaximumNoOfConsecutiveDescendingDigits = true;
+    options.maximumNoOfConsecutiveDescendingDigits = MaximumNoOfConsecutiveDigits.Three;
 
     return options;
 }
@@ -50,7 +58,7 @@ constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
         password: ['', [
         Validators.required,
-        // Password: at least 8 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars
+        // Password must be at least 8 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars
         passwordStrengthValidator(this.getOptions(), "InvalidPassword")
         ]]
     });
@@ -65,7 +73,7 @@ Your component markup can be like below.
     <input type="password" formControlName="password">
     <br>
     <div *ngIf="password?.touched && password?.errors?.['InvalidPassword']" style="color: red;">
-        Password must be at least 8 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars
+        Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars, no more than 3 consecutive ascending digits, no more than 3 consecutive descending digits
     </div>
 
     <button type="submit" [disabled]="form.invalid">Submit</button>

@@ -1,5 +1,5 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { PasswordStrengthValidator } from 'ts-my-password-strength';
+import { MaxNoOfConsecutiveDigits, PasswordStrengthValidator } from 'ts-my-password-strength';
 
 export function passwordStrengthValidator(options: MyPasswordStrengthOptions = new MyPasswordStrengthOptions(),
                                           errorKey: string = "Invalid"): ValidatorFn {
@@ -21,6 +21,10 @@ export function passwordStrengthValidator(options: MyPasswordStrengthOptions = n
     validator.specialCharacters = options.specialCharacters;
     validator.requireMaxNoOfSameConsecutiveCharacters = options.requireMaxNoOfSameConsecutiveCharacters;
     validator.maximumNoOfSameConsecutiveCharacters = options.maximumNoOfSameConsecutiveCharacters;
+    validator.requireMaxNoOfConsecutiveAscendingDigits = options.requireMaximumNoOfConsecutiveAscendingDigits;
+    validator.maximumNoOfConsecutiveAscendingDigits = <MaxNoOfConsecutiveDigits><unknown>options.maximumNoOfConsecutiveAscendingDigits;
+    validator.requireMaxNoOfConsecutiveDescendingDigits = options.requireMaximumNoOfConsecutiveDescendingDigits;
+    validator.maximumNoOfConsecutiveDescendingDigits = <MaxNoOfConsecutiveDigits><unknown>options.maximumNoOfConsecutiveDescendingDigits;
 
     console.log("Validator configuration: ", validator);
 
@@ -44,4 +48,15 @@ export class MyPasswordStrengthOptions {
   minimumUppercase : number = 1;
   requireMaxNoOfSameConsecutiveCharacters  : boolean = true;
   maximumNoOfSameConsecutiveCharacters : number = 2;
+  requireMaximumNoOfConsecutiveAscendingDigits: boolean = true;
+  maximumNoOfConsecutiveAscendingDigits: MaximumNoOfConsecutiveDigits = MaximumNoOfConsecutiveDigits.Two;
+  requireMaximumNoOfConsecutiveDescendingDigits: boolean = true;
+  maximumNoOfConsecutiveDescendingDigits: MaximumNoOfConsecutiveDigits = MaximumNoOfConsecutiveDigits.Two;
+}
+
+export enum MaximumNoOfConsecutiveDigits {
+  Two = 2,
+  Three = 3,
+  Four = 4,
+  Five = 5
 }

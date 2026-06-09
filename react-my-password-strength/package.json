@@ -35,7 +35,7 @@
   },
   "peerDependencies": {
     "react": "^16.0.0",
-    "ts-my-password-strength": "^1.0.1"
+    "ts-my-password-strength": "^1.1.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -71,5 +71,7 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {    
+  }
 }

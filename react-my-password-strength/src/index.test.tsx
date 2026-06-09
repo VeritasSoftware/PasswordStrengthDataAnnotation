@@ -1,6 +1,12 @@
 import React from 'react';
 import { render, fireEvent } from "@testing-library/react";
-import { MyPasswordStrengthOptions, PasswordStrength } from './index';
+import { MaximumNoOfConsecutiveDigits, MyPasswordStrengthOptions, PasswordStrength } from './index';
+
+const initialStyleOptions={
+  border: "1px solid #ccc",
+  padding: "8px",
+  width: "100%"
+}
 
 const styleOptions={
   border: "1px solid #ccc",
@@ -15,17 +21,19 @@ const errorStyleOptions={
 }
 
 const testBody = (strengthOptions: MyPasswordStrengthOptions, passwordToTest: string, expectedResult: boolean) => {
-  let isTestValid = false;  
+  let isTestValid:boolean|null = false;  
 
-  const handleOnValidation = (name:string, value:string, isValid:boolean) => {
+  const handleOnValidation = (name:string, value:string, isValid:boolean|null) => {
     console.log(`Validation result for ${name}: ${value} is ${isValid ? 'valid' : 'invalid'}`);
     isTestValid = isValid;
   };
 
   const { container } = render (
     <PasswordStrength
-        name='password' 
-        strengthOptions={strengthOptions} 
+        name='password'
+        placeholder='Please enter your password' 
+        strengthOptions={strengthOptions}
+        initialStyleOptions={initialStyleOptions} 
         styleOptions={styleOptions} 
         errorStyleOptions={errorStyleOptions}
         onValidation={handleOnValidation}
@@ -82,6 +90,119 @@ describe('Max No Of Same Consecutive Characters', () => {
       const getOptions = () : MyPasswordStrengthOptions => {
         let options = new MyPasswordStrengthOptions();
 
+        return options;
+      };
+      testBody(getOptions(), passwordToTest, expectedResult);
+    }
+  );
+});
+
+describe('Max No Of Consecutive Ascending Digits', () => {
+  test.each([
+    ["Password1!", MaximumNoOfConsecutiveDigits.Two, true], // Valid password
+    ["Pasword12!", MaximumNoOfConsecutiveDigits.Two, true], // Valid password
+    ["Pa56word12!", MaximumNoOfConsecutiveDigits.Two, true], // Valid password
+    ["Pa56word123!", MaximumNoOfConsecutiveDigits.Three, true], // Valid password
+    ["Pa567word123!", MaximumNoOfConsecutiveDigits.Three, true], // Valid password      
+    ["Password123!", MaximumNoOfConsecutiveDigits.Two, false],
+    ["Pa567word12!", MaximumNoOfConsecutiveDigits.Two, false],
+    ["Pa56word123!", MaximumNoOfConsecutiveDigits.Two, false],
+    ["Pa567word123!", MaximumNoOfConsecutiveDigits.Two, false],
+    ["Pa567word1234!", MaximumNoOfConsecutiveDigits.Three, false]
+  ])(
+    'passwordToTest: "%s" maxNoOfConsecutiveDigits: "%s" and expectedResult: %s',
+    (passwordToTest, maxNoOfConsecutiveDigits, expectedResult) => {
+      // Configure password strength requirements
+      const getOptions = () : MyPasswordStrengthOptions => {
+        let options = new MyPasswordStrengthOptions();
+
+        options.minimumLength = 8;
+        options.requireUppercase = false;
+        options.requireLowercase = false;
+        options.requireDigit = false;
+        options.requireSpecialCharacter = false;
+        options.requireMaxNoOfSameConsecutiveCharacters = false;
+        options.requireMaximumNoOfConsecutiveDescendingDigits = false;
+        options.requireMaximumNoOfConsecutiveAscendingDigits = true;
+        options.maximumNoOfConsecutiveAscendingDigits = maxNoOfConsecutiveDigits;
+        
+        return options;
+      };
+      testBody(getOptions(), passwordToTest, expectedResult);
+    }
+  );
+});
+
+describe('Max No Of Consecutive Descending Digits', () => {
+  test.each([
+    ["Password1!", MaximumNoOfConsecutiveDigits.Two, true], // Valid password
+    ["Password21!", MaximumNoOfConsecutiveDigits.Two, true], // Valid password
+    ["Pa65word21!", MaximumNoOfConsecutiveDigits.Two, true], // Valid password
+    ["Pa65word321!", MaximumNoOfConsecutiveDigits.Three, true], // Valid password
+    ["Pa765word321!", MaximumNoOfConsecutiveDigits.Three, true], // Valid password      
+    ["Password321!", MaximumNoOfConsecutiveDigits.Two, false],
+    ["Pa765word21!", MaximumNoOfConsecutiveDigits.Two, false],
+    ["Pa65word321!", MaximumNoOfConsecutiveDigits.Two, false],
+    ["Pa765word321!", MaximumNoOfConsecutiveDigits.Two, false],
+    ["Pa765word4321!", MaximumNoOfConsecutiveDigits.Three, false]
+  ])(
+    'passwordToTest: "%s" maxNoOfConsecutiveDigits: "%s" and expectedResult: %s',
+    (passwordToTest, maxNoOfConsecutiveDigits, expectedResult) => {
+      // Configure password strength requirements
+      const getOptions = () : MyPasswordStrengthOptions => {
+        let options = new MyPasswordStrengthOptions();
+
+        options.minimumLength = 8;
+        options.requireUppercase = false;
+        options.requireLowercase = false;
+        options.requireDigit = false;
+        options.requireSpecialCharacter = false;
+        options.requireMaxNoOfSameConsecutiveCharacters = false;        
+        options.requireMaximumNoOfConsecutiveAscendingDigits = false;
+        options.requireMaximumNoOfConsecutiveDescendingDigits = true;
+        options.maximumNoOfConsecutiveDescendingDigits = maxNoOfConsecutiveDigits;
+        
+        return options;
+      };
+      testBody(getOptions(), passwordToTest, expectedResult);
+    }
+  );
+});
+
+describe('Max No Of Consecutive Ascending & Descending Digits', () => {
+  test.each([
+    ["Password1!", MaximumNoOfConsecutiveDigits.Two, MaximumNoOfConsecutiveDigits.Two, true], // Valid password
+    ["Pasword12!", MaximumNoOfConsecutiveDigits.Two, MaximumNoOfConsecutiveDigits.Two, true], // Valid password
+    ["Pasword21!", MaximumNoOfConsecutiveDigits.Two, MaximumNoOfConsecutiveDigits.Two, true], // Valid password
+    ["Pa12word43!", MaximumNoOfConsecutiveDigits.Two, MaximumNoOfConsecutiveDigits.Two, true], // Valid password
+    ["Password1243!", MaximumNoOfConsecutiveDigits.Two, MaximumNoOfConsecutiveDigits.Two, true], // Valid password
+    ["Password123876!", MaximumNoOfConsecutiveDigits.Three, MaximumNoOfConsecutiveDigits.Three, true], // Valid password
+    ["Pa45word87!", MaximumNoOfConsecutiveDigits.Three, MaximumNoOfConsecutiveDigits.Three, true], // Valid password
+    ["Pa456word432!", MaximumNoOfConsecutiveDigits.Three, MaximumNoOfConsecutiveDigits.Three, true], // Valid password      
+    ["Password123!", MaximumNoOfConsecutiveDigits.Two, MaximumNoOfConsecutiveDigits.Two, false],
+    ["Pa987word!", MaximumNoOfConsecutiveDigits.Two, MaximumNoOfConsecutiveDigits.Two, false],
+    ["Pa654word234!", MaximumNoOfConsecutiveDigits.Two, MaximumNoOfConsecutiveDigits.Two, false],
+    ["Pa56word321!", MaximumNoOfConsecutiveDigits.Two, MaximumNoOfConsecutiveDigits.Two, false],
+    ["Pa7654word12!", MaximumNoOfConsecutiveDigits.Two, MaximumNoOfConsecutiveDigits.Three, false],
+    ["Password123654!", MaximumNoOfConsecutiveDigits.Two, MaximumNoOfConsecutiveDigits.Two, false]
+  ])(
+    'passwordToTest: "%s" maxNoOfConsecutiveAscendingDigits: "%s" maxNoOfConsecutiveDescendingDigits: "%s" and expectedResult: %s',
+    (passwordToTest, maxNoOfConsecutiveAscendingDigits, maxNoOfConsecutiveDescendingDigits, expectedResult) => {
+      // Configure password strength requirements
+      const getOptions = () : MyPasswordStrengthOptions => {
+        let options = new MyPasswordStrengthOptions();
+
+        options.minimumLength = 8;
+        options.requireUppercase = false;
+        options.requireLowercase = false;
+        options.requireDigit = false;
+        options.requireSpecialCharacter = false;
+        options.requireMaxNoOfSameConsecutiveCharacters = false;        
+        options.requireMaximumNoOfConsecutiveAscendingDigits = true;
+        options.maximumNoOfConsecutiveAscendingDigits = maxNoOfConsecutiveAscendingDigits;
+        options.requireMaximumNoOfConsecutiveDescendingDigits = true;
+        options.maximumNoOfConsecutiveDescendingDigits = maxNoOfConsecutiveDescendingDigits;
+        
         return options;
       };
       testBody(getOptions(), passwordToTest, expectedResult);

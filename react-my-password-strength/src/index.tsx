@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { PasswordStrengthValidator } from 'ts-my-password-strength'
+import { MaxNoOfConsecutiveDigits, PasswordStrengthValidator } from 'ts-my-password-strength'
 
 interface Props {
   strengthOptions: MyPasswordStrengthOptions,
@@ -50,6 +50,10 @@ export const PasswordStrength = ({ name = "password",
     validator.specialCharacters = strengthOptions.specialCharacters;
     validator.requireMaxNoOfSameConsecutiveCharacters = strengthOptions.requireMaxNoOfSameConsecutiveCharacters;
     validator.maximumNoOfSameConsecutiveCharacters = strengthOptions.maximumNoOfSameConsecutiveCharacters;
+    validator.requireMaxNoOfConsecutiveAscendingDigits = strengthOptions.requireMaximumNoOfConsecutiveAscendingDigits;
+    validator.maximumNoOfConsecutiveAscendingDigits = strengthOptions.maximumNoOfConsecutiveAscendingDigits as unknown as MaxNoOfConsecutiveDigits;
+    validator.requireMaxNoOfConsecutiveDescendingDigits = strengthOptions.requireMaximumNoOfConsecutiveDescendingDigits;
+    validator.maximumNoOfConsecutiveDescendingDigits = strengthOptions.maximumNoOfConsecutiveDescendingDigits as unknown as MaxNoOfConsecutiveDigits;
 
     console.log("Validator configuration: ", validator);
 
@@ -88,4 +92,15 @@ export class MyPasswordStrengthOptions {
   minimumUppercase : number = 1;
   requireMaxNoOfSameConsecutiveCharacters  : boolean = true;
   maximumNoOfSameConsecutiveCharacters : number = 2;
+  requireMaximumNoOfConsecutiveAscendingDigits: boolean = true;
+  maximumNoOfConsecutiveAscendingDigits: MaximumNoOfConsecutiveDigits = MaximumNoOfConsecutiveDigits.Two;
+  requireMaximumNoOfConsecutiveDescendingDigits: boolean = true;
+  maximumNoOfConsecutiveDescendingDigits: MaximumNoOfConsecutiveDigits = MaximumNoOfConsecutiveDigits.Two;
+}
+
+export enum MaximumNoOfConsecutiveDigits {
+  Two = 2,
+  Three = 3,
+  Four = 4,
+  Five = 5
 }
