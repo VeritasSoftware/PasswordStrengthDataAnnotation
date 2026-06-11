@@ -43,6 +43,10 @@ namespace MyPasswordStrength
             validator.MaxNoOfConsecutiveAscendingDigits = _strengthOptions.MaximumNoOfConsecutiveAscendingDigits;
             validator.RequireMaxNoOfConsecutiveDescendingDigits = _strengthOptions.RequireMaximumNoOfConsecutiveDescendingDigits;
             validator.MaxNoOfConsecutiveDescendingDigits = _strengthOptions.MaximumNoOfConsecutiveDescendingDigits;
+            validator.RequireMaxNoOfConsecutiveAscendingCharacters = _strengthOptions.RequireMaximumNoOfConsecutiveAscendingCharacters;
+            validator.MaxNoOfConsecutiveAscendingCharacters = _strengthOptions.MaximumNoOfConsecutiveAscendingCharacters;
+            validator.RequireMaxNoOfConsecutiveDescendingCharacters = _strengthOptions.RequireMaximumNoOfConsecutiveDescendingCharacters;
+            validator.MaxNoOfConsecutiveDescendingCharacters = _strengthOptions.MaximumNoOfConsecutiveDescendingCharacters;
 
             _validator = validator;
 
@@ -78,9 +82,21 @@ namespace MyPasswordStrength
         public MaximumNoOfConsecutiveDigits MaximumNoOfConsecutiveAscendingDigits { get; set; } = MaximumNoOfConsecutiveDigits.Two;
         public bool RequireMaximumNoOfConsecutiveDescendingDigits { get; set; } = true;
         public MaximumNoOfConsecutiveDigits MaximumNoOfConsecutiveDescendingDigits { get; set; } = MaximumNoOfConsecutiveDigits.Two;
+        public bool RequireMaximumNoOfConsecutiveAscendingCharacters { get; set; } = true;
+        public MaximumNoOfConsecutiveCharacters MaximumNoOfConsecutiveAscendingCharacters { get; set; } = MaximumNoOfConsecutiveCharacters.Two;
+        public bool RequireMaximumNoOfConsecutiveDescendingCharacters { get; set; } = true;
+        public MaximumNoOfConsecutiveCharacters MaximumNoOfConsecutiveDescendingCharacters { get; set; } = MaximumNoOfConsecutiveCharacters.Two;
     }
 
     public enum MaximumNoOfConsecutiveDigits
+    {
+        Two = 2,
+        Three = 3,
+        Four = 4,
+        Five = 5
+    }
+
+    public enum MaximumNoOfConsecutiveCharacters
     {
         Two = 2,
         Three = 3,

@@ -20,11 +20,17 @@ namespace MyPasswordStrength.Validator
         public MaximumNoOfConsecutiveDigits MaxNoOfConsecutiveAscendingDigits { get; set; } = MaximumNoOfConsecutiveDigits.Two;
         public bool RequireMaxNoOfConsecutiveDescendingDigits { get; set; } = true;
         public MaximumNoOfConsecutiveDigits MaxNoOfConsecutiveDescendingDigits { get; set; } = MaximumNoOfConsecutiveDigits.Two;
+        public bool RequireMaxNoOfConsecutiveAscendingCharacters { get; set; } = true;
+        public MaximumNoOfConsecutiveCharacters MaxNoOfConsecutiveAscendingCharacters { get; set; } = MaximumNoOfConsecutiveCharacters.Two;
+        public bool RequireMaxNoOfConsecutiveDescendingCharacters { get; set; } = true;
+        public MaximumNoOfConsecutiveCharacters MaxNoOfConsecutiveDescendingCharacters { get; set; } = MaximumNoOfConsecutiveCharacters.Two;
         public static string GetRegexPattern(int minLength, bool upper, int minUpper, bool lower, int minLower,
                                                 bool digit, int minDigit, bool special, int minSpecialCharacter, string specialCharacters,
                                                 bool requireMaxNoOfSameConsecutiveCharacters, int maxNoOfSameConsecutiveCharacters,
                                                 bool requireMaxNoOfConsecutiveAscendingDigits, MaximumNoOfConsecutiveDigits maxNoOfConsecutiveAscendingDigits,
-                                                bool requireMaxNoOfConsecutiveDescendingDigits, MaximumNoOfConsecutiveDigits maxNoOfConsecutiveDescendingDigits)
+                                                bool requireMaxNoOfConsecutiveDescendingDigits, MaximumNoOfConsecutiveDigits maxNoOfConsecutiveDescendingDigits,
+                                                bool requireMaxNoOfConsecutiveAscendingCharacters, MaximumNoOfConsecutiveCharacters maxNoOfConsecutiveAscendingCharacters,
+                                                bool requireMaxNoOfConsecutiveDescendingCharacters, MaximumNoOfConsecutiveCharacters maxNoOfConsecutiveDescendingCharacters)
         {
             string pattern = "^";
             if (upper)
@@ -38,47 +44,95 @@ namespace MyPasswordStrength.Validator
             if (requireMaxNoOfSameConsecutiveCharacters)
                 pattern += "(?=^((?<currentChar>.)(?!\\k<currentChar>{" + maxNoOfSameConsecutiveCharacters + "}))+$)"; //max no of same consecutive characters
             if (requireMaxNoOfConsecutiveAscendingDigits)
-                pattern += "(?!^(.*?(" + GetMaxConsecutiveAscendingDigitsPattern((int)maxNoOfConsecutiveAscendingDigits + 1) + "))+)"; // Max no of consecutive ascending digits
+                pattern += "(?!^(.*?(" + GetMaxConsecutiveDigitsPattern((int)maxNoOfConsecutiveAscendingDigits + 1) + "))+)"; // Max no of consecutive ascending digits
             if (requireMaxNoOfConsecutiveDescendingDigits)
-                pattern += "(?!^(.*?(" + GetMaxConsecutiveDescendingDigitsPattern((int)maxNoOfConsecutiveDescendingDigits + 1) + "))+)"; // Max no of consecutive descending digits
+                pattern += "(?!^(.*?(" + GetMaxConsecutiveDigitsPattern((int)maxNoOfConsecutiveDescendingDigits + 1, true) + "))+)"; // Max no of consecutive descending digits
+            if (requireMaxNoOfConsecutiveAscendingCharacters)
+                pattern += "(?!^(.*?(" + GetMaxConsecutiveCharactersPattern((int)maxNoOfConsecutiveAscendingCharacters + 1) + "))+)"; // Max no of consecutive ascending digits
+            if (requireMaxNoOfConsecutiveDescendingCharacters)
+                pattern += "(?!^(.*?(" + GetMaxConsecutiveCharactersPattern((int)maxNoOfConsecutiveDescendingCharacters + 1, true) + "))+)"; // Max no of consecutive descending digits
             pattern += $".{{{minLength},}}$"; // Minimum length
             return pattern;
-        }        
+        }
 
         public bool PasswordStrength(string password)
         {
             if (string.IsNullOrEmpty(password))
                 return false;
 
-            var regexPattern = GetRegexPattern(MinimumLength, RequireUppercase, MinUppercase, RequireLowercase, MinLowercase, 
+            var regexPattern = GetRegexPattern(MinimumLength, RequireUppercase, MinUppercase, RequireLowercase, MinLowercase,
                                                 RequireDigit, MinDigit, RequireSpecialCharacter, MinSpecialCharacter, SpecialCharacters,
                                                 RequireMaxNoOfSameConsecutiveCharacters, MaxNoOfSameConsecutiveCharacters,
                                                 RequireMaxNoOfConsecutiveAscendingDigits, MaxNoOfConsecutiveAscendingDigits,
-                                                RequireMaxNoOfConsecutiveDescendingDigits, MaxNoOfConsecutiveDescendingDigits);
+                                                RequireMaxNoOfConsecutiveDescendingDigits, MaxNoOfConsecutiveDescendingDigits,
+                                                RequireMaxNoOfConsecutiveAscendingCharacters, MaxNoOfConsecutiveAscendingCharacters,
+                                                RequireMaxNoOfConsecutiveDescendingCharacters, MaxNoOfConsecutiveDescendingCharacters);
 
             return Regex.IsMatch(password, regexPattern);
         }
 
-        private static string GetMaxConsecutiveAscendingDigitsPattern(int length)
+        private static string GetMaxConsecutiveDigitsPattern(int length, bool isDescending = false)
         {
-            var sequences = Enumerable.Range(0, 9).Select(st => string.Concat(
-                                          Enumerable.Range(st, length) // consecutive digits
-                                      ));
+            var sequences = Enumerable.Range(0, 9).If(isDescending, list => list.Reverse())
+                                        .Select(st => string.Concat(
+                                            Enumerable.Range(st, length).If(isDescending, list => list.Reverse()) // consecutive digits
+                                        ));
 
             var result = string.Join("|", sequences);
 
             return result;
         }
 
-        private static string GetMaxConsecutiveDescendingDigitsPattern(int length)
+        private static string GetMaxConsecutiveCharactersPattern(int length, bool isDescending = false)
         {
-            var sequences = Enumerable.Range(0, 9).Reverse().Select(st => string.Concat(
-                                          Enumerable.Range(st, length).Reverse() // consecutive digits
-                                      ));
+            if (length <= 0) return string.Empty;
 
-            var result = string.Join("|", sequences);
+            var sequences = Enumerable.Range('A', 26).If(isDescending, list => list.Reverse())
+                                        .Select(st => {
+                                            var upperRange = Enumerable.Range(st, length)
+                                                                        .If(isDescending, list => list.Reverse())
+                                                                        .Select(x => $"{(char)x}");
+
+                                            var lowerRange = upperRange.Select(c => $"{c.ToLower()}");
+                                            var upperLowerRange = upperRange.Select(c => $"({c}|{c.ToLower()})");
+                                            var lowerUpperRange = upperRange.Select(c => $"({c.ToLower()}|{c})");
+
+                                            var upper = string.Concat(upperRange);
+                                            var lower = string.Concat(lowerRange);
+                                            var upperLower = string.Concat(upperLowerRange);
+                                            var lowerUpper = string.Concat(lowerUpperRange);
+
+                                            var values = new
+                                            {
+                                                Upper = upper,
+                                                Lower = lower,
+                                                UpperLower = upperLower,
+                                                LowerUpper = lowerUpper
+                                            };
+
+                                            return values;
+                                        })
+                                        .Select(x => string.Join("|", x.Upper, x.Lower, x.UpperLower, x.LowerUpper));
+
+            var validSequences = isDescending ? sequences.Skip(length).Take(sequences.Count() - length)
+                                              : sequences.Take(sequences.Count() - length);
+
+            var result = string.Join("|", validSequences);
 
             return result;
         }
-    }  
+    }
+
+    internal static class Extensions
+    {
+        public static IEnumerable<T> If<T>(this IEnumerable<T> list, bool condition,
+                                                Func<IEnumerable<T>, IEnumerable<T>> then)
+        {
+            if (condition)
+            {
+                list = then(list);
+            }
+            return list;
+        }
+    }
 }

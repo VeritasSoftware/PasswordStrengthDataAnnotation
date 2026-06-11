@@ -236,6 +236,54 @@ namespace PasswordStrengthTests
         }
 
         [Theory]
+        [InlineData("Password1!", MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, true)]
+        [InlineData("Pabword1!", MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, true)]
+        [InlineData("Pabcword1!", MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("Pabwordc1!", MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, true)]
+        [InlineData("Pabcwordc1!", MaximumNoOfConsecutiveCharacters.Three, MaximumNoOfConsecutiveCharacters.Two, true)]
+        [InlineData("Pabwordcb1!", MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Three, true)]
+        [InlineData("Pabcwordcb1!", MaximumNoOfConsecutiveCharacters.Three, MaximumNoOfConsecutiveCharacters.Three, true)]
+        [InlineData("PAbCdwordCBa1!", MaximumNoOfConsecutiveCharacters.Four, MaximumNoOfConsecutiveCharacters.Four, true)]
+        [InlineData("PABcdworDCa1!", MaximumNoOfConsecutiveCharacters.Four, MaximumNoOfConsecutiveCharacters.Three, true)]
+        [InlineData("Passwordcb1!", MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("PaBcwordC1!", MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("PaBcwordCb1!", MaximumNoOfConsecutiveCharacters.Three, MaximumNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("PAbCdwordbCa1!", MaximumNoOfConsecutiveCharacters.Three, MaximumNoOfConsecutiveCharacters.Three, false)]
+        [InlineData("PABcdworDCa1!", MaximumNoOfConsecutiveCharacters.Four, MaximumNoOfConsecutiveCharacters.Two, true)]
+        public void MaxNoOfConsecutiveAscendingDescendingCharacters(string passwordToTest, MaximumNoOfConsecutiveCharacters maxConsecutiveAscendingCharacters,
+                                                                    MaximumNoOfConsecutiveCharacters maxConsecutiveDescendingCharacters, bool expectedResult)
+        {
+            var options = new MyPasswordStrengthOptions
+            {
+                MinimumLength = 8,
+                RequireUppercase = false,
+                RequireLowercase = false,
+                RequireDigit = false,
+                RequireSpecialCharacter = false,
+                RequireMaximumNoOfSameConsecutiveCharacters = false,
+                RequireMaximumNoOfConsecutiveAscendingDigits = false,
+                RequireMaximumNoOfConsecutiveDescendingDigits = false,
+                RequireMaximumNoOfConsecutiveAscendingCharacters = true,
+                MaximumNoOfConsecutiveAscendingCharacters = maxConsecutiveAscendingCharacters,
+                RequireMaximumNoOfConsecutiveDescendingCharacters = true,
+                MaximumNoOfConsecutiveDescendingCharacters = maxConsecutiveDescendingCharacters
+            };
+
+            bool? result = null;
+
+            var entry = new PasswordStrengthEntry((pwd, isValid) =>
+            {
+                result = isValid;
+            }, options);
+
+            // Set the entry text so the entry runs.
+            entry.Text = passwordToTest;
+
+            Assert.True(result.HasValue);
+            Assert.True(result.Value == expectedResult);
+        }
+
+        [Theory]
         [InlineData("PasSwOrd1!", true)] // Valid password
         [InlineData("PassWORD1!", false)] // No uppercase letter        
         public void MinNoOfLowerCase(string passwordToTest, bool expectedResult)
