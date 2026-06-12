@@ -131,18 +131,18 @@ namespace PasswordStrengthTests
         [Theory]
         [InlineData("Password1!", MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, true)]
         [InlineData("Pabword1!", MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, true)]
-        [InlineData("Pabcword1!", MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("PABcdworDCa1!", MaxNoOfConsecutiveCharacters.Four, MaxNoOfConsecutiveCharacters.Two, true)]
         [InlineData("Pabwordc1!", MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, true)]
-        [InlineData("Pabcwordc1!", MaxNoOfConsecutiveCharacters.Three, MaxNoOfConsecutiveCharacters.Two, true)]
+        [InlineData("Pabcwordc1!", MaxNoOfConsecutiveCharacters.Three, MaxNoOfConsecutiveCharacters.Three, true)]
         [InlineData("Pabwordcb1!", MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Three, true)]
         [InlineData("Pabcwordcb1!", MaxNoOfConsecutiveCharacters.Three, MaxNoOfConsecutiveCharacters.Three, true)]
         [InlineData("PAbCdwordCBa1!", MaxNoOfConsecutiveCharacters.Four, MaxNoOfConsecutiveCharacters.Four, true)]
         [InlineData("PABcdworDCa1!", MaxNoOfConsecutiveCharacters.Four, MaxNoOfConsecutiveCharacters.Three, true)]
+        [InlineData("Pabcword1!", MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false)]
         [InlineData("Passwordcb1!", MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false)]
         [InlineData("PaBcwordC1!", MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false)]
         [InlineData("PaBcwordCb1!", MaxNoOfConsecutiveCharacters.Three, MaxNoOfConsecutiveCharacters.Two, false)]
         [InlineData("PAbCdwordbCa1!", MaxNoOfConsecutiveCharacters.Three, MaxNoOfConsecutiveCharacters.Three, false)]
-        [InlineData("PABcdworDCa1!", MaxNoOfConsecutiveCharacters.Four, MaxNoOfConsecutiveCharacters.Two, true)]
         public void MaxNoOfConsecutiveAscendingDescendingCharacters(string passwordToTest, MaxNoOfConsecutiveCharacters maxConsecutiveAscendingCharacters,
                                                                     MaxNoOfConsecutiveCharacters maxConsecutiveDescendingCharacters, bool expectedResult)
         {

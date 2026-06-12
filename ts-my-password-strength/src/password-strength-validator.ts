@@ -16,12 +16,18 @@ export class PasswordStrengthValidator {
     maximumNoOfConsecutiveAscendingDigits: MaxNoOfConsecutiveDigits = MaxNoOfConsecutiveDigits.Two;
     requireMaxNoOfConsecutiveDescendingDigits: boolean = true;
     maximumNoOfConsecutiveDescendingDigits: MaxNoOfConsecutiveDigits = MaxNoOfConsecutiveDigits.Two;
+    requireMaxNoOfConsecutiveAscendingCharacters: boolean = true;
+    maxNoOfConsecutiveAscendingCharacters: MaxNoOfConsecutiveCharacters = MaxNoOfConsecutiveCharacters.Two;
+    requireMaxNoOfConsecutiveDescendingCharacters: boolean = true;
+    maxNoOfConsecutiveDescendingCharacters: MaxNoOfConsecutiveCharacters = MaxNoOfConsecutiveCharacters.Two;
 
     getRegexPattern (minLength: number, upper: boolean, minUpper: number, 
                     lower: boolean, minLower: number,  special: boolean, minSpecialCharacter: number, specialCharacters: string,
                     digit: boolean, minDigit: number, requireMaxNoOfSameConsecutiveCharacters: boolean, maxNoOfSameConsecutiveCharacters: number,
                     requireMaxNoOfConsecutiveAscendingDigits: boolean, maxNoOfConsecutiveAscendingDigits: MaxNoOfConsecutiveDigits,
-                    requireMaxNoOfConsecutiveDescendingDigits: boolean, maxNoOfConsecutiveDescendingDigits: MaxNoOfConsecutiveDigits): string {
+                    requireMaxNoOfConsecutiveDescendingDigits: boolean, maxNoOfConsecutiveDescendingDigits: MaxNoOfConsecutiveDigits,
+                    requireMaxNoOfConsecutiveAscendingCharacters: boolean, maxNoOfConsecutiveAscendingCharacters: MaxNoOfConsecutiveCharacters,
+                    requireMaxNoOfConsecutiveDescendingCharacters: boolean, maxNoOfConsecutiveDescendingCharacters: MaxNoOfConsecutiveCharacters): string {
         let pattern = "^";
         if (upper)
             pattern += "(?=(.*?[A-Z]){" + minUpper + ",})"; // min no of uppercase letter
@@ -37,6 +43,10 @@ export class PasswordStrengthValidator {
             pattern += "(?!^(.*?(" + this.getMaxConsecutiveAscendingDigitsPattern(<number>maxNoOfConsecutiveAscendingDigits + 1) + "))+)"; // Max no of consecutive ascending digits
         if (requireMaxNoOfConsecutiveDescendingDigits)
             pattern += "(?!^(.*?(" + this.getMaxConsecutiveDescendingDigitsPattern(<number>maxNoOfConsecutiveDescendingDigits + 1) + "))+)"; // Max no of consecutive descending digits
+        if (requireMaxNoOfConsecutiveAscendingCharacters)
+            pattern += "(?!^(.*?(" + this.getMaxConsecutiveCharactersPattern(<number>maxNoOfConsecutiveAscendingCharacters + 1) + "))+)"; // Max no of consecutive ascending characters
+        if (requireMaxNoOfConsecutiveDescendingCharacters)
+            pattern += "(?!^(.*?(" + this.getMaxConsecutiveCharactersPattern(<number>maxNoOfConsecutiveDescendingCharacters + 1, true) + "))+)"; // Max no of consecutive descending characters
         pattern += ".{" + minLength + ",}$"; // Minimum length
         return pattern;         
     }
@@ -50,7 +60,9 @@ export class PasswordStrengthValidator {
             this.requireLowercase, this.minimumLowercase, this.requireSpecialCharacter, this.minimumSpecialCharacter, this.specialCharacters,
             this.requireDigit, this.minimumDigit, this.requireMaxNoOfSameConsecutiveCharacters, this.maximumNoOfSameConsecutiveCharacters,
             this.requireMaxNoOfConsecutiveAscendingDigits, this.maximumNoOfConsecutiveAscendingDigits,
-            this.requireMaxNoOfConsecutiveDescendingDigits, this.maximumNoOfConsecutiveDescendingDigits);
+            this.requireMaxNoOfConsecutiveDescendingDigits, this.maximumNoOfConsecutiveDescendingDigits,
+            this.requireMaxNoOfConsecutiveAscendingCharacters, this.maxNoOfConsecutiveAscendingCharacters,
+            this.requireMaxNoOfConsecutiveDescendingCharacters, this.maxNoOfConsecutiveDescendingCharacters);
 
         const regex = new RegExp(regexPattern);
 
@@ -82,6 +94,44 @@ export class PasswordStrengthValidator {
         return patterns.join("|"); // Join all patterns with OR operator
     }
 
+    private getMaxConsecutiveCharactersPattern(length: number, isDescending: boolean = false): string {
+        if (!Number.isInteger(length) || length <= 0 || length > 26) {
+            return "";
+        }
+    
+        const patterns: string[] = [];
+    
+        if (!isDescending) {
+            // A → Z
+            for (let start = 0; start <= 26 - length; start++) {
+                const letters: string[] = [];
+                for (let i = 0; i < length; i++) {
+                    letters.push(String.fromCharCode(65 + start + i));
+                }
+                patterns.push(this.buildVariants(letters));
+            }
+        } else {
+            // Z → A
+            for (let start = 26 - 1; start >= length - 1; start--) {
+                const letters: string[] = [];
+                for (let i = 0; i < length; i++) {
+                    letters.push(String.fromCharCode(65 + start - i));
+                }
+                patterns.push(this.buildVariants(letters));
+            }
+        }
+    
+        return patterns.join("|");
+    }
+    
+    private buildVariants(letters: string[]): string {
+        const upper = letters.join("");
+        const lower = upper.toLowerCase();
+        const upperLower = letters.map(ch => `(${ch}|${ch.toLowerCase()})`).join("");
+        const lowerUpper = letters.map(ch => `(${ch.toLowerCase()}|${ch})`).join("");
+        return `${upper}|${lower}|${upperLower}|${lowerUpper}`;
+    }
+
     private generateIncreasingNumbers(start: number, length: number): number[] {
         // Validate inputs
         if (typeof start !== 'number' || typeof length !== 'number') {
@@ -109,6 +159,13 @@ export class PasswordStrengthValidator {
 }
 
 export enum MaxNoOfConsecutiveDigits {
+    Two = 2,
+    Three = 3,
+    Four = 4,
+    Five = 5
+}
+
+export enum MaxNoOfConsecutiveCharacters {
     Two = 2,
     Three = 3,
     Four = 4,
