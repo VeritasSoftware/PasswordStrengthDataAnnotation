@@ -16,7 +16,7 @@ namespace MyPasswordStrength
         public int MinDigit { get; set; } = 1;
         public bool RequireSpecialCharacter { get; set; } = true;
         public int MinSpecialCharacter { get; set; } = 1;
-        public string SpecialCharacters { get; set; } = @"@$!%*?&";
+        public string SpecialCharacters { get; set; } = @"!""#$%&'()*+,-./:;<=>?@[\]^_`{|}~";
         public bool RequireMaxNoOfSameConsecutiveCharacters { get; set; } = true;
         public int MaxNoOfSameConsecutiveCharacters { get; set; } = 2;
         public bool RequireMaxNoOfConsecutiveAscendingDigits { get; set; } = true;

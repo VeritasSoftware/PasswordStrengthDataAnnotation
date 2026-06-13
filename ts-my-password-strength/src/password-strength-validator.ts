@@ -7,7 +7,7 @@ export class PasswordStrengthValidator {
     minimumLowercase: number = 1;
     requireSpecialCharacter: boolean = true;
     minimumSpecialCharacter: number = 1;
-    specialCharacters: string = "@$!%*?&";
+    specialCharacters: string = `!"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~`;
     requireDigit: boolean = true;
     minimumDigit: number = 1;
     requireMaxNoOfSameConsecutiveCharacters: boolean = true
