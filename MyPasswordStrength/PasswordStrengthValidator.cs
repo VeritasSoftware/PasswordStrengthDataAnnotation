@@ -96,26 +96,21 @@ namespace MyPasswordStrength
                                                                         .If(isDescending, list => list.Reverse())
                                                                         .Select(x => $"{(char)x}");
 
-                                            var lowerRange = upperRange.Select(c => $"{c.ToLower()}");
                                             var upperLowerRange = upperRange.Select(c => $"({c}|{c.ToLower()})");
                                             var lowerUpperRange = upperRange.Select(c => $"({c.ToLower()}|{c})");
 
-                                            var upper = string.Concat(upperRange);
-                                            var lower = string.Concat(lowerRange);
                                             var upperLower = string.Concat(upperLowerRange);
                                             var lowerUpper = string.Concat(lowerUpperRange);
 
                                             var values = new
                                             {
-                                                Upper = upper,
-                                                Lower = lower,
                                                 UpperLower = upperLower,
                                                 LowerUpper = lowerUpper
                                             };
 
                                             return values;
                                         })
-                                        .Select(x => string.Join("|", x.Upper, x.Lower, x.UpperLower, x.LowerUpper));
+                                        .Select(x => string.Join("|", x.UpperLower, x.LowerUpper));
             
             var validSequences = isDescending ? sequences.Skip(length).Take(sequences.Count() - length) 
                                               : sequences.Take(sequences.Count() - length);
