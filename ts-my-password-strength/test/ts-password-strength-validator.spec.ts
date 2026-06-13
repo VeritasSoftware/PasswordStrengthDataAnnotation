@@ -328,8 +328,10 @@ describe('Max No Of Same Consecutive Characters', () => {
         validator.maximumNoOfConsecutiveAscendingDigits = MaxNoOfConsecutiveDigits.Three;
         validator.requireMaxNoOfConsecutiveDescendingDigits = true;
         validator.maximumNoOfConsecutiveDescendingDigits = MaxNoOfConsecutiveDigits.Three;
-        validator.requireMaxNoOfConsecutiveAscendingCharacters = false;
-        validator.requireMaxNoOfConsecutiveDescendingCharacters = false;
+        validator.requireMaxNoOfConsecutiveAscendingCharacters = true;
+        validator.maxNoOfConsecutiveAscendingCharacters = MaxNoOfConsecutiveCharacters.Three;
+        validator.requireMaxNoOfConsecutiveDescendingCharacters = true;
+        validator.maxNoOfConsecutiveDescendingCharacters = MaxNoOfConsecutiveCharacters.Two;
   
         let isValid = validator.passwordStrength(passwordToTest);
   

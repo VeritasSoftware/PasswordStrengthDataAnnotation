@@ -268,7 +268,7 @@ namespace PasswordStrengthTests
         {
             var validator = new PasswordStrengthValidator
             {
-                MinimumLength = 8,
+                MinimumLength = 9,
                 RequireUppercase = true,
                 MinUppercase = 2,
                 RequireLowercase = true,
@@ -282,7 +282,11 @@ namespace PasswordStrengthTests
                 RequireMaxNoOfConsecutiveAscendingDigits = true,
                 MaxNoOfConsecutiveAscendingDigits = MaxNoOfConsecutiveDigits.Three,
                 RequireMaxNoOfConsecutiveDescendingDigits = true,
-                MaxNoOfConsecutiveDescendingDigits = MaxNoOfConsecutiveDigits.Three
+                MaxNoOfConsecutiveDescendingDigits = MaxNoOfConsecutiveDigits.Two,
+                RequireMaxNoOfConsecutiveAscendingCharacters = true,
+                MaxNoOfConsecutiveAscendingCharacters = MaxNoOfConsecutiveCharacters.Three,
+                RequireMaxNoOfConsecutiveDescendingCharacters = true,
+                MaxNoOfConsecutiveDescendingCharacters = MaxNoOfConsecutiveCharacters.Two
             };
 
             var result = validator.PasswordStrength(passwordToTest);

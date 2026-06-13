@@ -16,7 +16,7 @@ and then call the `PasswordStrength` method to check if a given password meets t
 
 The `PasswordStrength` method returns a boolean indicating whether the password is valid according to the configured requirements.
 
-The special characters considered in the validation are: @$!%*?&. 
+The special characters considered in the validation are: !"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~. 
 
 You can modify this set of special characters by setting the `specialCharacters` property to a custom string of special characters.
 
@@ -46,11 +46,15 @@ validator.minimumSpecialCharacter = 2;
 validator.requireMaxNoOfSameConsecutiveCharacters = true;
 validator.maximumNoOfSameConsecutiveCharacters = 2;
 validator.requireMaxNoOfConsecutiveAscendingDigits = true;
-validator.maximumNoOfConsecutiveAscendingDigits = MaxNoOfConsecutiveDigits.Two;
+validator.maximumNoOfConsecutiveAscendingDigits = MaxNoOfConsecutiveDigits.Three;
 validator.requireMaxNoOfConsecutiveDescendingDigits = true;
-validator.maximumNoOfConsecutiveDescendingDigits = MaxNoOfConsecutiveDigits.Two;
+validator.maximumNoOfConsecutiveDescendingDigits = MaxNoOfConsecutiveDigits.Three;
+validator.requireMaxNoOfConsecutiveAscendingCharacters = true;
+validator.maxNoOfConsecutiveAscendingCharacters = MaxNoOfConsecutiveCharacters.Three;
+validator.requireMaxNoOfConsecutiveDescendingCharacters = true;
+validator.maxNoOfConsecutiveDescendingCharacters = MaxNoOfConsecutiveCharacters.Two;
 
-let password = "P@76w0rD12!";
+let password = "P@76w0rDe123!";
 
 // Validate the password
 let isValid: boolean =  validator.PasswordStrength(password);

@@ -35,7 +35,7 @@ The `PasswordStrength` method returns a boolean indicating whether the password 
 // Configure password strength requirements
 var validator = new PasswordStrengthValidator
 {
-    MinimumLength = 8,
+    MinimumLength = 9,
     RequireUppercase = true,
     MinUppercase = 2,
     RequireLowercase = true,
@@ -49,7 +49,11 @@ var validator = new PasswordStrengthValidator
     RequireMaxNoOfConsecutiveAscendingDigits = true,
     MaxNoOfConsecutiveAscendingDigits = MaxNoOfConsecutiveDigits.Three,
     RequireMaxNoOfConsecutiveDescendingDigits = true,
-    MaxNoOfConsecutiveDescendingDigits = MaxNoOfConsecutiveDigits.Three
+    MaxNoOfConsecutiveDescendingDigits = MaxNoOfConsecutiveDigits.Two,
+    RequireMaxNoOfConsecutiveAscendingCharacters = true,
+    MaxNoOfConsecutiveAscendingCharacters = MaxNoOfConsecutiveCharacters.Three,
+    RequireMaxNoOfConsecutiveDescendingCharacters = true,
+    MaxNoOfConsecutiveDescendingCharacters = MaxNoOfConsecutiveCharacters.Two
 };
 
 var password = "P@76w0rDe123!";
@@ -67,7 +71,7 @@ else
 }
 ```
 
-The special characters considered in the validation are: @$!%*?&. 
+The special characters considered in the validation are: !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~. 
 
 You can modify this set of special characters by setting the `SpecialCharacters` property to a custom string of special characters.
 
@@ -84,18 +88,22 @@ using System.ComponentModel.DataAnnotations;
 namespace YourNamespace
 {
     public class PasswordStrengthAttribute : RegularExpressionAttribute
-    {
+    {        
         public PasswordStrengthAttribute(int minimumLength = 6, bool requireUppercase = true, int minUppercase = 1,
                                             bool requireLowercase = true, int minLowercase = 1, bool requireDigit = true, int minDigit = 1,
-                                            bool requireSpecialCharacter = true, int minSpecialCharacter = 1, string specialCharacters = @"@$!%*?&",
+                                            bool requireSpecialCharacter = true, int minSpecialCharacter = 1, string specialCharacters = @"!""#$%&'()*+,-./:;<=>?@[\]^_`{|}~",
                                             bool requireMaxNoOfSameConsecutiveCharacters = true, int maxNoOfSameConsecutiveCharacters = 2,
                                             bool requireMaxNoOfConsecutiveAscendingDigits = true, MaxNoOfConsecutiveDigits maxNoOfConsecutiveAscendingDigits = MaxNoOfConsecutiveDigits.Two,
-                                            bool requireMaxNoOfConsecutiveDescendingDigits = true, MaxNoOfConsecutiveDigits maxNoOfConsecutiveDescendingDigits = MaxNoOfConsecutiveDigits.Two)
+                                            bool requireMaxNoOfConsecutiveDescendingDigits = true, MaxNoOfConsecutiveDigits maxNoOfConsecutiveDescendingDigits = MaxNoOfConsecutiveDigits.Two,
+                                            bool requireMaxNoOfConsecutiveAscendingCharacters = true, MaxNoOfConsecutiveCharacters maxNoOfConsecutiveAscendingCharacters = MaxNoOfConsecutiveCharacters.Two,
+                                            bool requireMaxNoOfConsecutiveDescendingCharacters = true, MaxNoOfConsecutiveCharacters maxNoOfConsecutiveDescendingCharacters = MaxNoOfConsecutiveCharacters.Two)
             : base(PasswordStrengthValidator.GetRegexPattern(minimumLength, requireUppercase, minUppercase, requireLowercase, minLowercase,
                                                                 requireDigit, minDigit, requireSpecialCharacter, minSpecialCharacter, specialCharacters,
                                                                 requireMaxNoOfSameConsecutiveCharacters, maxNoOfSameConsecutiveCharacters,
                                                                 requireMaxNoOfConsecutiveAscendingDigits, maxNoOfConsecutiveAscendingDigits,
-                                                                requireMaxNoOfConsecutiveDescendingDigits, maxNoOfConsecutiveDescendingDigits))
+                                                                requireMaxNoOfConsecutiveDescendingDigits, maxNoOfConsecutiveDescendingDigits,
+                                                                requireMaxNoOfConsecutiveAscendingCharacters, maxNoOfConsecutiveAscendingCharacters,
+                                                                requireMaxNoOfConsecutiveDescendingCharacters, maxNoOfConsecutiveDescendingCharacters))
         {
         }
     }
@@ -113,6 +121,8 @@ namespace YourNamespace
 				  maxNoOfSameConsecutiveCharacters: 2,
                   maxNoOfConsecutiveAscendingDigits: MaxNoOfConsecutiveDigits.Three,
                   maxNoOfConsecutiveDescendingDigits: MaxNoOfConsecutiveDigits.Three,
-				  ErrorMessage = "Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars, no more than 3 consecutive ascending digits, no more than 3 consecutive descending digits.")]
+                  maxNoOfConsecutiveAscendingCharacters: MaxNoOfConsecutiveCharacters.Three,
+                  maxNoOfConsecutiveDescendingCharacters: MaxNoOfConsecutiveCharacters.Two
+				  ErrorMessage = "Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars, no more than 3 consecutive ascending digits, no more than 3 consecutive descending digits, no more than 3 consecutive ascending characters, no more than 2 consecutive descending characters .")]
 public string? Password { get; set; }
 ```
