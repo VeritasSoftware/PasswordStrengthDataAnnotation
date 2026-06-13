@@ -125,11 +125,9 @@ export class PasswordStrengthValidator {
     }
     
     private buildVariants(letters: string[]): string {
-        const upper = letters.join("");
-        const lower = upper.toLowerCase();
         const upperLower = letters.map(ch => `(${ch}|${ch.toLowerCase()})`).join("");
         const lowerUpper = letters.map(ch => `(${ch.toLowerCase()}|${ch})`).join("");
-        return `${upper}|${lower}|${upperLower}|${lowerUpper}`;
+        return `${upperLower}|${lowerUpper}`;
     }
 
     private generateIncreasingNumbers(start: number, length: number): number[] {
