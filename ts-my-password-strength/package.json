@@ -1,7 +1,7 @@
 {
   "name": "ts-my-password-strength",
   "version": "1.0.0",
-  "description": "Define your password strength complexity requirements with ease.",
+  "description": "A TypeScript library for validating password strength based on customizable complexity requirements.",
   "repository": "https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation",
   "homepage": "https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation",
   "main": "index.js",

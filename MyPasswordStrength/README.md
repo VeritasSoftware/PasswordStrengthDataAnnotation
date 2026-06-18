@@ -1,19 +1,6 @@
 ﻿# MyPasswordStrength
 
 [![.NET Build & Test](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/dotnet.yml/badge.svg)](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/dotnet.yml)
-[![TypeScript Build & Test](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/node.js.yml/badge.svg)](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/node.js.yml)
-[![Angular Build & Test](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/angular.node.js.yml/badge.svg)](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/angular.node.js.yml)
-[![ReactJS Build & Test](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/react.node.js.yml/badge.svg)](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/actions/workflows/react.node.js.yml)
-
-|**Packages**|Version|Downloads|
-|---------------------------|:---:|:---:|
-|*MyPasswordStrength*|[![Nuget Version](https://img.shields.io/nuget/v/MyPasswordStrength)](https://www.nuget.org/packages/MyPasswordStrength)|[![Downloads count](https://img.shields.io/nuget/dt/MyPasswordStrength)](https://www.nuget.org/packages/MyPasswordStrength)|
-|*MyPasswordStrength.NET.MAUI*|[![Nuget Version](https://img.shields.io/nuget/v/MyPasswordStrength.NET.MAUI)](https://www.nuget.org/packages/MyPasswordStrength.NET.MAUI)|[![Downloads count](https://img.shields.io/nuget/dt/MyPasswordStrength.NET.MAUI)](https://www.nuget.org/packages/MyPasswordStrength.NET.MAUI)|
-|*ts-my-password-strength*|[![NPM Version](https://img.shields.io/npm/v/ts-my-password-strength)](https://www.npmjs.com/package/ts-my-password-strength)|[![Downloads count](https://img.shields.io/npm/dy/ts-my-password-strength)](https://www.npmjs.com/package/ts-my-password-strength)|
-|*angular-my-password-strength*|[![NPM Version](https://img.shields.io/npm/v/angular-my-password-strength)](https://www.npmjs.com/package/angular-my-password-strength)|[![Downloads count](https://img.shields.io/npm/dy/angular-my-password-strength)](https://www.npmjs.com/package/angular-my-password-strength)|
-|*react-my-password-strength*|[![NPM Version](https://img.shields.io/npm/v/react-my-password-strength)](https://www.npmjs.com/package/react-my-password-strength)|[![Downloads count](https://img.shields.io/npm/dy/react-my-password-strength)](https://www.npmjs.com/package/react-my-password-strength)|
-
-[**Typescript Library**](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/tree/master/ts-my-password-strength)   [**Angular Library**](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/tree/master/angular-my-password-strength)   [**ReactJS Library**](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/tree/master/react-my-password-strength)   [**.NET MAUI Library**](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/tree/master/MyPasswordStrength.NET.MAUI)
 
 Define your password strength complexity requirements with ease using the library. 
 
@@ -56,7 +43,7 @@ var validator = new PasswordStrengthValidator
     MaxNoOfConsecutiveDescendingCharacters = MaxNoOfConsecutiveCharacters.Two
 };
 
-var password = "P@76w0rDe123!";
+var password = "P@76abc0rDed123!";
 
 // Validate the password
 bool isValid =  validator.PasswordStrength(password);
@@ -115,15 +102,15 @@ namespace YourNamespace
 
 ```csharp
 [PasswordStrength(minimumLength: 9,
-				  minUppercase: 2,
-				  minLowercase: 3,
-				  minDigit: 2,
-				  minSpecialCharacter: 2,
-				  maxNoOfSameConsecutiveCharacters: 2,
-                  maxNoOfConsecutiveAscendingDigits: MaxNoOfConsecutiveDigits.Three,
-                  maxNoOfConsecutiveDescendingDigits: MaxNoOfConsecutiveDigits.Three,
-                  maxNoOfConsecutiveAscendingCharacters: MaxNoOfConsecutiveCharacters.Three,
-                  maxNoOfConsecutiveDescendingCharacters: MaxNoOfConsecutiveCharacters.Two
-				  ErrorMessage = "Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars, no more than 3 consecutive ascending digits, no more than 3 consecutive descending digits, no more than 3 consecutive ascending characters, no more than 2 consecutive descending characters .")]
+                    minUppercase: 2,
+                    minLowercase: 3,
+                    minDigit: 2,
+                    minSpecialCharacter: 2,
+                    maxNoOfSameConsecutiveCharacters: 2,
+                    maxNoOfConsecutiveAscendingDigits: MaxNoOfConsecutiveDigits.Three,
+                    maxNoOfConsecutiveDescendingDigits: MaxNoOfConsecutiveDigits.Three,
+                    maxNoOfConsecutiveAscendingCharacters: MaxNoOfConsecutiveCharacters.Three,
+                    maxNoOfConsecutiveDescendingCharacters: MaxNoOfConsecutiveCharacters.Two,
+                    ErrorMessage = "Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars, no more than 3 consecutive ascending digits, no more than 3 consecutive descending digits, no more than 3 consecutive ascending characters, no more than 2 consecutive descending characters .")]
 public string? Password { get; set; }
 ```

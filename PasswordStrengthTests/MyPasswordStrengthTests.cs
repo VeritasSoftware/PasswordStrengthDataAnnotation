@@ -263,7 +263,7 @@ namespace PasswordStrengthTests
         }
 
         [Theory]
-        [InlineData("P@76w0rDe123!", true)] // Valid password
+        [InlineData("P@76abc0rDed123!", true)] // Valid password
         public void AllTogether(string passwordToTest, bool expectedResult)
         {
             var validator = new PasswordStrengthValidator

@@ -58,7 +58,7 @@ validator.maxNoOfConsecutiveAscendingCharacters = MaxNoOfConsecutiveCharacters.T
 validator.requireMaxNoOfConsecutiveDescendingCharacters = true;
 validator.maxNoOfConsecutiveDescendingCharacters = MaxNoOfConsecutiveCharacters.Two;
 
-let password = "P@76w0rDe123!";
+let password = "P@76abc0rDed123!";
 
 // Validate the password
 let isValid: boolean =  validator.PasswordStrength(password);

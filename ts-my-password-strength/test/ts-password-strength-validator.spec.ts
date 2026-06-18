@@ -306,7 +306,7 @@ describe('Max No Of Same Consecutive Characters', () => {
 
   describe('All Together', () => {
     test.each([
-      ["P@76w0rDe123!", true] // Valid password
+      ["P@76abc0rDed123!", true] // Valid password
     ])(
       'passwordToTest: "%s" and expectedResult: %s',
       (passwordToTest, expectedResult) => {
