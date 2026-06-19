@@ -10,12 +10,12 @@ namespace PasswordStrengthTests
     public class MyPasswordStrengthMAUITests
     {
         [Theory]
-        [InlineData("P@76w0rDe123!", true)] // Valid password
+        [InlineData("P@76abc0rDed123!", true)] // Valid password
         public void AllTogether(string passwordToTest, bool expectedResult)
         {
             var options = new MyPasswordStrengthOptions
             {
-                MinimumLength = 8,
+                MinimumLength = 9,
                 RequireUppercase = true,
                 MinimumUppercase = 2,
                 RequireLowercase = true,
@@ -29,7 +29,11 @@ namespace PasswordStrengthTests
                 RequireMaximumNoOfConsecutiveAscendingDigits = true,
                 MaximumNoOfConsecutiveAscendingDigits = MaximumNoOfConsecutiveDigits.Three,
                 RequireMaximumNoOfConsecutiveDescendingDigits = true,
-                MaximumNoOfConsecutiveDescendingDigits = MaximumNoOfConsecutiveDigits.Three
+                MaximumNoOfConsecutiveDescendingDigits = MaximumNoOfConsecutiveDigits.Two,
+                RequireMaximumNoOfConsecutiveAscendingCharacters = true,
+                MaximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Three,
+                RequireMaximumNoOfConsecutiveDescendingCharacters = true,
+                MaximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Two
             };
 
             bool? result = null;

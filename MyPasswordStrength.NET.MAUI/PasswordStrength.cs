@@ -73,7 +73,7 @@ namespace MyPasswordStrength
         public int MinimumDigit { get; set; } = 1;
         public bool RequireSpecialCharacter { get; set; } = true;
         public int MinimumSpecialCharacter { get; set; } = 1;
-        public string SpecialCharacters { get; set; } = "@$!%*?&";
+        public string SpecialCharacters { get; set; } = @"!""#$%&'()*+,-./:;<=>?@[\]^_`{|}~";
         public bool RequireUppercase { get; set; } = true;
         public int MinimumUppercase { get; set; } = 1;
         public bool RequireMaximumNoOfSameConsecutiveCharacters { get; set; } = true;
