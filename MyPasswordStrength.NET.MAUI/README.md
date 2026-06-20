@@ -20,7 +20,98 @@ The special characters considered in the validation are: !"#$%&'()*+,-./:;<=>?@[
 
 You can modify this set of special characters by setting the `SpecialCharacters` property of the options to a custom string of special characters.
 
-### Sample Usage
+## Sample Usage
+
+### XAML page
+
+```xaml
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pwd="clr-namespace:MyPasswordStrength;assembly=MyPasswordStrength.NET.MAUI"
+             x:Class="MyTestMAUIAPP.Pages.RegistrationPage"
+             Title="Registration"
+             x:Name="registrationPage">
+    <VerticalStackLayout>
+        <Label 
+            Text="Welcome to .NET MAUI!"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
+        <Border x:Name="border" Stroke="Black" StrokeThickness="2">
+            <pwd:PasswordStrengthEntry
+                x:Name="passwordStrength"
+                Placeholder="Please enter password" />
+        </Border>
+
+        <Label
+            x:Name="errorLabel"
+            Text="Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars, no more than 3 consecutive ascending digits, no more than 2 consecutive descending digits, no more than 3 consecutive ascending chars, no more than 2 consecutive descending chars"
+            FontSize="24"
+            IsVisible="False"
+            TextColor="Red"
+            HorizontalOptions="Center" />
+    </VerticalStackLayout>
+</ContentPage>
+```
+
+```csharp
+public partial class RegistrationPage : ContentPage
+{
+	public RegistrationPage()
+	{        
+        InitializeComponent();
+
+        passwordStrength.StrengthOptions = StrengthOptions;
+        passwordStrength.OnValidation = HandleOnValidation;
+    }
+
+    public MyPasswordStrengthOptions StrengthOptions
+    {
+        get
+        {
+            return new MyPasswordStrengthOptions
+            {
+                MinimumLength = 9,
+                RequireUppercase = true,
+                MinimumUppercase = 2,
+                RequireLowercase = true,
+                MinimumLowercase = 3,
+                RequireDigit = true,
+                MinimumDigit = 2,
+                RequireSpecialCharacter = true,
+                MinimumSpecialCharacter = 2,
+                RequireMaximumNoOfSameConsecutiveCharacters = true,
+                MaximumNoOfSameConsecutiveCharacters = 2,
+                RequireMaximumNoOfConsecutiveAscendingDigits = true,
+                MaximumNoOfConsecutiveAscendingDigits = MaximumNoOfConsecutiveDigits.Three,
+                RequireMaximumNoOfConsecutiveDescendingDigits = true,
+                MaximumNoOfConsecutiveDescendingDigits = MaximumNoOfConsecutiveDigits.Two,
+                RequireMaximumNoOfConsecutiveAscendingCharacters = true,
+                MaximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Three,
+                RequireMaximumNoOfConsecutiveDescendingCharacters = true,
+                MaximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Two
+            };
+        }
+    }
+
+    public async void HandleOnValidation(string pwd, bool isValid)
+    {
+        if (isValid)
+        {
+            border.Stroke = Colors.Green;
+            errorLabel.IsVisible = false;
+        }
+        else
+        {
+            border.Stroke = Colors.Red;
+            errorLabel.IsVisible = true;
+        }
+    }
+}
+```
+
+### Code only
 
 ```c#
 using Microsoft.Maui.Controls.Shapes;
@@ -52,7 +143,7 @@ public class Registration : ContentPage
             }
         };
 
-        _entry = new PasswordStrengthEntry(HandleOnValidation, GetOptions(), "Enter your password")
+        _entry = new PasswordStrengthEntry(HandleOnValidation, StrengthOptions, "Enter your password")
         {
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill
@@ -82,32 +173,33 @@ public class Registration : ContentPage
         Content = content;
     }
 
-    private MyPasswordStrengthOptions GetOptions()
+    public MyPasswordStrengthOptions StrengthOptions
     {
-        var options = new MyPasswordStrengthOptions
+        get
         {
-            MinimumLength = 9,
-            RequireUppercase = true,
-            MinimumUppercase = 2,
-            RequireLowercase = true,
-            MinimumLowercase = 3,
-            RequireDigit = true,
-            MinimumDigit = 2,
-            RequireSpecialCharacter = true,
-            MinimumSpecialCharacter = 2,
-            RequireMaximumNoOfSameConsecutiveCharacters = true,
-            MaximumNoOfSameConsecutiveCharacters = 2,
-            RequireMaximumNoOfConsecutiveAscendingDigits = true,
-            MaximumNoOfConsecutiveAscendingDigits = MaximumNoOfConsecutiveDigits.Three,
-            RequireMaximumNoOfConsecutiveDescendingDigits = true,
-            MaximumNoOfConsecutiveDescendingDigits = MaximumNoOfConsecutiveDigits.Two,
-            RequireMaximumNoOfConsecutiveAscendingCharacters = true,
-            MaximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Three,
-            RequireMaximumNoOfConsecutiveDescendingCharacters = true,
-            MaximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Two
-        };
-
-        return options;
+            return new MyPasswordStrengthOptions
+            {
+                MinimumLength = 9,
+                RequireUppercase = true,
+                MinimumUppercase = 2,
+                RequireLowercase = true,
+                MinimumLowercase = 3,
+                RequireDigit = true,
+                MinimumDigit = 2,
+                RequireSpecialCharacter = true,
+                MinimumSpecialCharacter = 2,
+                RequireMaximumNoOfSameConsecutiveCharacters = true,
+                MaximumNoOfSameConsecutiveCharacters = 2,
+                RequireMaximumNoOfConsecutiveAscendingDigits = true,
+                MaximumNoOfConsecutiveAscendingDigits = MaximumNoOfConsecutiveDigits.Three,
+                RequireMaximumNoOfConsecutiveDescendingDigits = true,
+                MaximumNoOfConsecutiveDescendingDigits = MaximumNoOfConsecutiveDigits.Two,
+                RequireMaximumNoOfConsecutiveAscendingCharacters = true,
+                MaximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Three,
+                RequireMaximumNoOfConsecutiveDescendingCharacters = true,
+                MaximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Two
+            };
+        }
     }
 
     private async void HandleOnValidation(string pwd, bool isValid)
