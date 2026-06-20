@@ -53,7 +53,9 @@ var validator = new PasswordStrengthValidator
     RequireMaxNoOfConsecutiveAscendingCharacters = true,
     MaxNoOfConsecutiveAscendingCharacters = MaxNoOfConsecutiveCharacters.Three,
     RequireMaxNoOfConsecutiveDescendingCharacters = true,
-    MaxNoOfConsecutiveDescendingCharacters = MaxNoOfConsecutiveCharacters.Two
+    MaxNoOfConsecutiveDescendingCharacters = MaxNoOfConsecutiveCharacters.Two,
+    RequireRepeatingSequence = true,
+    MinLengthOfRepeatingSequence = 2
 };
 
 var password = "P@76w0rDe123!";
@@ -96,14 +98,16 @@ namespace YourNamespace
                                             bool requireMaxNoOfConsecutiveAscendingDigits = true, MaxNoOfConsecutiveDigits maxNoOfConsecutiveAscendingDigits = MaxNoOfConsecutiveDigits.Two,
                                             bool requireMaxNoOfConsecutiveDescendingDigits = true, MaxNoOfConsecutiveDigits maxNoOfConsecutiveDescendingDigits = MaxNoOfConsecutiveDigits.Two,
                                             bool requireMaxNoOfConsecutiveAscendingCharacters = true, MaxNoOfConsecutiveCharacters maxNoOfConsecutiveAscendingCharacters = MaxNoOfConsecutiveCharacters.Two,
-                                            bool requireMaxNoOfConsecutiveDescendingCharacters = true, MaxNoOfConsecutiveCharacters maxNoOfConsecutiveDescendingCharacters = MaxNoOfConsecutiveCharacters.Two)
+                                            bool requireMaxNoOfConsecutiveDescendingCharacters = true, MaxNoOfConsecutiveCharacters maxNoOfConsecutiveDescendingCharacters = MaxNoOfConsecutiveCharacters.Two,
+                                            bool requireRepeatingSequence = true, int minLengthOfRepeatingSequence = 2)
             : base(PasswordStrengthValidator.GetRegexPattern(minimumLength, requireUppercase, minUppercase, requireLowercase, minLowercase,
                                                                 requireDigit, minDigit, requireSpecialCharacter, minSpecialCharacter, specialCharacters,
                                                                 requireMaxNoOfSameConsecutiveCharacters, maxNoOfSameConsecutiveCharacters,
                                                                 requireMaxNoOfConsecutiveAscendingDigits, maxNoOfConsecutiveAscendingDigits,
                                                                 requireMaxNoOfConsecutiveDescendingDigits, maxNoOfConsecutiveDescendingDigits,
                                                                 requireMaxNoOfConsecutiveAscendingCharacters, maxNoOfConsecutiveAscendingCharacters,
-                                                                requireMaxNoOfConsecutiveDescendingCharacters, maxNoOfConsecutiveDescendingCharacters))
+                                                                requireMaxNoOfConsecutiveDescendingCharacters, maxNoOfConsecutiveDescendingCharacters,
+                                                                requireRepeatingSequence, minLengthOfRepeatingSequence))
         {
         }
     }
@@ -114,15 +118,16 @@ namespace YourNamespace
 
 ```csharp
 [PasswordStrength(minimumLength: 9,
-				  minUppercase: 2,
-				  minLowercase: 3,
-				  minDigit: 2,
-				  minSpecialCharacter: 2,
-				  maxNoOfSameConsecutiveCharacters: 2,
-                  maxNoOfConsecutiveAscendingDigits: MaxNoOfConsecutiveDigits.Three,
-                  maxNoOfConsecutiveDescendingDigits: MaxNoOfConsecutiveDigits.Three,
-                  maxNoOfConsecutiveAscendingCharacters: MaxNoOfConsecutiveCharacters.Three,
-                  maxNoOfConsecutiveDescendingCharacters: MaxNoOfConsecutiveCharacters.Two
-				  ErrorMessage = "Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars, no more than 3 consecutive ascending digits, no more than 3 consecutive descending digits, no more than 3 consecutive ascending characters, no more than 2 consecutive descending characters .")]
+                    minUppercase: 2,
+                    minLowercase: 3,
+                    minDigit: 2,
+                    minSpecialCharacter: 2,
+                    maxNoOfSameConsecutiveCharacters: 2,
+                    maxNoOfConsecutiveAscendingDigits: MaxNoOfConsecutiveDigits.Three,
+                    maxNoOfConsecutiveDescendingDigits: MaxNoOfConsecutiveDigits.Three,
+                    maxNoOfConsecutiveAscendingCharacters: MaxNoOfConsecutiveCharacters.Three,
+                    maxNoOfConsecutiveDescendingCharacters: MaxNoOfConsecutiveCharacters.Two,
+                    minLengthOfRepeatingSequence: 2,
+                    ErrorMessage = "Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars, no more than 3 consecutive ascending digits, no more than 3 consecutive descending digits, no more than 3 consecutive ascending characters, no more than 2 consecutive descending characters, no repeating sequence of more than 2 chars.")]
 public string? Password { get; set; }
 ```

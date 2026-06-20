@@ -26,6 +26,7 @@ namespace PasswordStrengthTests
                 RequireSpecialCharacter = true,
                 MinSpecialCharacter = 1,
                 SpecialCharacters = "!@#$%^&*()",
+                RequireRepeatingSequence = false,
                 RequireMaxNoOfSameConsecutiveCharacters = true,
                 MaxNoOfSameConsecutiveCharacters = 2
             };
@@ -167,6 +168,32 @@ namespace PasswordStrengthTests
         }
 
         [Theory]
+        [InlineData("PassworD1!", 2, true)] // Valid password
+        [InlineData("P@ss1worD@ass!", 4, true)] // Valid password
+        [InlineData("P@ssworD@ss1!", 3, false)] // Invalid password
+        public void RepeatingSequence(string passwordToTest, int minLengthOfRepeatingSequence, bool expectedResult)
+        {
+            var validator = new PasswordStrengthValidator
+            {
+                RequireMaxNoOfSameConsecutiveCharacters = false,
+                RequireLowercase = false,
+                RequireUppercase = false,
+                RequireDigit = false,
+                RequireSpecialCharacter = false,                
+                RequireMaxNoOfConsecutiveAscendingDigits = false,
+                RequireMaxNoOfConsecutiveDescendingDigits = false,
+                RequireMaxNoOfConsecutiveAscendingCharacters = false,
+                RequireMaxNoOfConsecutiveDescendingCharacters = false,
+                RequireRepeatingSequence = true,
+                MinLengthOfRepeatingSequence = minLengthOfRepeatingSequence
+            };
+
+            var result = validator.PasswordStrength(passwordToTest);
+
+            Assert.True(result == expectedResult);
+        }
+
+        [Theory]
         [InlineData("PasSwOrd1!", true)] // Valid password
         [InlineData("PassWORD1!", false)] // No uppercase letter        
         public void MinNoOfLowerCase(string passwordToTest, bool expectedResult)
@@ -286,7 +313,9 @@ namespace PasswordStrengthTests
                 RequireMaxNoOfConsecutiveAscendingCharacters = true,
                 MaxNoOfConsecutiveAscendingCharacters = MaxNoOfConsecutiveCharacters.Three,
                 RequireMaxNoOfConsecutiveDescendingCharacters = true,
-                MaxNoOfConsecutiveDescendingCharacters = MaxNoOfConsecutiveCharacters.Two
+                MaxNoOfConsecutiveDescendingCharacters = MaxNoOfConsecutiveCharacters.Two,
+                RequireRepeatingSequence = true,
+                MinLengthOfRepeatingSequence = 2
             };
 
             var result = validator.PasswordStrength(passwordToTest);
