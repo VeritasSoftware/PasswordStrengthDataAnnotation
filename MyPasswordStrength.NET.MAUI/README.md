@@ -24,6 +24,8 @@ You can modify this set of special characters by setting the `SpecialCharacters`
 
 ### XAML page
 
+`RegistrationPage.xaml`:
+
 ```xaml
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -54,6 +56,7 @@ You can modify this set of special characters by setting the `SpecialCharacters`
     </VerticalStackLayout>
 </ContentPage>
 ```
+`RegistrationPage.xaml.cs`:
 
 ```csharp
 using MyPasswordStrength;
@@ -116,6 +119,8 @@ public partial class RegistrationPage : ContentPage
 ```
 
 ### Code only
+
+`Registration.cs`:
 
 ```c#
 using Microsoft.Maui.Controls.Shapes;
