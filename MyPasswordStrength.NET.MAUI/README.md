@@ -70,7 +70,7 @@ public partial class RegistrationPage : ContentPage
         passwordStrength.OnValidation = HandleOnValidation;
     }
 
-    public MyPasswordStrengthOptions StrengthOptions
+    private MyPasswordStrengthOptions StrengthOptions
     {
         get
         {
@@ -99,7 +99,7 @@ public partial class RegistrationPage : ContentPage
         }
     }
 
-    public async void HandleOnValidation(string pwd, bool isValid)
+    private async void HandleOnValidation(string pwd, bool isValid)
     {
         if (isValid)
         {
@@ -177,7 +177,7 @@ public class Registration : ContentPage
         Content = content;
     }
 
-    public MyPasswordStrengthOptions StrengthOptions
+    private MyPasswordStrengthOptions StrengthOptions
     {
         get
         {
