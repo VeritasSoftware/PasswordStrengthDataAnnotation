@@ -29,7 +29,7 @@ You can modify this set of special characters by setting the `SpecialCharacters`
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:pwd="clr-namespace:MyPasswordStrength;assembly=MyPasswordStrength.NET.MAUI"
-             x:Class="MyTestMAUIAPP.Pages.RegistrationPage"
+             x:Class="YourNamespace.Pages.RegistrationPage"
              Title="Registration"
              x:Name="registrationPage">
     <VerticalStackLayout>
@@ -56,6 +56,10 @@ You can modify this set of special characters by setting the `SpecialCharacters`
 ```
 
 ```csharp
+using MyPasswordStrength;
+
+namespace YourNamespace.Pages;
+
 public partial class RegistrationPage : ContentPage
 {
 	public RegistrationPage()
