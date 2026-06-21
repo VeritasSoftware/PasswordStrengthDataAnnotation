@@ -13,10 +13,10 @@ You can configure:
 * Minimum lower case characters
 * Minimum digits
 * Minimum special characters
-* Maximum same consecutive characters
-* Maximum consecutive ascending/descending digits
-* Maximum consecutive ascending/descending characters
-* Repeated sequence check
+* Maximum same consecutive characters - eg aaa
+* Maximum consecutive ascending/descending digits - eg 123 / 654
+* Maximum consecutive ascending/descending characters - eg aBCd / DcbA
+* Repeated sequence check - eg in Passwordss - ss is repeating sequence
 
 ## Programmatic Password Validation
 
