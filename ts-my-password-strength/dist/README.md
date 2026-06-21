@@ -25,7 +25,7 @@ You can modify this set of special characters by setting the `specialCharacters`
 First import the validator.
 
 ```typescript
-import { PasswordStrengthValidator } from 'ts-my-password-strength';
+import { MaxNoOfConsecutiveCharacters, MaxNoOfConsecutiveDigits, PasswordStrengthValidator } from 'ts-my-password-strength';
 ```
 
 Then, use it as shown below.
@@ -34,7 +34,7 @@ Then, use it as shown below.
 // Configure password strength requirements
 let validator = new PasswordStrengthValidator();
 
-validator.minimumLength = 8;
+validator.minimumLength = 9;
 validator.requireUppercase = true;
 validator.minimumUppercase = 2;
 validator.requireLowercase = true;
@@ -53,6 +53,8 @@ validator.requireMaxNoOfConsecutiveAscendingCharacters = true;
 validator.maxNoOfConsecutiveAscendingCharacters = MaxNoOfConsecutiveCharacters.Three;
 validator.requireMaxNoOfConsecutiveDescendingCharacters = true;
 validator.maxNoOfConsecutiveDescendingCharacters = MaxNoOfConsecutiveCharacters.Two;
+validator.requireRepeatingSequence = true;
+validator.minLengthOfRepeatingSequence = 2;
 
 let password = "P@76abc0rDed123!";
 
