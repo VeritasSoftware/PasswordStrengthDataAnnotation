@@ -169,7 +169,7 @@ namespace PasswordStrengthTests
 
         [Theory]
         [InlineData("PassworD1!", 2, true)] // Valid password
-        [InlineData("P@ss1worD@ass!", 4, true)] // Valid password
+        [InlineData("P@ss1worD@ss!", 4, true)] // Valid password
         [InlineData("P@ssworD@ss1!", 3, false)] // Invalid password
         public void RepeatingSequence(string passwordToTest, int minLengthOfRepeatingSequence, bool expectedResult)
         {

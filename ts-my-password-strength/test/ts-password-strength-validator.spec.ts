@@ -208,7 +208,7 @@ describe('Max No Of Same Consecutive Characters', () => {
   describe('Repeating Sequence', () => {
     test.each([
       ["PassworD1!", 2, true], // Valid password
-      ["P@ss1worD@ass!", 4, true], // Valid password
+      ["P@ss1worD@ss!", 4, true], // Valid password
       ["P@ssworD@ss1!", 3, false] // Invalid password
     ])(
       'passwordToTest: "%s" minLengthOfRepeatingSequence: %s and expectedResult: %s',
