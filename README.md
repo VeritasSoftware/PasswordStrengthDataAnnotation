@@ -21,6 +21,7 @@ The package provides a Validator class that you can use to validate passwords pr
 
 You can configure:
 
+* Minimum length
 * Minimum upper case characters
 * Minimum lower case characters
 * Minimum digits

@@ -8,6 +8,7 @@ The package provides a `PasswordStrengthValidator` class that you can use to val
 
 You can configure:
 
+* Minimum length
 * Minimum upper case characters
 * Minimum lower case characters
 * Minimum digits
