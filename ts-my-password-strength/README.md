@@ -10,6 +10,17 @@ Define your password strength complexity requirements with ease using the librar
 
 The package provides a `PasswordStrengthValidator` class that you can use to validate passwords programmatically.
 
+You can configure:
+
+* Minimum upper case characters
+* Minimum lower case characters
+* Minimum digits
+* Minimum special characters
+* Maximum same consecutive characters
+* Maximum consecutive ascending/descending digits
+* Maximum consecutive ascending/descending characters
+* Repeated sequence check
+
 ## Programmatic Password Validation
 
 You can validate passwords programmatically using the `PasswordStrengthValidator` class provided in the package.
