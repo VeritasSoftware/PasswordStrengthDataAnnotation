@@ -14,8 +14,8 @@ You can configure:
 * Minimum digits
 * Minimum special characters
 * Maximum same consecutive characters - eg aaa
-* Maximum consecutive ascending/descending digits - eg 123 / 654
-* Maximum consecutive ascending/descending characters - eg aBCd / DcbA
+* Maximum consecutive ascending and/or descending digits - eg 123 / 654
+* Maximum consecutive ascending and/or descending characters - eg aBCd / DcbA
 
 ## Reactive Form Validation
 
