@@ -57,7 +57,7 @@ validator.requireMaxNoOfConsecutiveAscendingCharacters = true;
 validator.maxNoOfConsecutiveAscendingCharacters = MaxNoOfConsecutiveCharacters.Three;
 validator.requireMaxNoOfConsecutiveDescendingCharacters = true;
 validator.maxNoOfConsecutiveDescendingCharacters = MaxNoOfConsecutiveCharacters.Two;
-validator.requireRepeatingSequence = true;
+validator.requireRepeatingSequenceCheck = true;
 validator.minLengthOfRepeatingSequence = 2;
 
 let password = "P@76abc0rDed123!";

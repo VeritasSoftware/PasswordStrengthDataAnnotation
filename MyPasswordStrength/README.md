@@ -41,7 +41,7 @@ var validator = new PasswordStrengthValidator
     MaxNoOfConsecutiveAscendingCharacters = MaxNoOfConsecutiveCharacters.Three,
     RequireMaxNoOfConsecutiveDescendingCharacters = true,
     MaxNoOfConsecutiveDescendingCharacters = MaxNoOfConsecutiveCharacters.Two,
-    RequireRepeatingSequence = true,
+    RequireRepeatingSequenceCheck = true,
     MinLengthOfRepeatingSequence = 2
 };
 
@@ -86,7 +86,7 @@ namespace YourNamespace
                                             bool requireMaxNoOfConsecutiveDescendingDigits = true, MaxNoOfConsecutiveDigits maxNoOfConsecutiveDescendingDigits = MaxNoOfConsecutiveDigits.Two,
                                             bool requireMaxNoOfConsecutiveAscendingCharacters = true, MaxNoOfConsecutiveCharacters maxNoOfConsecutiveAscendingCharacters = MaxNoOfConsecutiveCharacters.Two,
                                             bool requireMaxNoOfConsecutiveDescendingCharacters = true, MaxNoOfConsecutiveCharacters maxNoOfConsecutiveDescendingCharacters = MaxNoOfConsecutiveCharacters.Two,
-                                            bool requireRepeatingSequence = true, int minLengthOfRepeatingSequence = 2)
+                                            bool requireRepeatingSequenceCheck = true, int minLengthOfRepeatingSequence = 2)
             : base(PasswordStrengthValidator.GetRegexPattern(minimumLength, requireUppercase, minUppercase, requireLowercase, minLowercase,
                                                                 requireDigit, minDigit, requireSpecialCharacter, minSpecialCharacter, specialCharacters,
                                                                 requireMaxNoOfSameConsecutiveCharacters, maxNoOfSameConsecutiveCharacters,
@@ -94,7 +94,7 @@ namespace YourNamespace
                                                                 requireMaxNoOfConsecutiveDescendingDigits, maxNoOfConsecutiveDescendingDigits,
                                                                 requireMaxNoOfConsecutiveAscendingCharacters, maxNoOfConsecutiveAscendingCharacters,
                                                                 requireMaxNoOfConsecutiveDescendingCharacters, maxNoOfConsecutiveDescendingCharacters,
-                                                                requireRepeatingSequence, minLengthOfRepeatingSequence))
+                                                                requireRepeatingSequenceCheck, minLengthOfRepeatingSequence))
         {
         }
     }

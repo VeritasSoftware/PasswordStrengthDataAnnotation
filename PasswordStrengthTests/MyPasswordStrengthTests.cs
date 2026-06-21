@@ -26,7 +26,7 @@ namespace PasswordStrengthTests
                 RequireSpecialCharacter = true,
                 MinSpecialCharacter = 1,
                 SpecialCharacters = "!@#$%^&*()",
-                RequireRepeatingSequence = false,
+                RequireRepeatingSequenceCheck = false,
                 RequireMaxNoOfSameConsecutiveCharacters = true,
                 MaxNoOfSameConsecutiveCharacters = 2
             };
@@ -185,7 +185,7 @@ namespace PasswordStrengthTests
                 RequireMaxNoOfConsecutiveDescendingDigits = false,
                 RequireMaxNoOfConsecutiveAscendingCharacters = false,
                 RequireMaxNoOfConsecutiveDescendingCharacters = false,
-                RequireRepeatingSequence = true,
+                RequireRepeatingSequenceCheck = true,
                 MinLengthOfRepeatingSequence = minLengthOfRepeatingSequence
             };
 
@@ -315,7 +315,7 @@ namespace PasswordStrengthTests
                 MaxNoOfConsecutiveAscendingCharacters = MaxNoOfConsecutiveCharacters.Three,
                 RequireMaxNoOfConsecutiveDescendingCharacters = true,
                 MaxNoOfConsecutiveDescendingCharacters = MaxNoOfConsecutiveCharacters.Two,
-                RequireRepeatingSequence = true,
+                RequireRepeatingSequenceCheck = true,
                 MinLengthOfRepeatingSequence = 2
             };
 

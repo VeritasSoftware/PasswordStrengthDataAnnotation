@@ -42,7 +42,7 @@ describe('Max No Of Same Consecutive Characters', () => {
           let validator = new PasswordStrengthValidator();
           validator.requireMaxNoOfConsecutiveAscendingCharacters = false;
           validator.requireMaxNoOfConsecutiveDescendingCharacters = false;
-          validator.requireRepeatingSequence = false;
+          validator.requireRepeatingSequenceCheck = false;
           
           let isValid = validator.passwordStrength(passwordToTest);
   
@@ -225,7 +225,7 @@ describe('Max No Of Same Consecutive Characters', () => {
           validator.requireLowercase = false;
           validator.requireMaxNoOfConsecutiveAscendingDigits = false;
           validator.requireMaxNoOfConsecutiveDescendingDigits = false;
-          validator.requireRepeatingSequence = true;
+          validator.requireRepeatingSequenceCheck = true;
           validator.minLengthOfRepeatingSequence = minLengthOfRepeatingSequence;
   
           let isValid = validator.passwordStrength(passwordToTest);
@@ -363,7 +363,7 @@ describe('Max No Of Same Consecutive Characters', () => {
         validator.maxNoOfConsecutiveAscendingCharacters = MaxNoOfConsecutiveCharacters.Three;
         validator.requireMaxNoOfConsecutiveDescendingCharacters = true;
         validator.maxNoOfConsecutiveDescendingCharacters = MaxNoOfConsecutiveCharacters.Two;
-        validator.requireRepeatingSequence = true;
+        validator.requireRepeatingSequenceCheck = true;
         validator.minLengthOfRepeatingSequence = 2;
   
         let isValid = validator.passwordStrength(passwordToTest);

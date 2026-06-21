@@ -20,7 +20,7 @@ export class PasswordStrengthValidator {
     maxNoOfConsecutiveAscendingCharacters: MaxNoOfConsecutiveCharacters = MaxNoOfConsecutiveCharacters.Two;
     requireMaxNoOfConsecutiveDescendingCharacters: boolean = true;
     maxNoOfConsecutiveDescendingCharacters: MaxNoOfConsecutiveCharacters = MaxNoOfConsecutiveCharacters.Two;
-    requireRepeatingSequence: boolean = true;
+    requireRepeatingSequenceCheck: boolean = true;
     minLengthOfRepeatingSequence: number = 2;
 
     getRegexPattern (minLength: number, upper: boolean, minUpper: number, 
@@ -30,7 +30,7 @@ export class PasswordStrengthValidator {
                     requireMaxNoOfConsecutiveDescendingDigits: boolean, maxNoOfConsecutiveDescendingDigits: MaxNoOfConsecutiveDigits,
                     requireMaxNoOfConsecutiveAscendingCharacters: boolean, maxNoOfConsecutiveAscendingCharacters: MaxNoOfConsecutiveCharacters,
                     requireMaxNoOfConsecutiveDescendingCharacters: boolean, maxNoOfConsecutiveDescendingCharacters: MaxNoOfConsecutiveCharacters,
-                    requireRepeatingSequence: boolean, minLengthOfRepeatingSequence: number): string {
+                    requireRepeatingSequenceCheck: boolean, minLengthOfRepeatingSequence: number): string {
         let pattern = "^";
         if (upper)
             pattern += "(?=(.*?[A-Z]){" + minUpper + ",})"; // min no of uppercase letter
@@ -50,7 +50,7 @@ export class PasswordStrengthValidator {
             pattern += "(?!^(.*?(" + this.getMaxConsecutiveCharactersPattern(<number>maxNoOfConsecutiveAscendingCharacters + 1) + "))+)"; // Max no of consecutive ascending characters
         if (requireMaxNoOfConsecutiveDescendingCharacters)
             pattern += "(?!^(.*?(" + this.getMaxConsecutiveCharactersPattern(<number>maxNoOfConsecutiveDescendingCharacters + 1, true) + "))+)"; // Max no of consecutive descending characters
-        if (requireRepeatingSequence)
+        if (requireRepeatingSequenceCheck)
             pattern += "(?!^(.*?(?<repeating>.{" + minLengthOfRepeatingSequence + ",})(?=(.*?\\k<repeating>)))+)"; // Repeating sequence
         pattern += ".{" + minLength + ",}$"; // Minimum length
         return pattern;         
@@ -68,7 +68,7 @@ export class PasswordStrengthValidator {
             this.requireMaxNoOfConsecutiveDescendingDigits, this.maximumNoOfConsecutiveDescendingDigits,
             this.requireMaxNoOfConsecutiveAscendingCharacters, this.maxNoOfConsecutiveAscendingCharacters,
             this.requireMaxNoOfConsecutiveDescendingCharacters, this.maxNoOfConsecutiveDescendingCharacters,
-            this.requireRepeatingSequence, this.minLengthOfRepeatingSequence);
+            this.requireRepeatingSequenceCheck, this.minLengthOfRepeatingSequence);
 
         const regex = new RegExp(regexPattern);
 
