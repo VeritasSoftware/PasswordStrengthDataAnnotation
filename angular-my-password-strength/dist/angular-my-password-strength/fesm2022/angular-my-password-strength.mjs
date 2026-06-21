@@ -21,6 +21,10 @@ function passwordStrengthValidator(options = new MyPasswordStrengthOptions(), er
         validator.maximumNoOfConsecutiveAscendingDigits = options.maximumNoOfConsecutiveAscendingDigits;
         validator.requireMaxNoOfConsecutiveDescendingDigits = options.requireMaximumNoOfConsecutiveDescendingDigits;
         validator.maximumNoOfConsecutiveDescendingDigits = options.maximumNoOfConsecutiveDescendingDigits;
+        validator.requireMaxNoOfConsecutiveAscendingCharacters = options.requireMaximumNoOfConsecutiveAscendingCharacters;
+        validator.maxNoOfConsecutiveAscendingCharacters = options.maximumNoOfConsecutiveAscendingCharacters;
+        validator.requireMaxNoOfConsecutiveDescendingCharacters = options.requireMaximumNoOfConsecutiveDescendingCharacters;
+        validator.maxNoOfConsecutiveDescendingCharacters = options.maximumNoOfConsecutiveDescendingCharacters;
         console.log("Validator configuration: ", validator);
         let isValid = validator.passwordStrength(control.value);
         console.log("Password strength validation result: ", isValid);
@@ -35,7 +39,7 @@ class MyPasswordStrengthOptions {
     minimumDigit = 1;
     requireSpecialCharacter = true;
     minimumSpecialCharacter = 1;
-    specialCharacters = '@$!%*?&';
+    specialCharacters = `!"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~`;
     requireUppercase = true;
     minimumUppercase = 1;
     requireMaxNoOfSameConsecutiveCharacters = true;
@@ -44,6 +48,10 @@ class MyPasswordStrengthOptions {
     maximumNoOfConsecutiveAscendingDigits = MaximumNoOfConsecutiveDigits.Two;
     requireMaximumNoOfConsecutiveDescendingDigits = true;
     maximumNoOfConsecutiveDescendingDigits = MaximumNoOfConsecutiveDigits.Two;
+    requireMaximumNoOfConsecutiveAscendingCharacters = true;
+    maximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Two;
+    requireMaximumNoOfConsecutiveDescendingCharacters = true;
+    maximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Two;
 }
 var MaximumNoOfConsecutiveDigits;
 (function (MaximumNoOfConsecutiveDigits) {
@@ -52,6 +60,13 @@ var MaximumNoOfConsecutiveDigits;
     MaximumNoOfConsecutiveDigits[MaximumNoOfConsecutiveDigits["Four"] = 4] = "Four";
     MaximumNoOfConsecutiveDigits[MaximumNoOfConsecutiveDigits["Five"] = 5] = "Five";
 })(MaximumNoOfConsecutiveDigits || (MaximumNoOfConsecutiveDigits = {}));
+var MaximumNoOfConsecutiveCharacters;
+(function (MaximumNoOfConsecutiveCharacters) {
+    MaximumNoOfConsecutiveCharacters[MaximumNoOfConsecutiveCharacters["Two"] = 2] = "Two";
+    MaximumNoOfConsecutiveCharacters[MaximumNoOfConsecutiveCharacters["Three"] = 3] = "Three";
+    MaximumNoOfConsecutiveCharacters[MaximumNoOfConsecutiveCharacters["Four"] = 4] = "Four";
+    MaximumNoOfConsecutiveCharacters[MaximumNoOfConsecutiveCharacters["Five"] = 5] = "Five";
+})(MaximumNoOfConsecutiveCharacters || (MaximumNoOfConsecutiveCharacters = {}));
 
 /*
  * Public API Surface of angular-my-password-strength
@@ -61,5 +76,5 @@ var MaximumNoOfConsecutiveDigits;
  * Generated bundle index. Do not edit.
  */
 
-export { MaximumNoOfConsecutiveDigits, MyPasswordStrengthOptions, passwordStrengthValidator };
+export { MaximumNoOfConsecutiveCharacters, MaximumNoOfConsecutiveDigits, MyPasswordStrengthOptions, passwordStrengthValidator };
 //# sourceMappingURL=angular-my-password-strength.mjs.map

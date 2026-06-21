@@ -1,5 +1,5 @@
 import { FormControl } from '@angular/forms';
-import { MaximumNoOfConsecutiveDigits, MyPasswordStrengthOptions, passwordStrengthValidator } from './angular-my-password-strength.component';
+import { MaximumNoOfConsecutiveCharacters, MaximumNoOfConsecutiveDigits, MyPasswordStrengthOptions, passwordStrengthValidator } from './angular-my-password-strength.component';
 
 describe('Defaults', () => {
   const validatorFn = passwordStrengthValidator();
@@ -336,6 +336,122 @@ describe('Max No Of Consecutive Ascending & Descending Digits', () => {
   });
 });
 
+describe('Max No Of Consecutive Ascending & Descending Characters', () => {
+  let options = new MyPasswordStrengthOptions();
+
+  options.requireDigit = false;
+  options.requireSpecialCharacter = false;
+  options.requireMaxNoOfSameConsecutiveCharacters = false;
+  options.requireUppercase = false;
+  options.requireLowercase = false;
+  options.requireMaximumNoOfConsecutiveAscendingDigits = false;
+  options.requireMaximumNoOfConsecutiveDescendingDigits = false;
+  options.requireMaximumNoOfConsecutiveAscendingCharacters = true;
+  options.requireMaximumNoOfConsecutiveDescendingCharacters = true;
+
+
+  const validatorFn = passwordStrengthValidator(options);  
+
+  it('Valid password', () => {
+    options.maximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Two;
+    options.maximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Two;
+    const control = new FormControl('Password1!');
+    const result = validatorFn(control);
+    expect(result).toBeNull();
+  });
+  it('Valid password', () => {
+    options.maximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Two;
+    options.maximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Two;
+    const control = new FormControl('Pabword1!');
+    const result = validatorFn(control);
+    expect(result).toBeNull();
+  });
+  it('Valid password', () => {
+    options.maximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Four;
+    options.maximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Two;
+    const control = new FormControl('PABcdworDCa1!');
+    const result = validatorFn(control);
+    expect(result).toBeNull();
+  });
+  it('Valid password', () => {
+    options.maximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Two;
+    options.maximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Two;
+    const control = new FormControl('Pabwordc1!');
+    const result = validatorFn(control);
+    expect(result).toBeNull();
+  });
+  it('Valid password', () => {
+    options.maximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Three;
+    options.maximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Three;
+    const control = new FormControl('Pabcwordc1!');
+    const result = validatorFn(control);
+    expect(result).toBeNull();
+  });
+  it('Valid password', () => {
+    options.maximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Two;
+    options.maximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Three;
+    const control = new FormControl('Pabwordcb1!');
+    const result = validatorFn(control);
+    expect(result).toBeNull();
+  });
+  it('Valid password', () => {
+    options.maximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Three;
+    options.maximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Three;
+    const control = new FormControl('Pabcwordcb1!');
+    const result = validatorFn(control);
+    expect(result).toBeNull();
+  });
+  it('Valid password', () => {
+    options.maximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Four;
+    options.maximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Four;
+    const control = new FormControl('PAbCdwordCBa1!');
+    const result = validatorFn(control);
+    expect(result).toBeNull();
+  });
+  it('Valid password', () => {
+    options.maximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Four;
+    options.maximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Three;
+    const control = new FormControl('PABcdworDCa1!');
+    const result = validatorFn(control);
+    expect(result).toBeNull();
+  });
+  it('Invalid password', () => {
+    options.maximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Two;
+    options.maximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Two;
+    const control = new FormControl('Pabcword1!');
+    const result = validatorFn(control);
+    expect(result).not.toBeNull();
+  });
+  it('Invalid password', () => {
+    options.maximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Two;
+    options.maximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Two;
+    const control = new FormControl('Passwordcb1!');
+    const result = validatorFn(control);
+    expect(result).not.toBeNull();
+  });
+  it('Invalid password', () => {
+    options.maximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Two;
+    options.maximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Two;
+    const control = new FormControl('PaBcwordC1!');
+    const result = validatorFn(control);
+    expect(result).not.toBeNull();
+  });
+  it('Invalid password', () => {
+    options.maximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Three;
+    options.maximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Two;
+    const control = new FormControl('PaBcwordCb1!');
+    const result = validatorFn(control);
+    expect(result).not.toBeNull();
+  });
+  it('Invalid password', () => {
+    options.maximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Three;
+    options.maximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Three;
+    const control = new FormControl('PAbCdwordbCa1!');
+    const result = validatorFn(control);
+    expect(result).not.toBeNull();
+  });
+});
+
 describe('Min No Of Lower Case', () => {
   let options = new MyPasswordStrengthOptions();
 
@@ -435,7 +551,7 @@ describe('Min No Of Special Characters', () => {
 describe('All Together', () => {
   let options = new MyPasswordStrengthOptions();
     
-  options.minimumLength = 8;
+  options.minimumLength = 9;
   options.requireUppercase = true;
   options.minimumUppercase = 2;
   options.requireLowercase = true;
@@ -449,12 +565,16 @@ describe('All Together', () => {
   options.requireMaximumNoOfConsecutiveAscendingDigits = true;
   options.maximumNoOfConsecutiveAscendingDigits = MaximumNoOfConsecutiveDigits.Three;
   options.requireMaximumNoOfConsecutiveDescendingDigits = true;
-  options.maximumNoOfConsecutiveDescendingDigits = MaximumNoOfConsecutiveDigits.Three;
+  options.maximumNoOfConsecutiveDescendingDigits = MaximumNoOfConsecutiveDigits.Two;
+  options.requireMaximumNoOfConsecutiveAscendingCharacters = true;
+  options.maximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Three;
+  options.requireMaximumNoOfConsecutiveDescendingCharacters = true;
+  options.maximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Two;
 
   const validatorFn = passwordStrengthValidator(options);  
 
   it('Valid password', () => {
-    const control = new FormControl('P@76w0rDe123!');
+    const control = new FormControl('P@76abc0rDed123!');
     const result = validatorFn(control);
     expect(result).toBeNull();
   });

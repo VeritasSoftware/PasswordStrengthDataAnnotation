@@ -1,5 +1,5 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { MaxNoOfConsecutiveDigits, PasswordStrengthValidator } from 'ts-my-password-strength';
+import { MaxNoOfConsecutiveCharacters, MaxNoOfConsecutiveDigits, PasswordStrengthValidator } from 'ts-my-password-strength';
 
 export function passwordStrengthValidator(options: MyPasswordStrengthOptions = new MyPasswordStrengthOptions(),
                                           errorKey: string = "Invalid"): ValidatorFn {
@@ -25,6 +25,10 @@ export function passwordStrengthValidator(options: MyPasswordStrengthOptions = n
     validator.maximumNoOfConsecutiveAscendingDigits = <MaxNoOfConsecutiveDigits><unknown>options.maximumNoOfConsecutiveAscendingDigits;
     validator.requireMaxNoOfConsecutiveDescendingDigits = options.requireMaximumNoOfConsecutiveDescendingDigits;
     validator.maximumNoOfConsecutiveDescendingDigits = <MaxNoOfConsecutiveDigits><unknown>options.maximumNoOfConsecutiveDescendingDigits;
+    validator.requireMaxNoOfConsecutiveAscendingCharacters = options.requireMaximumNoOfConsecutiveAscendingCharacters;
+    validator.maxNoOfConsecutiveAscendingCharacters = <MaxNoOfConsecutiveCharacters><unknown>options.maximumNoOfConsecutiveAscendingCharacters;
+    validator.requireMaxNoOfConsecutiveDescendingCharacters = options.requireMaximumNoOfConsecutiveDescendingCharacters;
+    validator.maxNoOfConsecutiveDescendingCharacters = <MaxNoOfConsecutiveCharacters><unknown>options.maximumNoOfConsecutiveDescendingCharacters;
 
     console.log("Validator configuration: ", validator);
 
@@ -43,7 +47,7 @@ export class MyPasswordStrengthOptions {
   minimumDigit : number = 1;
   requireSpecialCharacter : boolean = true;
   minimumSpecialCharacter : number = 1;
-  specialCharacters : string = '@$!%*?&';
+  specialCharacters : string = `!"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~`;
   requireUppercase : boolean = true;
   minimumUppercase : number = 1;
   requireMaxNoOfSameConsecutiveCharacters  : boolean = true;
@@ -52,9 +56,20 @@ export class MyPasswordStrengthOptions {
   maximumNoOfConsecutiveAscendingDigits: MaximumNoOfConsecutiveDigits = MaximumNoOfConsecutiveDigits.Two;
   requireMaximumNoOfConsecutiveDescendingDigits: boolean = true;
   maximumNoOfConsecutiveDescendingDigits: MaximumNoOfConsecutiveDigits = MaximumNoOfConsecutiveDigits.Two;
+  requireMaximumNoOfConsecutiveAscendingCharacters: boolean = true;
+  maximumNoOfConsecutiveAscendingCharacters: MaximumNoOfConsecutiveCharacters = MaximumNoOfConsecutiveCharacters.Two;
+  requireMaximumNoOfConsecutiveDescendingCharacters: boolean = true;
+  maximumNoOfConsecutiveDescendingCharacters: MaximumNoOfConsecutiveCharacters = MaximumNoOfConsecutiveCharacters.Two;  
 }
 
 export enum MaximumNoOfConsecutiveDigits {
+  Two = 2,
+  Three = 3,
+  Four = 4,
+  Five = 5
+}
+
+export enum MaximumNoOfConsecutiveCharacters {
   Two = 2,
   Three = 3,
   Four = 4,

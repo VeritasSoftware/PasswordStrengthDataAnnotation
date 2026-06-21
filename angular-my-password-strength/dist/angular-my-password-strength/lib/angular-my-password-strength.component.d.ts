@@ -17,8 +17,18 @@ export declare class MyPasswordStrengthOptions {
     maximumNoOfConsecutiveAscendingDigits: MaximumNoOfConsecutiveDigits;
     requireMaximumNoOfConsecutiveDescendingDigits: boolean;
     maximumNoOfConsecutiveDescendingDigits: MaximumNoOfConsecutiveDigits;
+    requireMaximumNoOfConsecutiveAscendingCharacters: boolean;
+    maximumNoOfConsecutiveAscendingCharacters: MaximumNoOfConsecutiveCharacters;
+    requireMaximumNoOfConsecutiveDescendingCharacters: boolean;
+    maximumNoOfConsecutiveDescendingCharacters: MaximumNoOfConsecutiveCharacters;
 }
 export declare enum MaximumNoOfConsecutiveDigits {
+    Two = 2,
+    Three = 3,
+    Four = 4,
+    Five = 5
+}
+export declare enum MaximumNoOfConsecutiveCharacters {
     Two = 2,
     Three = 3,
     Four = 4,

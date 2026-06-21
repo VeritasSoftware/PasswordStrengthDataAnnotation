@@ -8,6 +8,17 @@
 
 > A .NET MAUI library for validating password strength based on customizable complexity requirements.
 
+You can configure:
+
+* Minimum length
+* Minimum upper case characters
+* Minimum lower case characters
+* Minimum digits
+* Minimum special characters
+* Maximum same consecutive characters - eg aaa
+* Maximum consecutive ascending/descending digits - eg 123 / 654
+* Maximum consecutive ascending/descending characters - eg aBCd / DcbA
+
 ## Background
 
 Define your password strength complexity requirements with ease using the library. 

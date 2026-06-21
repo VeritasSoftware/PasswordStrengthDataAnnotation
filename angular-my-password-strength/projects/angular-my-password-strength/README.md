@@ -10,6 +10,17 @@ Define your password strength complexity requirements with ease using the librar
 
 The package provides a `passwordStrengthValidator` function that you can use to validate passwords in your reactive forms.
 
+You can configure:
+
+* Minimum length
+* Minimum upper case characters
+* Minimum lower case characters
+* Minimum digits
+* Minimum special characters
+* Maximum same consecutive characters - eg aaa
+* Maximum consecutive ascending/descending digits - eg 123 / 654
+* Maximum consecutive ascending/descending characters - eg aBCd / DcbA
+
 ## Reactive Form Validation
 
 You can validate passwords programmatically using the `passwordStrengthValidator` function provided in the package.
@@ -25,7 +36,7 @@ You can modify this set of special characters by setting the `specialCharacters`
 First, import the validator in your component.
 
 ```typescript
-import { MaximumNoOfConsecutiveDigits, MyPasswordStrengthOptions, passwordStrengthValidator } from 'angular-my-password-strength';
+import { MaximumNoOfConsecutiveCharacters, MaximumNoOfConsecutiveDigits, MyPasswordStrengthOptions, passwordStrengthValidator } from 'angular-my-password-strength';
 ```
 
 Then, use it as shown below.
@@ -35,7 +46,7 @@ Then, use it as shown below.
 getOptions(): MyPasswordStrengthOptions {
     let options = new MyPasswordStrengthOptions();
 
-    options.minimumLength = 8;
+    options.minimumLength = 9;
     options.requireUppercase = true;
     options.minimumUppercase = 2;
     options.requireLowercase = true;
@@ -49,7 +60,11 @@ getOptions(): MyPasswordStrengthOptions {
     options.requireMaximumNoOfConsecutiveAscendingDigits = true;
     options.maximumNoOfConsecutiveAscendingDigits = MaximumNoOfConsecutiveDigits.Three;
     options.requireMaximumNoOfConsecutiveDescendingDigits = true;
-    options.maximumNoOfConsecutiveDescendingDigits = MaximumNoOfConsecutiveDigits.Three;
+    options.maximumNoOfConsecutiveDescendingDigits = MaximumNoOfConsecutiveDigits.Two;
+    options.requireMaximumNoOfConsecutiveAscendingCharacters = true;
+    options.maximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Three;
+    options.requireMaximumNoOfConsecutiveDescendingCharacters = true;
+    options.maximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Two;
 
     return options;
 }
@@ -58,7 +73,7 @@ constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
         password: ['', [
         Validators.required,
-        // Password must be at least 8 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars
+        // Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars, no more than 3 consecutive ascending digits, no more than 2 consecutive descending digits, no more than 3 consecutive ascending chars, no more than 2 consecutive descending chars
         passwordStrengthValidator(this.getOptions(), "InvalidPassword")
         ]]
     });
@@ -73,7 +88,7 @@ Your component markup can be like below.
     <input type="password" formControlName="password">
     <br>
     <div *ngIf="password?.touched && password?.errors?.['InvalidPassword']" style="color: red;">
-        Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars, no more than 3 consecutive ascending digits, no more than 3 consecutive descending digits
+        Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars, no more than 3 consecutive ascending digits, no more than 2 consecutive descending digits, no more than 3 consecutive ascending chars, no more than 2 consecutive descending chars
     </div>
 
     <button type="submit" [disabled]="form.invalid">Submit</button>
