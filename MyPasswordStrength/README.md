@@ -16,7 +16,7 @@ You can configure:
 * Maximum same consecutive characters - eg aaa
 * Maximum consecutive ascending/descending digits - eg 123 / 654
 * Maximum consecutive ascending/descending characters - eg aBCd / DcbA
-* Repeated sequence check - eg in Passwordss - ss is repeating sequence
+* Repeated sequence check - eg in P@ssword@s - @s is repeating sequence
 
 ## Programmatic Password Validation
 
