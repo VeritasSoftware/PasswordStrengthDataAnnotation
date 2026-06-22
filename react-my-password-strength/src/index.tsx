@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { MaxNoOfConsecutiveDigits, PasswordStrengthValidator } from 'ts-my-password-strength'
+import { MaxNoOfConsecutiveCharacters, MaxNoOfConsecutiveDigits, PasswordStrengthValidator } from 'ts-my-password-strength'
 
 interface Props {
   strengthOptions: MyPasswordStrengthOptions,
@@ -54,6 +54,10 @@ export const PasswordStrength = ({ name = "password",
     validator.maximumNoOfConsecutiveAscendingDigits = strengthOptions.maximumNoOfConsecutiveAscendingDigits as unknown as MaxNoOfConsecutiveDigits;
     validator.requireMaxNoOfConsecutiveDescendingDigits = strengthOptions.requireMaximumNoOfConsecutiveDescendingDigits;
     validator.maximumNoOfConsecutiveDescendingDigits = strengthOptions.maximumNoOfConsecutiveDescendingDigits as unknown as MaxNoOfConsecutiveDigits;
+    validator.requireMaxNoOfConsecutiveAscendingCharacters = strengthOptions.requireMaximumNoOfConsecutiveAscendingCharacters;
+    validator.maxNoOfConsecutiveAscendingCharacters = strengthOptions.maximumNoOfConsecutiveAscendingCharacters as unknown as MaxNoOfConsecutiveCharacters;
+    validator.requireMaxNoOfConsecutiveDescendingCharacters = strengthOptions.requireMaximumNoOfConsecutiveDescendingCharacters;
+    validator.maxNoOfConsecutiveDescendingCharacters = strengthOptions.maximumNoOfConsecutiveDescendingCharacters as unknown as MaxNoOfConsecutiveCharacters;
 
     console.log("Validator configuration: ", validator);
 
@@ -87,7 +91,7 @@ export class MyPasswordStrengthOptions {
   minimumDigit : number = 1;
   requireSpecialCharacter : boolean = true;
   minimumSpecialCharacter : number = 1;
-  specialCharacters : string = '@$!%*?&';
+  specialCharacters : string = `!"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~`;
   requireUppercase : boolean = true;
   minimumUppercase : number = 1;
   requireMaxNoOfSameConsecutiveCharacters  : boolean = true;
@@ -96,9 +100,20 @@ export class MyPasswordStrengthOptions {
   maximumNoOfConsecutiveAscendingDigits: MaximumNoOfConsecutiveDigits = MaximumNoOfConsecutiveDigits.Two;
   requireMaximumNoOfConsecutiveDescendingDigits: boolean = true;
   maximumNoOfConsecutiveDescendingDigits: MaximumNoOfConsecutiveDigits = MaximumNoOfConsecutiveDigits.Two;
+  requireMaximumNoOfConsecutiveAscendingCharacters: boolean = true;
+  maximumNoOfConsecutiveAscendingCharacters: MaximumNoOfConsecutiveCharacters = MaximumNoOfConsecutiveCharacters.Two;
+  requireMaximumNoOfConsecutiveDescendingCharacters: boolean = true;
+  maximumNoOfConsecutiveDescendingCharacters: MaximumNoOfConsecutiveCharacters = MaximumNoOfConsecutiveCharacters.Two; 
 }
 
 export enum MaximumNoOfConsecutiveDigits {
+  Two = 2,
+  Three = 3,
+  Four = 4,
+  Five = 5
+}
+
+export enum MaximumNoOfConsecutiveCharacters {
   Two = 2,
   Three = 3,
   Four = 4,

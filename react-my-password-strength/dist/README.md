@@ -20,6 +20,17 @@ The package provides a `PasswordStrength` component that you can use to validate
 
 You can set the password strength requirements through the properties of the `MyPasswordStrengthOptions` class and pass the options to the function.
 
+You can configure:
+
+* Minimum length
+* Minimum upper case characters
+* Minimum lower case characters
+* Minimum digits
+* Minimum special characters
+* Maximum same consecutive characters - eg aaa
+* Maximum consecutive ascending and/or descending digits - eg 123 / 654
+* Maximum consecutive ascending and/or descending characters - eg aBCd / DcbA
+
 The special characters considered in the validation are: @$!%*?&. 
 
 You can modify this set of special characters by setting the `specialCharacters` property of the options to a custom string of special characters.
@@ -28,7 +39,7 @@ You can modify this set of special characters by setting the `specialCharacters`
 
 ```tsx
 import React, { useState } from 'react'
-import { MaximumNoOfConsecutiveDigits, MyPasswordStrengthOptions, PasswordStrength } from 'react-my-password-strength'
+import { MaximumNoOfConsecutiveCharacters, MaximumNoOfConsecutiveDigits, MyPasswordStrengthOptions, PasswordStrength } from 'react-my-password-strength'
 
 const App = () => {
   const [formData, setFormData] = useState({});
@@ -44,7 +55,7 @@ const App = () => {
       return;
     }
 
-    setError(isValid ? "" : "Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars, no more than 3 consecutive ascending digits, no more than 3 consecutive descending digits");
+    setError(isValid ? "" : "Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars, no more than 3 consecutive ascending digits, no more than 2 consecutive descending digits, no more than 3 consecutive ascending chars, no more than 2 consecutive descending chars");
 
     setFormData((prev) => ({ ...prev, [name]: value }));
     // Check if all fields are valid
@@ -96,7 +107,7 @@ export default App
 function getOptions(): MyPasswordStrengthOptions {
   let options = new MyPasswordStrengthOptions();
 
-  options.minimumLength = 8;
+  options.minimumLength = 9;
   options.requireUppercase = true;
   options.minimumUppercase = 2;
   options.requireLowercase = true;
@@ -110,7 +121,11 @@ function getOptions(): MyPasswordStrengthOptions {
   options.requireMaximumNoOfConsecutiveAscendingDigits = true;
   options.maximumNoOfConsecutiveAscendingDigits = MaximumNoOfConsecutiveDigits.Three;
   options.requireMaximumNoOfConsecutiveDescendingDigits = true;
-  options.maximumNoOfConsecutiveDescendingDigits = MaximumNoOfConsecutiveDigits.Three;
+  options.maximumNoOfConsecutiveDescendingDigits = MaximumNoOfConsecutiveDigits.Two;
+  options.requireMaximumNoOfConsecutiveAscendingCharacters = true;
+  options.maximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Three;
+  options.requireMaximumNoOfConsecutiveDescendingCharacters = true;
+  options.maximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Two;
 
   return options;
 }

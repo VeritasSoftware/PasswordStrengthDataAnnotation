@@ -1,6 +1,6 @@
 {
   "name": "react-my-password-strength",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "A React library for validating password strength based on customizable complexity requirements.",
   "author": "VeritasSoftware",
   "license": "MIT",
@@ -22,7 +22,7 @@
   },
   "peerDependencies": {
     "react": "^16.0.0",
-    "ts-my-password-strength": "^1.1.0"
+    "ts-my-password-strength": "^2.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",

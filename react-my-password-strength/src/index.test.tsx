@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from "@testing-library/react";
-import { MaximumNoOfConsecutiveDigits, MyPasswordStrengthOptions, PasswordStrength } from './index';
+import { MaximumNoOfConsecutiveCharacters, MaximumNoOfConsecutiveDigits, MyPasswordStrengthOptions, PasswordStrength } from './index';
 
 const initialStyleOptions={
   border: "1px solid #ccc",
@@ -51,7 +51,7 @@ const testBody = (strengthOptions: MyPasswordStrengthOptions, passwordToTest: st
 
 describe('All Together', () => {
   test.each([
-    ["P@76w0rDe123!", true] // Valid password
+    ["P@76abc0rDed123!", true] // Valid password
   ])(
     'passwordToTest: "%s" and expectedResult: %s',
     (passwordToTest, expectedResult) => {
@@ -74,6 +74,10 @@ describe('All Together', () => {
         options.maximumNoOfConsecutiveAscendingDigits = MaximumNoOfConsecutiveDigits.Three;
         options.requireMaximumNoOfConsecutiveDescendingDigits = true;
         options.maximumNoOfConsecutiveDescendingDigits = MaximumNoOfConsecutiveDigits.Three;
+        options.requireMaximumNoOfConsecutiveAscendingCharacters = true;
+        options.maximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Three;
+        options.requireMaximumNoOfConsecutiveDescendingCharacters = true;
+        options.maximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Two;
         
         return options;
       };
@@ -235,6 +239,49 @@ describe('Max No Of Consecutive Ascending & Descending Digits', () => {
         options.maximumNoOfConsecutiveAscendingDigits = maxNoOfConsecutiveAscendingDigits;
         options.requireMaximumNoOfConsecutiveDescendingDigits = true;
         options.maximumNoOfConsecutiveDescendingDigits = maxNoOfConsecutiveDescendingDigits;
+        
+        return options;
+      };
+      testBody(getOptions(), passwordToTest, expectedResult);
+    }
+  );
+});
+
+describe('Max No Of Consecutive Ascending & Descending Characters', () => {
+  test.each([
+    ["Password1!", MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, true], // Valid password
+    ["Pabword1!", MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, true], // Valid password
+    ["PABcdworDCa1!", MaximumNoOfConsecutiveCharacters.Four, MaximumNoOfConsecutiveCharacters.Two, true], // Valid password
+    ["Pabwordc1!", MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, true], // Valid password
+    ["Pabwordcb1!", MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Three, true], // Valid password
+    ["Pabcwordcb1!", MaximumNoOfConsecutiveCharacters.Three, MaximumNoOfConsecutiveCharacters.Three, true], // Valid password
+    ["PAbCdwordCBa1!", MaximumNoOfConsecutiveCharacters.Four, MaximumNoOfConsecutiveCharacters.Four, true], // Valid password
+    ["PABcdworDCa1!", MaximumNoOfConsecutiveCharacters.Four, MaximumNoOfConsecutiveCharacters.Three, true], // Valid password      
+    ["PABcdworDCa1!", MaximumNoOfConsecutiveCharacters.Four, MaximumNoOfConsecutiveCharacters.Two, true], // Valid password
+    ["Pabcword1!", MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false],
+    ["Passwordcb1!", MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false],
+    ["PaBcwordCb1!", MaximumNoOfConsecutiveCharacters.Three, MaximumNoOfConsecutiveCharacters.Two, false],
+    ["PAbCdwordbCa1!", MaximumNoOfConsecutiveCharacters.Three, MaximumNoOfConsecutiveCharacters.Three, false],
+    ["PaBcwordC1!", MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false]
+  ])(
+    'passwordToTest: "%s" maxNoOfConsecutiveAscendingCharacters: %s maxNoOfConsecutiveDescendingCharacters: %s and expectedResult: %s',
+    (passwordToTest, maxNoOfConsecutiveAscendingCharacters, maxNoOfConsecutiveDescendingCharacters, expectedResult) => {
+      // Configure password strength requirements
+      const getOptions = () : MyPasswordStrengthOptions => {
+        let options = new MyPasswordStrengthOptions();
+
+        options.minimumLength = 8;
+        options.requireUppercase = false;
+        options.requireLowercase = false;
+        options.requireDigit = false;
+        options.requireSpecialCharacter = false;
+        options.requireMaxNoOfSameConsecutiveCharacters = false;        
+        options.requireMaximumNoOfConsecutiveAscendingDigits = false;
+        options.requireMaximumNoOfConsecutiveDescendingDigits = false;
+        options.requireMaximumNoOfConsecutiveAscendingCharacters = true;
+        options.maximumNoOfConsecutiveAscendingCharacters = maxNoOfConsecutiveAscendingCharacters; 
+        options.requireMaximumNoOfConsecutiveDescendingCharacters = true;       
+        options.maximumNoOfConsecutiveDescendingCharacters = maxNoOfConsecutiveDescendingCharacters;
         
         return options;
       };

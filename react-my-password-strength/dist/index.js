@@ -49,6 +49,10 @@ var PasswordStrength = function PasswordStrength(_ref) {
     validator.maximumNoOfConsecutiveAscendingDigits = strengthOptions.maximumNoOfConsecutiveAscendingDigits;
     validator.requireMaxNoOfConsecutiveDescendingDigits = strengthOptions.requireMaximumNoOfConsecutiveDescendingDigits;
     validator.maximumNoOfConsecutiveDescendingDigits = strengthOptions.maximumNoOfConsecutiveDescendingDigits;
+    validator.requireMaxNoOfConsecutiveAscendingCharacters = strengthOptions.requireMaximumNoOfConsecutiveAscendingCharacters;
+    validator.maxNoOfConsecutiveAscendingCharacters = strengthOptions.maximumNoOfConsecutiveAscendingCharacters;
+    validator.requireMaxNoOfConsecutiveDescendingCharacters = strengthOptions.requireMaximumNoOfConsecutiveDescendingCharacters;
+    validator.maxNoOfConsecutiveDescendingCharacters = strengthOptions.maximumNoOfConsecutiveDescendingCharacters;
     console.log("Validator configuration: ", validator);
     var isValid = validator.passwordStrength(password);
     console.log("Password strength validation result: ", isValid);
@@ -74,7 +78,7 @@ var MyPasswordStrengthOptions = function MyPasswordStrengthOptions() {
   this.minimumDigit = 1;
   this.requireSpecialCharacter = true;
   this.minimumSpecialCharacter = 1;
-  this.specialCharacters = '@$!%*?&';
+  this.specialCharacters = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
   this.requireUppercase = true;
   this.minimumUppercase = 1;
   this.requireMaxNoOfSameConsecutiveCharacters = true;
@@ -83,6 +87,10 @@ var MyPasswordStrengthOptions = function MyPasswordStrengthOptions() {
   this.maximumNoOfConsecutiveAscendingDigits = exports.MaximumNoOfConsecutiveDigits.Two;
   this.requireMaximumNoOfConsecutiveDescendingDigits = true;
   this.maximumNoOfConsecutiveDescendingDigits = exports.MaximumNoOfConsecutiveDigits.Two;
+  this.requireMaximumNoOfConsecutiveAscendingCharacters = true;
+  this.maximumNoOfConsecutiveAscendingCharacters = exports.MaximumNoOfConsecutiveCharacters.Two;
+  this.requireMaximumNoOfConsecutiveDescendingCharacters = true;
+  this.maximumNoOfConsecutiveDescendingCharacters = exports.MaximumNoOfConsecutiveCharacters.Two;
 };
 (function (MaximumNoOfConsecutiveDigits) {
   MaximumNoOfConsecutiveDigits[MaximumNoOfConsecutiveDigits["Two"] = 2] = "Two";
@@ -90,6 +98,12 @@ var MyPasswordStrengthOptions = function MyPasswordStrengthOptions() {
   MaximumNoOfConsecutiveDigits[MaximumNoOfConsecutiveDigits["Four"] = 4] = "Four";
   MaximumNoOfConsecutiveDigits[MaximumNoOfConsecutiveDigits["Five"] = 5] = "Five";
 })(exports.MaximumNoOfConsecutiveDigits || (exports.MaximumNoOfConsecutiveDigits = {}));
+(function (MaximumNoOfConsecutiveCharacters) {
+  MaximumNoOfConsecutiveCharacters[MaximumNoOfConsecutiveCharacters["Two"] = 2] = "Two";
+  MaximumNoOfConsecutiveCharacters[MaximumNoOfConsecutiveCharacters["Three"] = 3] = "Three";
+  MaximumNoOfConsecutiveCharacters[MaximumNoOfConsecutiveCharacters["Four"] = 4] = "Four";
+  MaximumNoOfConsecutiveCharacters[MaximumNoOfConsecutiveCharacters["Five"] = 5] = "Five";
+})(exports.MaximumNoOfConsecutiveCharacters || (exports.MaximumNoOfConsecutiveCharacters = {}));
 
 exports.MyPasswordStrengthOptions = MyPasswordStrengthOptions;
 exports.PasswordStrength = PasswordStrength;
