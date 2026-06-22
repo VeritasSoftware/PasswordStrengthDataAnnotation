@@ -72,7 +72,7 @@ else
 }
 ```
 
-The special characters considered in the validation are: !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~. 
+The special characters considered in the validation are: **!"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~**. 
 
 You can modify this set of special characters by setting the `SpecialCharacters` property to a custom string of special characters.
 

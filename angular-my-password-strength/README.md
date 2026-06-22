@@ -27,7 +27,7 @@ You can validate passwords programmatically using the `passwordStrengthValidator
 
 You can set the password strength requirements through the properties of the `MyPasswordStrengthOptions` class and pass the options to the function.
 
-The special characters considered in the validation are: @$!%*?&. 
+The special characters considered in the validation are: **!"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~**. 
 
 You can modify this set of special characters by setting the `specialCharacters` property of the options to a custom string of special characters.
 

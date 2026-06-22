@@ -31,7 +31,7 @@ You can configure:
 * Maximum consecutive ascending and/or descending digits - eg 123 / 654
 * Maximum consecutive ascending and/or descending characters - eg aBCd / DcbA
 
-The special characters considered in the validation are: @$!%*?&. 
+The special characters considered in the validation are: **!"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~**. 
 
 You can modify this set of special characters by setting the `specialCharacters` property of the options to a custom string of special characters.
 

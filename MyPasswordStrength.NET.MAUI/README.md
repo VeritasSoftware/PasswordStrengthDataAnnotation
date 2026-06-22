@@ -27,7 +27,7 @@ The package provides a `PasswordStrengthEntry` Entry that you can use to validat
 
 You can set the password strength requirements through the properties of the `MyPasswordStrengthOptions` class and pass the options to the Entry.
 
-The special characters considered in the validation are: !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~. 
+The special characters considered in the validation are: **!"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~**. 
 
 You can modify this set of special characters by setting the `SpecialCharacters` property of the options to a custom string of special characters.
 
@@ -76,8 +76,8 @@ namespace YourNamespace.Pages;
 
 public partial class RegistrationPage : ContentPage
 {
-	public RegistrationPage()
-	{        
+    public RegistrationPage()
+    {
         InitializeComponent();
 
         passwordStrength.StrengthOptions = StrengthOptions;
@@ -129,7 +129,7 @@ public partial class RegistrationPage : ContentPage
 }
 ```
 
-### Code only
+### Code only page
 
 `Registration.cs`:
 

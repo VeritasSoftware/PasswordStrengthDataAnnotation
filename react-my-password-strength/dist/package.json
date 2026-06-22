@@ -1,6 +1,6 @@
 {
   "name": "react-my-password-strength",
-  "version": "3.0.0",
+  "version": "3.0.2",
   "description": "A React library for validating password strength based on customizable complexity requirements.",
   "author": "VeritasSoftware",
   "license": "MIT",
