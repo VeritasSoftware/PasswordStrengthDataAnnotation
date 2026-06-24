@@ -169,11 +169,25 @@ namespace PasswordStrengthTests
 
         [Theory]
         [InlineData("Password1!", Language.English, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, true)]
-        [InlineData("お早う御座います1@", Language.Japanese, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, true)]
+        [InlineData("তুমি কেমন আছো?কখ!খক", Language.Bangla, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, true)]
+        [InlineData("मेरा पासवर्ड कख है1!", Language.Hindi, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, true)]
+        [InlineData("見到你很高興丐丑1丑丐@!", Language.Chinese, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, true)]
+        [InlineData("어떻게 지내세요?1떻떼!떼떻", Language.Korean, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, true)]
+        [InlineData("おはようございます1こご@ごこ", Language.Japanese, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, true)]
         [InlineData("آپ سے مل کے اچھا لگا", Language.Urdu, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, true)]
         [InlineData("PaBcwordC1!", Language.English, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false)]
-        [InlineData("おあぃい曖う御座います1@", Language.Japanese, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false)]
-        [InlineData("آپسشص سے مل کے اچھا لگا", Language.Urdu, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("তুমি কেমন আছো?কখগ!", Language.Bangla, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("তুমি কেমন আছো?গখক!", Language.Bangla, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("मेरा पासवर्ड है1कखग!", Language.Hindi, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("मेरा पासवर्ड है1गखक!", Language.Hindi, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("어떻게 지내세요?1떻떼떽!", Language.Korean, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("어떻게 지내세요?1떽떼떻!", Language.Korean, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("見到你很高興1丐丑丒@!", Language.Chinese, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("見到你很高興1丒丑丐@!", Language.Chinese, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("おはようございます1こごさ@", Language.Japanese, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("おはようございます1さごこ@", Language.Japanese, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("آپ سے سشص مل کے اچھا لگا", Language.Urdu, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("آپ سے صشس مل کے اچھا لگا", Language.Urdu, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false)]
         public void MultiLingualMaxNoOfConsecutiveAscendingDescendingCharacters(string passwordToTest, Language language,
                                                                     MaxNoOfConsecutiveCharacters maxConsecutiveAscendingCharacters,
                                                                     MaxNoOfConsecutiveCharacters maxConsecutiveDescendingCharacters,

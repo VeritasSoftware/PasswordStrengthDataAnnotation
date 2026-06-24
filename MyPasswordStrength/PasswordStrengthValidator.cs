@@ -109,11 +109,12 @@ namespace MyPasswordStrength
         {
             switch (language)
             {
-                case Language.Bengali: return theString.Replace("A-Z", _bengali);
+                case Language.Bangla: return theString.Replace("A-Z", _bengali);
                 case Language.Hindi: return theString.Replace("A-Z", _hindi);
                 case Language.Chinese: return theString.Replace("A-Z", _chinese);
                 case Language.Korean: return theString.Replace("A-Z", _korean);
                 case Language.Japanese: return theString.Replace("A-Z", _japanese);
+                case Language.Urdu: return theString.Replace("A-Z", _urdu);
                 default: return theString;
             }
         }
@@ -136,7 +137,7 @@ namespace MyPasswordStrength
         }
 
 
-        public static List<(string, string)> GetStartEndTuple(string language)
+        public static List<(string, string)> GetStartEndList(string language)
         {
             var result = new List<(string, string)>();
             var startChars = new List<string>();
@@ -168,11 +169,19 @@ namespace MyPasswordStrength
         private static List<(string, string)> GetStartEnd(Language language)
         {            
             switch(language)
-            {                    
+            {
+                case Language.Bangla:
+                    return GetStartEndList(_bengali);
+                case Language.Hindi:
+                    return GetStartEndList(_hindi);
+                case Language.Chinese:
+                    return GetStartEndList(_chinese);
+                case Language.Korean:
+                    return GetStartEndList(_korean);
                 case Language.Japanese:
-                    return GetStartEndTuple(_japanese);
+                    return GetStartEndList(_japanese);
                 case Language.Urdu:
-                    return GetStartEndTuple(_urdu);
+                    return GetStartEndList(_urdu);
                 default:
                     return new List<(string, string)>() { ("A", "Z") };
             };
@@ -189,6 +198,18 @@ namespace MyPasswordStrength
             {
                 switch (language)
                 {
+                    case Language.Bangla:
+                        startEndCharsList = GetStartEnd(Language.Bangla);
+                        break;
+                    case Language.Hindi:
+                        startEndCharsList = GetStartEnd(Language.Hindi);
+                        break;
+                    case Language.Chinese:
+                        startEndCharsList = GetStartEnd(Language.Chinese);
+                        break;
+                    case Language.Korean:
+                        startEndCharsList = GetStartEnd(Language.Korean);
+                        break;
                     case Language.Japanese:
                         startEndCharsList = GetStartEnd(Language.Japanese);
                         break;
@@ -280,7 +301,7 @@ namespace MyPasswordStrength
     public enum Language
     {
         English = 0,
-        Bengali = 1,
+        Bangla = 1,
         Hindi = 2,
         Chinese = 3,
         Korean = 4,
