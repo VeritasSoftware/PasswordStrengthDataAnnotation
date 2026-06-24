@@ -168,6 +168,40 @@ namespace PasswordStrengthTests
         }
 
         [Theory]
+        [InlineData("Password1!", Language.English, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, true)]
+        [InlineData("お早う御座います1@", Language.Japanese, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, true)]
+        [InlineData("آپ سے مل کے اچھا لگا", Language.Urdu, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, true)]
+        [InlineData("PaBcwordC1!", Language.English, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("おあぃい曖う御座います1@", Language.Japanese, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("آپسشص سے مل کے اچھا لگا", Language.Urdu, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false)]
+        public void MultiLingualMaxNoOfConsecutiveAscendingDescendingCharacters(string passwordToTest, Language language,
+                                                                    MaxNoOfConsecutiveCharacters maxConsecutiveAscendingCharacters,
+                                                                    MaxNoOfConsecutiveCharacters maxConsecutiveDescendingCharacters,
+                                                                    bool expectedResult)
+        {
+            var validator = new PasswordStrengthValidator
+            {
+                MinimumLength = 8,
+                RequireUppercase = false,
+                RequireLowercase = false,
+                RequireDigit = false,
+                RequireSpecialCharacter = false,
+                RequireMaxNoOfSameConsecutiveCharacters = false,
+                RequireMaxNoOfConsecutiveAscendingDigits = false,
+                RequireMaxNoOfConsecutiveDescendingDigits = false,
+                RequireRepeatingSequenceCheck = false,
+                RequireMaxNoOfConsecutiveAscendingCharacters = true,
+                MaxNoOfConsecutiveAscendingCharacters = maxConsecutiveAscendingCharacters,
+                RequireMaxNoOfConsecutiveDescendingCharacters = true,
+                MaxNoOfConsecutiveDescendingCharacters = maxConsecutiveDescendingCharacters,
+                Language = language
+            };
+
+            var result = validator.PasswordStrength(passwordToTest);
+            Assert.Equal(expectedResult, result);
+        }
+
+        [Theory]
         [InlineData("PassworD1!", 2, true)] // Valid password
         [InlineData("P@ss1worD@ss!", 4, true)] // Valid password
         [InlineData("P@ssworD@ss1!", 3, false)] // Invalid password
