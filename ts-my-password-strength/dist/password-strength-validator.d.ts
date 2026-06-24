@@ -19,7 +19,9 @@ export declare class PasswordStrengthValidator {
     maxNoOfConsecutiveAscendingCharacters: MaxNoOfConsecutiveCharacters;
     requireMaxNoOfConsecutiveDescendingCharacters: boolean;
     maxNoOfConsecutiveDescendingCharacters: MaxNoOfConsecutiveCharacters;
-    getRegexPattern(minLength: number, upper: boolean, minUpper: number, lower: boolean, minLower: number, special: boolean, minSpecialCharacter: number, specialCharacters: string, digit: boolean, minDigit: number, requireMaxNoOfSameConsecutiveCharacters: boolean, maxNoOfSameConsecutiveCharacters: number, requireMaxNoOfConsecutiveAscendingDigits: boolean, maxNoOfConsecutiveAscendingDigits: MaxNoOfConsecutiveDigits, requireMaxNoOfConsecutiveDescendingDigits: boolean, maxNoOfConsecutiveDescendingDigits: MaxNoOfConsecutiveDigits, requireMaxNoOfConsecutiveAscendingCharacters: boolean, maxNoOfConsecutiveAscendingCharacters: MaxNoOfConsecutiveCharacters, requireMaxNoOfConsecutiveDescendingCharacters: boolean, maxNoOfConsecutiveDescendingCharacters: MaxNoOfConsecutiveCharacters): string;
+    requireRepeatingSequenceCheck: boolean;
+    minLengthOfRepeatingSequence: number;
+    getRegexPattern(minLength: number, upper: boolean, minUpper: number, lower: boolean, minLower: number, special: boolean, minSpecialCharacter: number, specialCharacters: string, digit: boolean, minDigit: number, requireMaxNoOfSameConsecutiveCharacters: boolean, maxNoOfSameConsecutiveCharacters: number, requireMaxNoOfConsecutiveAscendingDigits: boolean, maxNoOfConsecutiveAscendingDigits: MaxNoOfConsecutiveDigits, requireMaxNoOfConsecutiveDescendingDigits: boolean, maxNoOfConsecutiveDescendingDigits: MaxNoOfConsecutiveDigits, requireMaxNoOfConsecutiveAscendingCharacters: boolean, maxNoOfConsecutiveAscendingCharacters: MaxNoOfConsecutiveCharacters, requireMaxNoOfConsecutiveDescendingCharacters: boolean, maxNoOfConsecutiveDescendingCharacters: MaxNoOfConsecutiveCharacters, requireRepeatingSequenceCheck: boolean, minLengthOfRepeatingSequence: number): string;
     passwordStrength(password: string): boolean;
     private getMaxConsecutiveAscendingDigitsPattern;
     private getMaxConsecutiveDescendingDigitsPattern;

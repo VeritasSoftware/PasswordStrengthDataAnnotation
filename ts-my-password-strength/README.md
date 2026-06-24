@@ -18,8 +18,8 @@ You can configure:
 * Minimum digits
 * Minimum special characters
 * Maximum same consecutive characters - eg aaa
-* Maximum consecutive ascending/descending digits - eg 123 / 654
-* Maximum consecutive ascending/descending characters - eg aBCd / DcbA
+* Maximum consecutive ascending and/or descending digits - eg 123 / 654
+* Maximum consecutive ascending and/or descending characters - eg aBCd / DcbA
 * Repeated sequence check - eg in P@ssword@s - @s is repeating sequence
 
 ## Programmatic Password Validation
@@ -32,7 +32,7 @@ and then call the `PasswordStrength` method to check if a given password meets t
 
 The `PasswordStrength` method returns a boolean indicating whether the password is valid according to the configured requirements.
 
-The special characters considered in the validation are: !"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~. 
+The special characters considered in the validation are: **!"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~**. 
 
 You can modify this set of special characters by setting the `specialCharacters` property to a custom string of special characters.
 
@@ -64,7 +64,7 @@ validator.maximumNoOfSameConsecutiveCharacters = 2;
 validator.requireMaxNoOfConsecutiveAscendingDigits = true;
 validator.maximumNoOfConsecutiveAscendingDigits = MaxNoOfConsecutiveDigits.Three;
 validator.requireMaxNoOfConsecutiveDescendingDigits = true;
-validator.maximumNoOfConsecutiveDescendingDigits = MaxNoOfConsecutiveDigits.Three;
+validator.maximumNoOfConsecutiveDescendingDigits = MaxNoOfConsecutiveDigits.Two;
 validator.requireMaxNoOfConsecutiveAscendingCharacters = true;
 validator.maxNoOfConsecutiveAscendingCharacters = MaxNoOfConsecutiveCharacters.Three;
 validator.requireMaxNoOfConsecutiveDescendingCharacters = true;

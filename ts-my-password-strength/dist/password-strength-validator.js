@@ -23,8 +23,10 @@ class PasswordStrengthValidator {
         this.maxNoOfConsecutiveAscendingCharacters = MaxNoOfConsecutiveCharacters.Two;
         this.requireMaxNoOfConsecutiveDescendingCharacters = true;
         this.maxNoOfConsecutiveDescendingCharacters = MaxNoOfConsecutiveCharacters.Two;
+        this.requireRepeatingSequenceCheck = true;
+        this.minLengthOfRepeatingSequence = 2;
     }
-    getRegexPattern(minLength, upper, minUpper, lower, minLower, special, minSpecialCharacter, specialCharacters, digit, minDigit, requireMaxNoOfSameConsecutiveCharacters, maxNoOfSameConsecutiveCharacters, requireMaxNoOfConsecutiveAscendingDigits, maxNoOfConsecutiveAscendingDigits, requireMaxNoOfConsecutiveDescendingDigits, maxNoOfConsecutiveDescendingDigits, requireMaxNoOfConsecutiveAscendingCharacters, maxNoOfConsecutiveAscendingCharacters, requireMaxNoOfConsecutiveDescendingCharacters, maxNoOfConsecutiveDescendingCharacters) {
+    getRegexPattern(minLength, upper, minUpper, lower, minLower, special, minSpecialCharacter, specialCharacters, digit, minDigit, requireMaxNoOfSameConsecutiveCharacters, maxNoOfSameConsecutiveCharacters, requireMaxNoOfConsecutiveAscendingDigits, maxNoOfConsecutiveAscendingDigits, requireMaxNoOfConsecutiveDescendingDigits, maxNoOfConsecutiveDescendingDigits, requireMaxNoOfConsecutiveAscendingCharacters, maxNoOfConsecutiveAscendingCharacters, requireMaxNoOfConsecutiveDescendingCharacters, maxNoOfConsecutiveDescendingCharacters, requireRepeatingSequenceCheck, minLengthOfRepeatingSequence) {
         let pattern = "^";
         if (upper)
             pattern += "(?=(.*?[A-Z]){" + minUpper + ",})"; // min no of uppercase letter
@@ -44,6 +46,8 @@ class PasswordStrengthValidator {
             pattern += "(?!^(.*?(" + this.getMaxConsecutiveCharactersPattern(maxNoOfConsecutiveAscendingCharacters + 1) + "))+)"; // Max no of consecutive ascending characters
         if (requireMaxNoOfConsecutiveDescendingCharacters)
             pattern += "(?!^(.*?(" + this.getMaxConsecutiveCharactersPattern(maxNoOfConsecutiveDescendingCharacters + 1, true) + "))+)"; // Max no of consecutive descending characters
+        if (requireRepeatingSequenceCheck)
+            pattern += "(?!^(.*?(?<repeating>.{" + minLengthOfRepeatingSequence + ",})(?=(.*?\\k<repeating>)))+)"; // Repeating sequence
         pattern += ".{" + minLength + ",}$"; // Minimum length
         return pattern;
     }
@@ -51,7 +55,7 @@ class PasswordStrengthValidator {
         if (!password) {
             return false;
         }
-        const regexPattern = this.getRegexPattern(this.minimumLength, this.requireUppercase, this.minimumUppercase, this.requireLowercase, this.minimumLowercase, this.requireSpecialCharacter, this.minimumSpecialCharacter, this.specialCharacters, this.requireDigit, this.minimumDigit, this.requireMaxNoOfSameConsecutiveCharacters, this.maximumNoOfSameConsecutiveCharacters, this.requireMaxNoOfConsecutiveAscendingDigits, this.maximumNoOfConsecutiveAscendingDigits, this.requireMaxNoOfConsecutiveDescendingDigits, this.maximumNoOfConsecutiveDescendingDigits, this.requireMaxNoOfConsecutiveAscendingCharacters, this.maxNoOfConsecutiveAscendingCharacters, this.requireMaxNoOfConsecutiveDescendingCharacters, this.maxNoOfConsecutiveDescendingCharacters);
+        const regexPattern = this.getRegexPattern(this.minimumLength, this.requireUppercase, this.minimumUppercase, this.requireLowercase, this.minimumLowercase, this.requireSpecialCharacter, this.minimumSpecialCharacter, this.specialCharacters, this.requireDigit, this.minimumDigit, this.requireMaxNoOfSameConsecutiveCharacters, this.maximumNoOfSameConsecutiveCharacters, this.requireMaxNoOfConsecutiveAscendingDigits, this.maximumNoOfConsecutiveAscendingDigits, this.requireMaxNoOfConsecutiveDescendingDigits, this.maximumNoOfConsecutiveDescendingDigits, this.requireMaxNoOfConsecutiveAscendingCharacters, this.maxNoOfConsecutiveAscendingCharacters, this.requireMaxNoOfConsecutiveDescendingCharacters, this.maxNoOfConsecutiveDescendingCharacters, this.requireRepeatingSequenceCheck, this.minLengthOfRepeatingSequence);
         const regex = new RegExp(regexPattern);
         return regex.test(password);
     }
