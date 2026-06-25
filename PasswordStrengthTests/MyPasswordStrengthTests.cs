@@ -270,8 +270,12 @@ namespace PasswordStrengthTests
         [Theory]
         [InlineData("PassworD1!", 2, true)] // Valid password
         [InlineData("P@ss1worD@ss!", 4, true)] // Valid password
+        [InlineData("मेरा पासवर्ड हैप1!", 2, true)] // Valid password
+        [InlineData("נעים להכיר אותך1", 2, true)] // Valid password
         [InlineData("P@ssworD@ss1!", 3, false)] // Invalid password
         [InlineData("P@ss@ssworD1!", 3, false)] // Invalid password
+        [InlineData("मेरा पासवर्ड है पास1!", 2, false)] // Invalid password
+        [InlineData("נעים להכיר אותך1 אבגך1", 2, false)] // Invalid password
         public void RepeatingSequence(string passwordToTest, int minLengthOfRepeatingSequence, bool expectedResult)
         {
             var validator = new PasswordStrengthValidator
