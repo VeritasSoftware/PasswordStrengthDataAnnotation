@@ -12,10 +12,13 @@ namespace MyPasswordStrength
         private const string _englishLowercase = "a-z";
         private const string _bengali = @"\\u0980-\\u09FF";
         private const string _hindi = @"\\u0900-\\u097F";
+        private const string _punjabi = @"\\u0A00-\\u0A7F";
         private const string _chinese = @"\\u4E00-\\u9FFF";
         private const string _korean = @"\\u1100-\\u11FF\\u3130-\\u318F\\uAC00-\\uD7A3\\uA960-\\uA97F\\uD7B0-\\uD7FF";
         private const string _japanese = @"\\u3040-\\u309F\\u30A0-\\u30FF\\u4E00-\\u9FFF";
         private const string _urdu = @"\\u0600-\\u06FF\\u0750-\\u077F\\u08A0-\\u08FF\\uFB50-\\uFDFF\\uFE70-\\uFEFF";
+        private const string _arabic = @"\\u0600-\\u06FF\\u0750-\\u077F\\u08A0-\\u08FF\\uFB50-\\uFDFF\\uFE70-\\uFEFF";
+        private const string _hebrew = @"\\u0590-\\u05FF";
 
         public int MinimumLength { get; set; }
         public bool RequireUppercase { get; set; } = true;
@@ -174,6 +177,8 @@ namespace MyPasswordStrength
                     return GetStartEndList(_bengali);
                 case Language.Hindi:
                     return GetStartEndList(_hindi);
+                case Language.Punjabi:
+                    return GetStartEndList(_punjabi);
                 case Language.Chinese:
                     return GetStartEndList(_chinese);
                 case Language.Korean:
@@ -182,6 +187,10 @@ namespace MyPasswordStrength
                     return GetStartEndList(_japanese);
                 case Language.Urdu:
                     return GetStartEndList(_urdu);
+                case Language.Arabic:
+                    return GetStartEndList(_arabic);
+                case Language.Hebrew:
+                    return GetStartEndList(_hebrew);
                 default:
                     return new List<(string, string)>() { ("A", "Z") };
             };
@@ -204,6 +213,9 @@ namespace MyPasswordStrength
                     case Language.Hindi:
                         startEndCharsList = GetStartEnd(Language.Hindi);
                         break;
+                    case Language.Punjabi:
+                        startEndCharsList = GetStartEnd(Language.Punjabi);
+                        break;
                     case Language.Chinese:
                         startEndCharsList = GetStartEnd(Language.Chinese);
                         break;
@@ -215,6 +227,12 @@ namespace MyPasswordStrength
                         break;
                     case Language.Urdu:
                         startEndCharsList = GetStartEnd(Language.Urdu);
+                        break;
+                    case Language.Arabic:
+                        startEndCharsList = GetStartEnd(Language.Arabic);
+                        break;
+                    case Language.Hebrew:
+                        startEndCharsList = GetStartEnd(Language.Hebrew);
                         break;
                 }
 
@@ -300,13 +318,16 @@ namespace MyPasswordStrength
 
     public enum Language
     {
-        English = 0,
-        Bangla = 1,
-        Hindi = 2,
-        Chinese = 3,
-        Korean = 4,
-        Japanese = 5,
-        Urdu = 6
+        English,
+        Bangla,
+        Hindi,
+        Punjabi,
+        Chinese,
+        Korean,
+        Japanese,
+        Urdu,
+        Arabic,
+        Hebrew
     }
 
     internal static class Extensions
