@@ -225,6 +225,49 @@ namespace PasswordStrengthTests
         }
 
         [Theory]
+        [InlineData("তুমি কেমন আ1@1", Language.Bangla, true)]
+        [InlineData("তুমি 1@!", Language.Bangla, false)]
+        [InlineData("मेरा पासवर्ड है1@1", Language.Hindi, true)]
+        [InlineData("मेरा1@1", Language.Hindi, false)]
+        [InlineData("ਤੁਹਾਡਾ ਕੀ ਹਾਲ ਹੈ?1@1", Language.Punjabi, true)]
+        [InlineData("ਤੁਹਾ1@1", Language.Punjabi, false)]
+        [InlineData("見到你很高興1@!", Language.Chinese, true)]
+        [InlineData("見到你很1@!", Language.Chinese, false)]
+        [InlineData("어떻게 지내세요?1!", Language.Korean, true)]
+        [InlineData("어떻게 지?1!", Language.Korean, false)]
+        [InlineData("おはようございます1@", Language.Japanese, true)]
+        [InlineData("おはよう1@!", Language.Japanese, false)]
+        [InlineData("آپ سے مل کے اچھا لگا1@1", Language.Urdu, true)]
+        [InlineData("پ سے م1314", Language.Urdu, false)]
+        [InlineData("صباح الخيرح1!1", Language.Arabic, true)]
+        [InlineData("صباح1!1", Language.Arabic, false)]
+        [InlineData("1!נעים להכיר אות@אב1@", Language.Hebrew, true)]
+        [InlineData("אב1בא@", Language.Hebrew, false)]
+        public void MultilingualMinNoOfCharacters(string passwordToTest, Language language, bool expectedResult)
+        {
+            var validator = new PasswordStrengthValidator
+            {
+                MinimumLength = 6,
+                RequireDigit = false,
+                RequireSpecialCharacter = false,
+                RequireMaxNoOfSameConsecutiveCharacters = false,
+                RequireMaxNoOfConsecutiveAscendingDigits = false,
+                RequireMaxNoOfConsecutiveAscendingCharacters = false,
+                RequireMaxNoOfConsecutiveDescendingDigits= false,
+                RequireMaxNoOfConsecutiveDescendingCharacters= false,
+                RequireRepeatingSequenceCheck= false,
+                RequireLowercase = false,
+                RequireUppercase = true,
+                MinUppercase = 5,
+                Language = language
+            };
+
+            var result = validator.PasswordStrength(passwordToTest);
+
+            Assert.Equal(expectedResult, result);
+        }
+
+        [Theory]
         [InlineData("PassworD1!", 2, true)] // Valid password
         [InlineData("P@ss1worD@ss!", 4, true)] // Valid password
         [InlineData("P@ssworD@ss1!", 3, false)] // Invalid password

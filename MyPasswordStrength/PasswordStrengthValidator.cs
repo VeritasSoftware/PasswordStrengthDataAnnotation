@@ -112,12 +112,15 @@ namespace MyPasswordStrength
         {
             switch (language)
             {
-                case Language.Bangla: return theString.Replace("A-Z", _bengali);
-                case Language.Hindi: return theString.Replace("A-Z", _hindi);
-                case Language.Chinese: return theString.Replace("A-Z", _chinese);
-                case Language.Korean: return theString.Replace("A-Z", _korean);
-                case Language.Japanese: return theString.Replace("A-Z", _japanese);
-                case Language.Urdu: return theString.Replace("A-Z", _urdu);
+                case Language.Bangla: return theString.Replace("A-Z", _bengali.Replace(@"\\u", @"\u"));
+                case Language.Hindi: return theString.Replace("A-Z", _hindi.Replace(@"\\u", @"\u"));
+                case Language.Punjabi: return theString.Replace("A-Z", _punjabi.Replace(@"\\u", @"\u"));
+                case Language.Chinese: return theString.Replace("A-Z", _chinese.Replace(@"\\u", @"\u"));
+                case Language.Korean: return theString.Replace("A-Z", _korean.Replace(@"\\u", @"\u"));
+                case Language.Japanese: return theString.Replace("A-Z", _japanese.Replace(@"\\u", @"\u"));
+                case Language.Urdu: return theString.Replace("A-Z", _urdu.Replace(@"\\u", @"\u"));
+                case Language.Arabic: return theString.Replace("A-Z", _arabic.Replace(@"\\u", @"\u"));
+                case Language.Hebrew: return theString.Replace("A-Z", _hebrew.Replace(@"\\u", @"\u"));
                 default: return theString;
             }
         }
