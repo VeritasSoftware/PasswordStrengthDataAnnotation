@@ -20,6 +20,8 @@ namespace MyPasswordStrength
         private const string _arabic = @"\\u0600-\\u06FF\\u0750-\\u077F\\u08A0-\\u08FF\\uFB50-\\uFDFF\\uFE70-\\uFEFF";
         private const string _hebrew = @"\\u0590-\\u05FF";
 
+        private string _regexPattern = null;
+
         public int MinimumLength { get; set; }
         public bool RequireUppercase { get; set; } = true;
         public int MinUppercase { get; set; } = 1;
@@ -84,7 +86,9 @@ namespace MyPasswordStrength
             if (string.IsNullOrEmpty(password))
                 return false;
 
-            var regexPattern = GetRegexPattern(MinimumLength, RequireUppercase, MinUppercase, RequireLowercase, MinLowercase,
+            if (_regexPattern == null)
+            {
+                _regexPattern = GetRegexPattern(MinimumLength, RequireUppercase, MinUppercase, RequireLowercase, MinLowercase,
                                                 RequireDigit, MinDigit, RequireSpecialCharacter, MinSpecialCharacter, SpecialCharacters,
                                                 RequireMaxNoOfSameConsecutiveCharacters, MaxNoOfSameConsecutiveCharacters,
                                                 RequireMaxNoOfConsecutiveAscendingDigits, MaxNoOfConsecutiveAscendingDigits,
@@ -92,8 +96,9 @@ namespace MyPasswordStrength
                                                 RequireMaxNoOfConsecutiveAscendingCharacters, MaxNoOfConsecutiveAscendingCharacters,
                                                 RequireMaxNoOfConsecutiveDescendingCharacters, MaxNoOfConsecutiveDescendingCharacters,
                                                 RequireRepeatingSequenceCheck, MinLengthOfRepeatingSequence, Language);
+            }
 
-            return Regex.IsMatch(password, regexPattern);
+            return Regex.IsMatch(password, _regexPattern);
         }
 
         private static string GetMaxConsecutiveDigitsPattern(int length, bool isDescending = false)

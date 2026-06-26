@@ -1,13 +1,15 @@
 export class PasswordStrengthValidator {
-    private static readonly _bangla:string = "\\u0980-\\u09FF";
-    private static readonly _hindi:string = "\\u0900-\\u097F";
-    private static readonly _punjabi:string = "\\u0A05-\\u0A14\\u0A15-\\u0A39";
-    private static readonly _chinese:string = "\\u4E00-\\u9FFF";
-    private static readonly _korean:string = "\\u1100-\\u11FF\\u3130-\\u318F\\uAC00-\\uD7A3";
-    private static readonly _japanese:string = "\\u3040-\\u309F\\u30A0-\\u30FF\\u31F0-\\u31FF\\u3400-\\u4DBF\\u4E00-\\u9FFF\\uF900-\\uFAFF";
-    private static readonly _urdu:string = "\\u0600-\\u06FF\\u0750-\\u077F\\u08A0-\\u08FF\\uFB50-\\uFDFF\\uFE70-\\uFEFF";
-    private static readonly _arabic:string = "\\u0621-\\u063A\\u0641-\\u064A";
-    private static readonly _hebrew:string = "\\u05D0-\\u05EA";
+    private _bangla:string = "\\u0980-\\u09FF";
+    private _hindi:string = "\\u0900-\\u097F";
+    private _punjabi:string = "\\u0A05-\\u0A14\\u0A15-\\u0A39";
+    private _chinese:string = "\\u4E00-\\u9FFF";
+    private _korean:string = "\\u1100-\\u11FF\\u3130-\\u318F\\uAC00-\\uD7A3";
+    private _japanese:string = "\\u3040-\\u309F\\u30A0-\\u30FF\\u31F0-\\u31FF\\u3400-\\u4DBF\\u4E00-\\u9FFF\\uF900-\\uFAFF";
+    private _urdu:string = "\\u0600-\\u06FF\\u0750-\\u077F\\u08A0-\\u08FF\\uFB50-\\uFDFF\\uFE70-\\uFEFF";
+    private _arabic:string = "\\u0621-\\u063A\\u0641-\\u064A";
+    private _hebrew:string = "\\u05D0-\\u05EA";
+
+    private _regexPattern: string|null = null;
 
     minimumLength: number = 6;
     requireUppercase: boolean = true;
@@ -31,7 +33,7 @@ export class PasswordStrengthValidator {
     maxNoOfConsecutiveDescendingCharacters: MaxNoOfConsecutiveCharacters = MaxNoOfConsecutiveCharacters.Two;
     requireRepeatingSequenceCheck: boolean = true;
     minLengthOfRepeatingSequence: number = 2;
-    language: Language = Language.English;
+    language: Language = Language.English;    
 
     getRegexPattern (minLength: number, upper: boolean, minUpper: number, 
                     lower: boolean, minLower: number,  special: boolean, minSpecialCharacter: number, specialCharacters: string,
@@ -71,18 +73,20 @@ export class PasswordStrengthValidator {
             return false;
         }
 
-        const regexPattern = this.getRegexPattern(this.minimumLength, this.requireUppercase, this.minimumUppercase,
-            this.requireLowercase, this.minimumLowercase, this.requireSpecialCharacter, this.minimumSpecialCharacter, this.specialCharacters,
-            this.requireDigit, this.minimumDigit, this.requireMaxNoOfSameConsecutiveCharacters, this.maximumNoOfSameConsecutiveCharacters,
-            this.requireMaxNoOfConsecutiveAscendingDigits, this.maximumNoOfConsecutiveAscendingDigits,
-            this.requireMaxNoOfConsecutiveDescendingDigits, this.maximumNoOfConsecutiveDescendingDigits,
-            this.requireMaxNoOfConsecutiveAscendingCharacters, this.maxNoOfConsecutiveAscendingCharacters,
-            this.requireMaxNoOfConsecutiveDescendingCharacters, this.maxNoOfConsecutiveDescendingCharacters,
-            this.requireRepeatingSequenceCheck, this.minLengthOfRepeatingSequence);        
+        if (this._regexPattern == null) {
+            this._regexPattern = this.getRegexPattern(this.minimumLength, this.requireUppercase, this.minimumUppercase,
+                this.requireLowercase, this.minimumLowercase, this.requireSpecialCharacter, this.minimumSpecialCharacter, this.specialCharacters,
+                this.requireDigit, this.minimumDigit, this.requireMaxNoOfSameConsecutiveCharacters, this.maximumNoOfSameConsecutiveCharacters,
+                this.requireMaxNoOfConsecutiveAscendingDigits, this.maximumNoOfConsecutiveAscendingDigits,
+                this.requireMaxNoOfConsecutiveDescendingDigits, this.maximumNoOfConsecutiveDescendingDigits,
+                this.requireMaxNoOfConsecutiveAscendingCharacters, this.maxNoOfConsecutiveAscendingCharacters,
+                this.requireMaxNoOfConsecutiveDescendingCharacters, this.maxNoOfConsecutiveDescendingCharacters,
+                this.requireRepeatingSequenceCheck, this.minLengthOfRepeatingSequence);
+        }
 
-        console.log(regexPattern);
+        console.log(this._regexPattern);
         
-        const regex = new RegExp(regexPattern);
+        const regex = new RegExp(this._regexPattern);
 
         return regex.test(password);
     }
@@ -146,23 +150,23 @@ export class PasswordStrengthValidator {
         switch(language)
         {
             case Language.Bangla:
-                return this.getStartEndList(PasswordStrengthValidator._bangla);
+                return this.getStartEndList(this._bangla);
             case Language.Hindi:
-                return this.getStartEndList(PasswordStrengthValidator._hindi);
+                return this.getStartEndList(this._hindi);
             case Language.Punjabi:
-                return this.getStartEndList(PasswordStrengthValidator._punjabi);
+                return this.getStartEndList(this._punjabi);
             case Language.Chinese:
-                return this.getStartEndList(PasswordStrengthValidator._chinese);
+                return this.getStartEndList(this._chinese);
             case Language.Korean:
-                return this.getStartEndList(PasswordStrengthValidator._korean);
+                return this.getStartEndList(this._korean);
             case Language.Japanese:
-                return this.getStartEndList(PasswordStrengthValidator._japanese);
+                return this.getStartEndList(this._japanese);
             case Language.Urdu:
-                return this.getStartEndList(PasswordStrengthValidator._urdu);
+                return this.getStartEndList(this._urdu);
             case Language.Arabic:
-                return this.getStartEndList(PasswordStrengthValidator._arabic);
+                return this.getStartEndList(this._arabic);
             case Language.Hebrew:
-                return this.getStartEndList(PasswordStrengthValidator._hebrew);
+                return this.getStartEndList(this._hebrew);
             default:
                 var arr:string[][] = [];
                 arr.push(["A", "Z"]);
