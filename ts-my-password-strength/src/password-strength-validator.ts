@@ -45,7 +45,7 @@ export class PasswordStrengthValidator {
                     requireRepeatingSequenceCheck: boolean, minLengthOfRepeatingSequence: number): string {
         let pattern = "^";
         if (upper)
-            pattern += "(?=(.*?[A-Z]){" + minUpper + ",})"; // min no of uppercase letter
+            pattern += this.replaceLanguage(this.language, "(?=(.*?[A-Z]){") + minUpper + ",})"; // min no of uppercase letter
         if (lower)
             pattern += "(?=(.*?[a-z]){" + minLower + ",})"; // min no of lowercase letter
         if (digit)
@@ -114,6 +114,22 @@ export class PasswordStrengthValidator {
             return pattern;
         });
         return patterns.join("|"); // Join all patterns with OR operator
+    }
+
+    private replaceLanguage (language: Language, theString:string) : string {
+        switch (language)
+        {
+            case Language.Bangla: return theString.replace("A-Z", this._bangla.replace(/\\u/g, "\\u"));
+            case Language.Hindi: return theString.replace("A-Z", this._hindi.replace(/\\u/g, "\\u"));
+            case Language.Punjabi: return theString.replace("A-Z", this._punjabi.replace(/\\u/g, "\\u"));
+            case Language.Chinese: return theString.replace("A-Z", this._chinese.replace(/\\u/g, "\\u"));
+            case Language.Korean: return theString.replace("A-Z", this._korean.replace(/\\u/g, "\\u"));
+            case Language.Japanese: return theString.replace("A-Z", this._japanese.replace(/\\u/g, "\\u"));
+            case Language.Urdu: return theString.replace("A-Z", this._urdu.replace(/\\u/g, "\\u"));
+            case Language.Arabic: return theString.replace("A-Z", this._arabic.replace(/\\u/g, "\\u"));
+            case Language.Hebrew: return theString.replace("A-Z", this._hebrew.replace(/\\u/g, "\\u"));
+            default: return theString;
+        }
     }
 
     private convertUnicodeToHexNumber(hexStr: string): number {

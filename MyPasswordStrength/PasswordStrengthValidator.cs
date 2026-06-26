@@ -8,8 +8,6 @@ namespace MyPasswordStrength
 {
     public class PasswordStrengthValidator
     {
-        private const string _englishUppercase = "A-Z";
-        private const string _englishLowercase = "a-z";
         private const string _bangla = @"\\u0980-\\u09FF";
         private const string _hindi = @"\\u0900-\\u097F";
         private const string _punjabi = @"\\u0A00-\\u0A7F";

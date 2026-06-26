@@ -242,7 +242,7 @@ namespace PasswordStrengthTests
         [InlineData("صباح الخيرح1!1", Language.Arabic, true)]
         [InlineData("صباح1!1", Language.Arabic, false)]
         [InlineData("1!נעים להכיר אות@אב1@", Language.Hebrew, true)]
-        [InlineData("אב1בא@", Language.Hebrew, false)]
+        [InlineData("אב1בא@3", Language.Hebrew, false)]
         public void MultilingualMinNoOfCharacters(string passwordToTest, Language language, bool expectedResult)
         {
             var validator = new PasswordStrengthValidator
