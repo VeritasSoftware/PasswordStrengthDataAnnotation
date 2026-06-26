@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES6",                // Output JavaScript version
+    "target": "es2018",                // Output JavaScript version
+    "lib": ["es6", "es2018.regexp", "es2020.string", "dom"],
     "module": "commonjs",           // Module system
     "strict": true,                 // Enable all strict checks
     "rootDir": "./src",             // Input root folder

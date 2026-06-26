@@ -10,7 +10,7 @@ namespace MyPasswordStrength
     {
         private const string _englishUppercase = "A-Z";
         private const string _englishLowercase = "a-z";
-        private const string _bengali = @"\\u0980-\\u09FF";
+        private const string _bangla = @"\\u0980-\\u09FF";
         private const string _hindi = @"\\u0900-\\u097F";
         private const string _punjabi = @"\\u0A00-\\u0A7F";
         private const string _chinese = @"\\u4E00-\\u9FFF";
@@ -112,7 +112,7 @@ namespace MyPasswordStrength
         {
             switch (language)
             {
-                case Language.Bangla: return theString.Replace("A-Z", _bengali.Replace(@"\\u", @"\u"));
+                case Language.Bangla: return theString.Replace("A-Z", _bangla.Replace(@"\\u", @"\u"));
                 case Language.Hindi: return theString.Replace("A-Z", _hindi.Replace(@"\\u", @"\u"));
                 case Language.Punjabi: return theString.Replace("A-Z", _punjabi.Replace(@"\\u", @"\u"));
                 case Language.Chinese: return theString.Replace("A-Z", _chinese.Replace(@"\\u", @"\u"));
@@ -177,7 +177,7 @@ namespace MyPasswordStrength
             switch(language)
             {
                 case Language.Bangla:
-                    return GetStartEndList(_bengali);
+                    return GetStartEndList(_bangla);
                 case Language.Hindi:
                     return GetStartEndList(_hindi);
                 case Language.Punjabi:
@@ -246,7 +246,6 @@ namespace MyPasswordStrength
                 }).SelectMany(x => GetUTF16Range(x.Start, x.End));
             }
             
-
             var sequences = new List<string>();
 
             if (language == Language.English)

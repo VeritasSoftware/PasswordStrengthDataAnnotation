@@ -1,4 +1,13 @@
 export class PasswordStrengthValidator {
+    private static readonly _bangla:string = "\\u0980-\\u09FF";
+    private static readonly _hindi:string = "\\u0900-\\u097F";
+    private static readonly _punjabi:string = "\\u0A05-\\u0A14\\u0A15-\\u0A39";
+    private static readonly _chinese:string = "\\u4E00-\\u9FFF";
+    private static readonly _korean:string = "\\u1100-\\u11FF\\u3130-\\u318F\\uAC00-\\uD7A3";
+    private static readonly _japanese:string = "\\u3040-\\u309F\\u30A0-\\u30FF\\u31F0-\\u31FF\\u3400-\\u4DBF\\u4E00-\\u9FFF\\uF900-\\uFAFF";
+    private static readonly _urdu:string = "\\u0600-\\u06FF\\u0750-\\u077F\\u08A0-\\u08FF\\uFB50-\\uFDFF\\uFE70-\\uFEFF";
+    private static readonly _arabic:string = "\\u0621-\\u063A\\u0641-\\u064A";
+    private static readonly _hebrew:string = "\\u05D0-\\u05EA";
 
     minimumLength: number = 6;
     requireUppercase: boolean = true;
@@ -22,6 +31,7 @@ export class PasswordStrengthValidator {
     maxNoOfConsecutiveDescendingCharacters: MaxNoOfConsecutiveCharacters = MaxNoOfConsecutiveCharacters.Two;
     requireRepeatingSequenceCheck: boolean = true;
     minLengthOfRepeatingSequence: number = 2;
+    language: Language = Language.English;
 
     getRegexPattern (minLength: number, upper: boolean, minUpper: number, 
                     lower: boolean, minLower: number,  special: boolean, minSpecialCharacter: number, specialCharacters: string,
@@ -68,8 +78,10 @@ export class PasswordStrengthValidator {
             this.requireMaxNoOfConsecutiveDescendingDigits, this.maximumNoOfConsecutiveDescendingDigits,
             this.requireMaxNoOfConsecutiveAscendingCharacters, this.maxNoOfConsecutiveAscendingCharacters,
             this.requireMaxNoOfConsecutiveDescendingCharacters, this.maxNoOfConsecutiveDescendingCharacters,
-            this.requireRepeatingSequenceCheck, this.minLengthOfRepeatingSequence);
+            this.requireRepeatingSequenceCheck, this.minLengthOfRepeatingSequence);        
 
+        console.log(regexPattern);
+        
         const regex = new RegExp(regexPattern);
 
         return regex.test(password);
@@ -100,33 +112,150 @@ export class PasswordStrengthValidator {
         return patterns.join("|"); // Join all patterns with OR operator
     }
 
+    private convertUnicodeToHexNumber(hexStr: string): number {
+        // Validate hex string
+        if (!/^[0-9A-Fa-f]+$/.test(hexStr)) {
+            throw new Error("Invalid hex string for Unicode code point");
+        }
+    
+        // Convert hex string to number
+        const codePoint = parseInt(hexStr, 16);
+    
+        // Validate Unicode range
+        if (codePoint < 0 || codePoint > 0x10FFFF) {
+            throw new RangeError("Code point out of Unicode range");
+        }
+
+        return codePoint;
+    }
+
+    public getStartEndList(language: string): string[][] {
+        var result:string[][] = [];
+
+        var pattern = /\\u(?<start>[0-9A-Fa-f]{4})-\\u(?<end>[0-9A-Fa-f]{4})/g;
+        var regex = new RegExp(pattern);
+
+        const results = [...language.matchAll(regex)].map(m => m.groups);
+
+        results.map(x => result.push([x!.start, x!.end ]));
+
+        return result;
+    }
+
+    private getStartEnd(language: Language): string[][]{
+        switch(language)
+        {
+            case Language.Bangla:
+                return this.getStartEndList(PasswordStrengthValidator._bangla);
+            case Language.Hindi:
+                return this.getStartEndList(PasswordStrengthValidator._hindi);
+            case Language.Punjabi:
+                return this.getStartEndList(PasswordStrengthValidator._punjabi);
+            case Language.Chinese:
+                return this.getStartEndList(PasswordStrengthValidator._chinese);
+            case Language.Korean:
+                return this.getStartEndList(PasswordStrengthValidator._korean);
+            case Language.Japanese:
+                return this.getStartEndList(PasswordStrengthValidator._japanese);
+            case Language.Urdu:
+                return this.getStartEndList(PasswordStrengthValidator._urdu);
+            case Language.Arabic:
+                return this.getStartEndList(PasswordStrengthValidator._arabic);
+            case Language.Hebrew:
+                return this.getStartEndList(PasswordStrengthValidator._hebrew);
+            default:
+                var arr:string[][] = [];
+                arr.push(["A", "Z"]);
+                return arr;
+        };
+    }
+
     private getMaxConsecutiveCharactersPattern(length: number, isDescending: boolean = false): string {
         if (!Number.isInteger(length) || length <= 0 || length > 26) {
             return "";
         }
     
         const patterns: string[] = [];
-    
-        if (!isDescending) {
-            // A → Z
-            for (let start = 0; start <= 26 - length; start++) {
-                const letters: string[] = [];
-                for (let i = 0; i < length; i++) {
-                    letters.push(String.fromCharCode(65 + start + i));
+        if (this.language == Language.English) {
+            if (!isDescending) {
+                // A → Z
+                for (let start = 0; start <= 26 - length; start++) {
+                    const letters: string[] = [];
+                    for (let i = 0; i < length; i++) {
+                        letters.push(String.fromCharCode(65 + start + i));
+                    }
+                    patterns.push(this.buildVariants(letters));
                 }
-                patterns.push(this.buildVariants(letters));
-            }
-        } else {
-            // Z → A
-            for (let start = 26 - 1; start >= length - 1; start--) {
-                const letters: string[] = [];
-                for (let i = 0; i < length; i++) {
-                    letters.push(String.fromCharCode(65 + start - i));
+            } else {
+                // Z → A
+                for (let start = 26 - 1; start >= length - 1; start--) {
+                    const letters: string[] = [];
+                    for (let i = 0; i < length; i++) {
+                        letters.push(String.fromCharCode(65 + start - i));
+                    }
+                    patterns.push(this.buildVariants(letters));
                 }
-                patterns.push(this.buildVariants(letters));
             }
         }
-    
+        else {
+            let startEndCharsList:string[][] = [];
+
+            switch (this.language)
+            {
+                case Language.Bangla:
+                    startEndCharsList = this.getStartEnd(Language.Bangla);
+                    break;
+                case Language.Hindi:
+                    startEndCharsList = this.getStartEnd(Language.Hindi);
+                    break;
+                case Language.Punjabi:
+                    startEndCharsList = this.getStartEnd(Language.Punjabi);
+                    break;
+                case Language.Chinese:
+                    startEndCharsList = this.getStartEnd(Language.Chinese);
+                    break;
+                case Language.Korean:
+                    startEndCharsList = this.getStartEnd(Language.Korean);
+                    break;
+                case Language.Japanese:
+                    startEndCharsList = this.getStartEnd(Language.Japanese);
+                    break;
+                case Language.Urdu:
+                    startEndCharsList = this.getStartEnd(Language.Urdu);
+                    break;
+                case Language.Arabic:
+                    startEndCharsList = this.getStartEnd(Language.Arabic);
+                    break;
+                case Language.Hebrew:
+                    startEndCharsList = this.getStartEnd(Language.Hebrew);
+                    break;
+            }
+
+            let range:number[] = 
+            startEndCharsList.map(x => [{ Start: this.convertUnicodeToHexNumber(x[0]), End: this.convertUnicodeToHexNumber(x[1]) }])
+                             .reduce((acc, val) => acc.concat(val[0].Start, val[0].End), [] as number[]);          
+
+            if (!isDescending) {
+                // A → Z     
+                for (let start = range[0]; start <= range[range.length - 1] - length; start++) {
+                    const letters: string[] = [];
+                    for (let i = 0; i < length; i++) {
+                        letters.push(String.fromCodePoint(start + i));
+                    }
+                    patterns.push(this.buildMultilingualVariants(letters));
+                }
+            } else {
+                // Z → A
+                for (let start = range[range.length - 1] - 1; start >= range[0] - 1; start--) {
+                    const letters: string[] = [];
+                    for (let i = 0; i < length; i++) {
+                        letters.push(String.fromCodePoint(start - i));
+                    }
+                    patterns.push(this.buildMultilingualVariants(letters));
+                }
+            }
+        }    
+        
         return patterns.join("|");
     }
     
@@ -134,6 +263,11 @@ export class PasswordStrengthValidator {
         const upperLower = letters.map(ch => `(${ch}|${ch.toLowerCase()})`).join("");
         const lowerUpper = letters.map(ch => `(${ch.toLowerCase()}|${ch})`).join("");
         return `${upperLower}|${lowerUpper}`;
+    }
+
+    private buildMultilingualVariants(letters: string[]): string {
+        const l = letters.map(ch => `${ch}`).join("");
+        return `${l}`;
     }
 
     private generateIncreasingNumbers(start: number, length: number): number[] {
@@ -174,4 +308,18 @@ export enum MaxNoOfConsecutiveCharacters {
     Three = 3,
     Four = 4,
     Five = 5
+}
+
+export enum Language
+{
+    English,
+    Bangla,
+    Hindi,
+    Punjabi,
+    Chinese,
+    Korean,
+    Japanese,
+    Urdu,
+    Arabic,
+    Hebrew
 }
