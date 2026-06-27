@@ -95,6 +95,7 @@ namespace PasswordStrengthTests
                 RequireSpecialCharacter = true,
                 MinimumSpecialCharacter = 1,
                 SpecialCharacters = "!@#$%^&*()",
+                RequireRepeatingSequenceCheck = false,
                 RequireMaximumNoOfSameConsecutiveCharacters = true,
                 MaximumNoOfSameConsecutiveCharacters = 2
             };
@@ -306,7 +307,7 @@ namespace PasswordStrengthTests
                 RequireMaximumNoOfConsecutiveAscendingCharacters = false,
                 RequireMaximumNoOfConsecutiveDescendingCharacters = false,
                 RequireRepeatingSequenceCheck = true,
-                MinLengthOfRepeatingSequence = minLengthOfRepeatingSequence
+                MinimumLengthOfRepeatingSequence = minLengthOfRepeatingSequence
             };
 
             bool? result = null;
