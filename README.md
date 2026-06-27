@@ -19,8 +19,11 @@ Define your password strength complexity requirements with ease using the librar
 
 The package provides a Validator class that you can use to validate passwords programmatically.
 
+The Validator supports `multilingual` password strength validation too.
+
 You can configure:
 
+* Desired language
 * Minimum length
 * Minimum upper case characters
 * Minimum lower case characters
@@ -142,4 +145,70 @@ namespace YourNamespace
                     minLengthOfRepeatingSequence: 2,
                     ErrorMessage = "Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars, no more than 3 consecutive ascending digits, no more than 3 consecutive descending digits, no more than 3 consecutive ascending characters, no more than 2 consecutive descending characters, no repeating sequence of more than 2 chars.")]
 public string? Password { get; set; }
+```
+
+### Multilingual feature
+
+The validator supports below languages.
+
+* English (default)
+* Bangla
+* Hindi
+* Punjabi
+* Chinese
+* Korean
+* Japanese
+* Urdu
+* Arabic
+* Hebrew
+
+You can set a property of the validator called `Language`.
+
+For languages other than English, properties `RequireLowercase` & `MinLowercase` do not apply.
+
+Below unit test demonstrates how this feature works:
+
+```csharp
+[Theory]
+[InlineData("তুমি কেমন আ1@1", Language.Bangla, true)]
+[InlineData("তুমি 1@!", Language.Bangla, false)]
+[InlineData("मेरा पासवर्ड है1@1", Language.Hindi, true)]
+[InlineData("मेरा1@1", Language.Hindi, false)]
+[InlineData("ਤੁਹਾਡਾ ਕੀ ਹਾਲ ਹੈ?1@1", Language.Punjabi, true)]
+[InlineData("ਤੁਹਾ1@1", Language.Punjabi, false)]
+[InlineData("見到你很高興1@!", Language.Chinese, true)]
+[InlineData("見到你很1@!", Language.Chinese, false)]
+[InlineData("어떻게 지내세요?1!", Language.Korean, true)]
+[InlineData("어떻게 지?1!", Language.Korean, false)]
+[InlineData("おはようございます1@", Language.Japanese, true)]
+[InlineData("おはよう1@!", Language.Japanese, false)]
+[InlineData("آپ سے مل کے اچھا لگا1@1", Language.Urdu, true)]
+[InlineData("پ سے م1314", Language.Urdu, false)]
+[InlineData("صباح الخيرح1!1", Language.Arabic, true)]
+[InlineData("صباح1!1", Language.Arabic, false)]
+[InlineData("1!נעים להכיר אות@אב1@", Language.Hebrew, true)]
+[InlineData("אב1בא@3", Language.Hebrew, false)]
+public void MultilingualMinNoOfCharacters(string passwordToTest, Language language, bool expectedResult)
+{
+    var validator = new PasswordStrengthValidator
+    {
+        MinimumLength = 6,
+        RequireDigit = false,
+        RequireSpecialCharacter = false,
+        RequireMaxNoOfSameConsecutiveCharacters = false,
+        RequireMaxNoOfConsecutiveAscendingDigits = false,
+        RequireMaxNoOfConsecutiveAscendingCharacters = false,
+        RequireMaxNoOfConsecutiveDescendingDigits= false,
+        RequireMaxNoOfConsecutiveDescendingCharacters= false,
+        RequireRepeatingSequenceCheck= false,
+        RequireLowercase = false,
+        RequireUppercase = true,
+        MinUppercase = 5,
+        Language = language
+    };
+
+    var result = validator.PasswordStrength(passwordToTest);
+
+    Assert.Equal(expectedResult, result);
+}
 ```
