@@ -170,24 +170,24 @@ Below unit test demonstrates how this feature works:
 
 ```csharp
 [Theory]
-[InlineData("তুমি কেমন আ1@1", Language.Bangla, true)]
-[InlineData("তুমি 1@!", Language.Bangla, false)]
-[InlineData("मेरा पासवर्ड है1@1", Language.Hindi, true)]
-[InlineData("मेरा1@1", Language.Hindi, false)]
-[InlineData("ਤੁਹਾਡਾ ਕੀ ਹਾਲ ਹੈ?1@1", Language.Punjabi, true)]
-[InlineData("ਤੁਹਾ1@1", Language.Punjabi, false)]
-[InlineData("見到你很高興1@!", Language.Chinese, true)]
-[InlineData("見到你很1@!", Language.Chinese, false)]
-[InlineData("어떻게 지내세요?1!", Language.Korean, true)]
-[InlineData("어떻게 지?1!", Language.Korean, false)]
-[InlineData("おはようございます1@", Language.Japanese, true)]
-[InlineData("おはよう1@!", Language.Japanese, false)]
-[InlineData("آپ سے مل کے اچھا لگا1@1", Language.Urdu, true)]
-[InlineData("پ سے م1314", Language.Urdu, false)]
-[InlineData("صباح الخيرح1!1", Language.Arabic, true)]
-[InlineData("صباح1!1", Language.Arabic, false)]
-[InlineData("1!נעים להכיר אות@אב1@", Language.Hebrew, true)]
-[InlineData("אב1בא@3", Language.Hebrew, false)]
+[InlineData("তুমি কেমন আ1@1", Language.Bangla, true)] //Valid
+[InlineData("তুমি 1@!", Language.Bangla, false)] //Invalid
+[InlineData("मेरा पासवर्ड है1@1", Language.Hindi, true)] //Valid
+[InlineData("मेरा1@1", Language.Hindi, false)] //Invalid
+[InlineData("ਤੁਹਾਡਾ ਕੀ ਹਾਲ ਹੈ?1@1", Language.Punjabi, true)] //Valid
+[InlineData("ਤੁਹਾ1@1", Language.Punjabi, false)] //Invalid
+[InlineData("見到你很高興1@!", Language.Chinese, true)] //Valid
+[InlineData("見到你很1@!", Language.Chinese, false)] //Invalid
+[InlineData("어떻게 지내세요?1!", Language.Korean, true)] //Valid
+[InlineData("어떻게 지?1!", Language.Korean, false)] //Invalid
+[InlineData("おはようございます1@", Language.Japanese, true)] //Valid
+[InlineData("おはよう1@!", Language.Japanese, false)] //Invalid
+[InlineData("آپ سے مل کے اچھا لگا1@1", Language.Urdu, true)] //Valid
+[InlineData("پ سے م1314", Language.Urdu, false)] //Invalid
+[InlineData("صباح الخيرح1!1", Language.Arabic, true)] //Valid
+[InlineData("صباح1!1", Language.Arabic, false)] //Invalid
+[InlineData("1!נעים להכיר אות@אב1@", Language.Hebrew, true)] //Valid
+[InlineData("אב1בא@3", Language.Hebrew, false)] //Invalid
 public void MultilingualMinNoOfCharacters(string passwordToTest, Language language, bool expectedResult)
 {
     var validator = new PasswordStrengthValidator

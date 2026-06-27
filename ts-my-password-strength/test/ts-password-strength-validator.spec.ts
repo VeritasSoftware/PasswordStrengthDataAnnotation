@@ -265,24 +265,24 @@ describe('Max No Of Same Consecutive Characters', () => {
 
   describe('Multilingual Min No Of Characters', () => {
     test.each([
-      ["তুমি কেমন আ1@1", Language.Bangla, true],
-      ["তুমি 1@!", Language.Bangla, false],
-      ["मेरा पासवर्ड है1@1", Language.Hindi, true],
-      ["मेरा1@1", Language.Hindi, false],
-      ["ਤੁਹਾਡਾ ਕੀ ਹਾਲ ਹੈ?1@1", Language.Punjabi, true],
-      ["ਤੁਹਾ1@1", Language.Punjabi, false],
-      ["見到你很高興1@!", Language.Chinese, true],
-      ["見到你很1@!", Language.Chinese, false],
-      ["어떻게 지내세요?1!", Language.Korean, true],
-      ["어떻게 지?1!", Language.Korean, false],
-      ["おはようございます1@", Language.Japanese, true],
-      ["おはよう1@!", Language.Japanese, false],
-      ["آپ سے مل کے اچھا لگا1@1", Language.Urdu, true],
-      ["پ سے م1314", Language.Urdu, false],
-      ["صباح الخيرح1!1", Language.Arabic, true],
-      ["صباح1!1", Language.Arabic, false],
-      ["1!נעים להכיר אות@אב1@", Language.Hebrew, true],
-      ["אב1בא@3", Language.Hebrew, false]
+      ["তুমি কেমন আ1@1", Language.Bangla, true], //Valid
+      ["তুমি 1@!", Language.Bangla, false], //Invalid
+      ["मेरा पासवर्ड है1@1", Language.Hindi, true], //Valid
+      ["मेरा1@1", Language.Hindi, false], //Invalid
+      ["ਤੁਹਾਡਾ ਕੀ ਹਾਲ ਹੈ?1@1", Language.Punjabi, true], //Valid
+      ["ਤੁਹਾ1@1", Language.Punjabi, false], //Invalid
+      ["見到你很高興1@!", Language.Chinese, true], //Valid
+      ["見到你很1@!", Language.Chinese, false], //Invalid
+      ["어떻게 지내세요?1!", Language.Korean, true], //Valid
+      ["어떻게 지?1!", Language.Korean, false], //Invalid
+      ["おはようございます1@", Language.Japanese, true], //Valid
+      ["おはよう1@!", Language.Japanese, false], //Invalid
+      ["آپ سے مل کے اچھا لگا1@1", Language.Urdu, true], //Valid
+      ["پ سے م1314", Language.Urdu, false], //Invalid
+      ["صباح الخيرح1!1", Language.Arabic, true], //Valid
+      ["صباح1!1", Language.Arabic, false], //Invalid
+      ["1!נעים להכיר אות@אב1@", Language.Hebrew, true], //Valid
+      ["אב1בא@3", Language.Hebrew, false] //Invalid
     ])(
       'passwordToTest: "%s" language: %s and expectedResult: %s',
       (passwordToTest, language, expectedResult) => {
