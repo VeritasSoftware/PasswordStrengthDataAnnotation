@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals';
-import { MaxNoOfConsecutiveCharacters, MaxNoOfConsecutiveDigits, PasswordStrengthValidator } from '../src/password-strength-validator';
+import { Language, MaxNoOfConsecutiveCharacters, MaxNoOfConsecutiveDigits, PasswordStrengthValidator } from '../src/password-strength-validator';
 
 describe('Defaults', () => {
   test.each([
@@ -205,12 +205,120 @@ describe('Max No Of Same Consecutive Characters', () => {
     );
   });
 
+  describe('Multilingual Max No Of Consecutive Ascending & Descending Characters', () => {
+    test.each([
+      ["Password1!", Language.English, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, true], // Valid password
+      ["PaBcwordC1!", Language.English, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false], // Invalid password
+      ["তুমি কেমন আছো?কখ!খক", Language.Bangla, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, true], // Valid password
+      ["তুমি কেমন আছো?কখগ!", Language.Bangla, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false], // Invalid password
+      ["তুমি কেমন আছো?গখক!", Language.Bangla, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false], // Invalid password
+      ["मेरा पासवर्ड है1कख!खक", Language.Hindi, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, true], // Valid password
+      ["मेरा पासवर्ड है1कखग!", Language.Hindi, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false], // Invalid password
+      ["मेरा पासवर्ड है1गखक!", Language.Hindi, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false], // Invalid password
+      ["ਤੁਹਾਡਾ ਕੀ ਹਾਲ ਹੈ?1ਤਥ!ਥਤ", Language.Punjabi, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, true], // Valid password
+      ["ਤੁਹਾਡਾ ਕੀ ਹਾਲ ਹੈ?1ਤਥਦ!", Language.Punjabi, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false], // Invalid password
+      ["ਤੁਹਾਡਾ ਕੀ ਹਾਲ ਹੈ?1ਦਥਤ!", Language.Punjabi, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false], // Invalid password
+      ["見到你很高興丐丑1丑丐@!", Language.Chinese, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, true], // Valid password
+      ["見到你很高興1丐丑丒@!", Language.Chinese, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false], // Invalid password
+      ["見到你很高興1丒丑丐@!", Language.Chinese, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false], // Invalid password
+      ["어떻게 지내세요?1떻떼!떼떻", Language.Korean, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, true], // Valid password
+      ["어떻게 지내세요?1떻떼떽!", Language.Korean, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false], // Invalid password
+      ["어떻게 지내세요?1떽떼떻!", Language.Korean, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false], // Invalid password
+      ["おはようございます1こご@ごこ", Language.Japanese, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, true], // Valid password
+      ["おはようございます1こごさ@", Language.Japanese, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false], // Invalid password
+      ["おはようございます1さごこ@", Language.Japanese, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false], // Invalid password
+      ["آپ سے مل کے اچھا لگا", Language.Urdu, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, true], // Valid password
+      ["آپ سے سشص مل کے اچھا لگا", Language.Urdu, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false], // Invalid password
+      ["آپ سے صشس مل کے اچھا لگا", Language.Urdu, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false], // Invalid password
+      ["صباح الخير@حخ!", Language.Arabic, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, true], // Valid password
+      ["صباح الخير@حخد!", Language.Arabic, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false], // Invalid password
+      ["صباح الخير@دخح!", Language.Arabic, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false], // Invalid password
+      ["נעים להכיר אות@אב1בא@", Language.Hebrew, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, true], // Valid password
+      ["נעים להכיר אותך1 גבא", Language.Hebrew, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false], // Invalid password
+      ["נעים להכיר אותך1 אבג", Language.Hebrew, MaxNoOfConsecutiveCharacters.Two, MaxNoOfConsecutiveCharacters.Two, false], // Invalid password
+    ])(
+      'passwordToTest: "%s" language: %s maxNoOfConsecutiveAscendingCharacters: "%s" maxNoOfConsecutiveDescendingCharacters: "%s" and expectedResult: %s',
+      (passwordToTest, language, maxNoOfConsecutiveAscendingCharacters, maxNoOfConsecutiveDescendingCharacters, expectedResult) => {
+          let validator = new PasswordStrengthValidator();
+
+          validator.minimumLength = 6;
+          validator.requireUppercase = false;
+          validator.requireLowercase = false;
+          validator.requireDigit = false;
+          validator.requireSpecialCharacter = false;
+          validator.requireMaxNoOfSameConsecutiveCharacters = false;                    
+          validator.requireMaxNoOfConsecutiveAscendingDigits = false;          
+          validator.requireMaxNoOfConsecutiveDescendingDigits = false;
+          validator.requireRepeatingSequenceCheck = false;
+          validator.requireMaxNoOfConsecutiveAscendingCharacters = true;          
+          validator.maxNoOfConsecutiveAscendingCharacters = maxNoOfConsecutiveAscendingCharacters;
+          validator.requireMaxNoOfConsecutiveDescendingCharacters = true;
+          validator.maxNoOfConsecutiveDescendingCharacters = maxNoOfConsecutiveDescendingCharacters;
+          validator.language = language;
+  
+          let isValid = validator.passwordStrength(passwordToTest);
+  
+          expect(isValid).toBe(expectedResult);
+      }
+    );
+  });
+
+  describe('Multilingual Min No Of Characters', () => {
+    test.each([
+      ["তুমি কেমন আ1@1", Language.Bangla, true],
+      ["তুমি 1@!", Language.Bangla, false],
+      ["मेरा पासवर्ड है1@1", Language.Hindi, true],
+      ["मेरा1@1", Language.Hindi, false],
+      ["ਤੁਹਾਡਾ ਕੀ ਹਾਲ ਹੈ?1@1", Language.Punjabi, true],
+      ["ਤੁਹਾ1@1", Language.Punjabi, false],
+      ["見到你很高興1@!", Language.Chinese, true],
+      ["見到你很1@!", Language.Chinese, false],
+      ["어떻게 지내세요?1!", Language.Korean, true],
+      ["어떻게 지?1!", Language.Korean, false],
+      ["おはようございます1@", Language.Japanese, true],
+      ["おはよう1@!", Language.Japanese, false],
+      ["آپ سے مل کے اچھا لگا1@1", Language.Urdu, true],
+      ["پ سے م1314", Language.Urdu, false],
+      ["صباح الخيرح1!1", Language.Arabic, true],
+      ["صباح1!1", Language.Arabic, false],
+      ["1!נעים להכיר אות@אב1@", Language.Hebrew, true],
+      ["אב1בא@3", Language.Hebrew, false]
+    ])(
+      'passwordToTest: "%s" language: %s and expectedResult: %s',
+      (passwordToTest, language, expectedResult) => {
+
+          let validator = new PasswordStrengthValidator();
+          validator.minimumLength = 6;
+          validator.requireDigit = false;
+          validator.requireSpecialCharacter = false;
+          validator.requireMaxNoOfSameConsecutiveCharacters = false;          
+          validator.requireMaxNoOfConsecutiveAscendingCharacters = false;
+          validator.requireMaxNoOfConsecutiveDescendingCharacters = false;
+          validator.requireMaxNoOfConsecutiveAscendingDigits = false;
+          validator.requireMaxNoOfConsecutiveDescendingDigits = false;
+          validator.requireLowercase = false;
+          validator.requireRepeatingSequenceCheck = false;
+          validator.requireUppercase = true;
+          validator.minimumUppercase = 5;
+          validator.language = language;
+  
+          let isValid = validator.passwordStrength(passwordToTest);
+  
+          expect(isValid).toBe(expectedResult);
+      }
+    );
+  });
+
   describe('Repeating Sequence', () => {
     test.each([
       ["PassworD1!", 2, true], // Valid password
       ["P@ss1worD@ss!", 4, true], // Valid password
+      ["मेरा पासवर्ड हैप1!", 2, true], // Valid password
+      ["נעים להכיר אותך1", 2, true], // Valid password
       ["P@ssworD@ss1!", 3, false], // Invalid password
-      ["P@ss@ssworD1!", 3, false] // Invalid password
+      ["P@ss@ssworD1!", 3, false], // Invalid password
+      ["मेरा पासवर्ड है पास1!", 2, false], // Invalid password
+      ["נעים להכיר אותך1 אבגך1", 2, false] // Invalid password
     ])(
       'passwordToTest: "%s" minLengthOfRepeatingSequence: %s and expectedResult: %s',
       (passwordToTest, minLengthOfRepeatingSequence, expectedResult) => {

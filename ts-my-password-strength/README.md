@@ -10,8 +10,11 @@ Define your password strength complexity requirements with ease using the librar
 
 The package provides a `PasswordStrengthValidator` class that you can use to validate passwords programmatically.
 
+The Validator supports `multilingual` password strength validation too.
+
 You can configure:
 
+* Desired language
 * Minimum length
 * Minimum upper case characters
 * Minimum lower case characters
@@ -85,4 +88,73 @@ else
 {
 	console.log("Password does not meet the strength requirements.");
 }
+```
+
+### Multilingual feature
+
+The validator supports below languages.
+
+* English (default)
+* Bangla
+* Hindi
+* Punjabi
+* Chinese
+* Korean
+* Japanese
+* Urdu
+* Arabic
+* Hebrew
+
+You can set a property of the validator called `language`.
+
+For languages other than English, properties `requireLowercase` & `minLowercase` do not apply.
+
+Below unit test demonstrates how this feature works:
+
+```typescript
+  describe('Multilingual Min No Of Characters', () => {
+    test.each([
+      ["তুমি কেমন আ1@1", Language.Bangla, true],
+      ["তুমি 1@!", Language.Bangla, false],
+      ["मेरा पासवर्ड है1@1", Language.Hindi, true],
+      ["मेरा1@1", Language.Hindi, false],
+      ["ਤੁਹਾਡਾ ਕੀ ਹਾਲ ਹੈ?1@1", Language.Punjabi, true],
+      ["ਤੁਹਾ1@1", Language.Punjabi, false],
+      ["見到你很高興1@!", Language.Chinese, true],
+      ["見到你很1@!", Language.Chinese, false],
+      ["어떻게 지내세요?1!", Language.Korean, true],
+      ["어떻게 지?1!", Language.Korean, false],
+      ["おはようございます1@", Language.Japanese, true],
+      ["おはよう1@!", Language.Japanese, false],
+      ["آپ سے مل کے اچھا لگا1@1", Language.Urdu, true],
+      ["پ سے م1314", Language.Urdu, false],
+      ["صباح الخيرح1!1", Language.Arabic, true],
+      ["صباح1!1", Language.Arabic, false],
+      ["1!נעים להכיר אות@אב1@", Language.Hebrew, true],
+      ["אב1בא@3", Language.Hebrew, false]
+    ])(
+      'passwordToTest: "%s" language: %s and expectedResult: %s',
+      (passwordToTest, language, expectedResult) => {
+
+          let validator = new PasswordStrengthValidator();
+          validator.minimumLength = 6;
+          validator.requireDigit = false;
+          validator.requireSpecialCharacter = false;
+          validator.requireMaxNoOfSameConsecutiveCharacters = false;          
+          validator.requireMaxNoOfConsecutiveAscendingCharacters = false;
+          validator.requireMaxNoOfConsecutiveDescendingCharacters = false;
+          validator.requireMaxNoOfConsecutiveAscendingDigits = false;
+          validator.requireMaxNoOfConsecutiveDescendingDigits = false;
+          validator.requireLowercase = false;
+          validator.requireRepeatingSequenceCheck = false;
+          validator.requireUppercase = true;
+          validator.minimumUppercase = 5;
+          validator.language = language;
+  
+          let isValid = validator.passwordStrength(passwordToTest);
+  
+          expect(isValid).toBe(expectedResult);
+      }
+    );
+  });
 ```
