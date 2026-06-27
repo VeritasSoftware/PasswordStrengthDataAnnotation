@@ -57,7 +57,7 @@ namespace MyPasswordStrength
             string pattern = "^";
             if (upper)
                 pattern +=  ReplaceLanguage(language, "(?=(.*?[A-Z]){") + minUpper + ",})"; // min no of uppercase letter
-            if (lower)
+            if (lower && language == Language.English)
                 pattern += "(?=(.*?[a-z]){" + minLower + ",})"; // min no of lowercase letter
             if (digit)
                 pattern += "(?=(.*?\\d){" + minDigit + ",})"; // min no of digit

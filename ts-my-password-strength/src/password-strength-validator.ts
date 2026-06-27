@@ -46,7 +46,7 @@ export class PasswordStrengthValidator {
         let pattern = "^";
         if (upper)
             pattern += this.replaceLanguage(this.language, "(?=(.*?[A-Z]){") + minUpper + ",})"; // min no of uppercase letter
-        if (lower)
+        if (lower && this.language == Language.English)
             pattern += "(?=(.*?[a-z]){" + minLower + ",})"; // min no of lowercase letter
         if (digit)
             pattern += "(?=(.*?\\d){" + minDigit + ",})"; // min no of digit
