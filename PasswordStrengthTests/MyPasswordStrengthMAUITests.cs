@@ -288,6 +288,42 @@ namespace PasswordStrengthTests
         }
 
         [Theory]
+        [InlineData("PassworD1!", 2, true)] // Valid password
+        [InlineData("P@ss1worD@ss!", 4, true)] // Valid password
+        [InlineData("P@ssworD@ss1!", 3, false)] // Invalid password
+        [InlineData("P@ss@ssworD1!", 3, false)] // Invalid password
+        public void RepeatingSequence(string passwordToTest, int minLengthOfRepeatingSequence, bool expectedResult)
+        {
+            var options = new MyPasswordStrengthOptions
+            {
+                RequireMaximumNoOfSameConsecutiveCharacters = false,
+                RequireLowercase = false,
+                RequireUppercase = false,
+                RequireDigit = false,
+                RequireSpecialCharacter = false,
+                RequireMaximumNoOfConsecutiveAscendingDigits = false,
+                RequireMaximumNoOfConsecutiveDescendingDigits = false,
+                RequireMaximumNoOfConsecutiveAscendingCharacters = false,
+                RequireMaximumNoOfConsecutiveDescendingCharacters = false,
+                RequireRepeatingSequenceCheck = true,
+                MinLengthOfRepeatingSequence = minLengthOfRepeatingSequence
+            };
+
+            bool? result = null;
+
+            var entry = new PasswordStrengthEntry((pwd, isValid) =>
+            {
+                result = isValid;
+            }, options);
+
+            // Set the entry text so the entry runs.
+            entry.Text = passwordToTest;
+
+            Assert.True(result.HasValue);
+            Assert.True(result.Value == expectedResult);
+        }
+
+        [Theory]
         [InlineData("PasSwOrd1!", true)] // Valid password
         [InlineData("PassWORD1!", false)] // No uppercase letter        
         public void MinNoOfLowerCase(string passwordToTest, bool expectedResult)

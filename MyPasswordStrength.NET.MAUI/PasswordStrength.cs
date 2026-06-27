@@ -80,6 +80,8 @@ namespace MyPasswordStrength
             _validator.MaxNoOfConsecutiveAscendingCharacters = options.MaximumNoOfConsecutiveAscendingCharacters;
             _validator.RequireMaxNoOfConsecutiveDescendingCharacters = options.RequireMaximumNoOfConsecutiveDescendingCharacters;
             _validator.MaxNoOfConsecutiveDescendingCharacters = options.MaximumNoOfConsecutiveDescendingCharacters;
+            _validator.RequireRepeatingSequenceCheck = options.RequireRepeatingSequenceCheck;
+            _validator.MinLengthOfRepeatingSequence =options.MinLengthOfRepeatingSequence;
         }
 
         private void SetTextChangedDelegate()
@@ -129,6 +131,8 @@ namespace MyPasswordStrength
         public MaximumNoOfConsecutiveCharacters MaximumNoOfConsecutiveAscendingCharacters { get; set; } = MaximumNoOfConsecutiveCharacters.Two;
         public bool RequireMaximumNoOfConsecutiveDescendingCharacters { get; set; } = true;
         public MaximumNoOfConsecutiveCharacters MaximumNoOfConsecutiveDescendingCharacters { get; set; } = MaximumNoOfConsecutiveCharacters.Two;
+        public bool RequireRepeatingSequenceCheck { get; set; } = true;
+        public int MinLengthOfRepeatingSequence { get; set; } = 2;
     }
 
     public enum MaximumNoOfConsecutiveDigits

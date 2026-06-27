@@ -4,6 +4,8 @@ namespace MyPasswordStrength.Validator
 {
     public class PasswordStrengthValidator
     {
+        private string? _regexPattern = null;
+
         public int MinimumLength { get; set; }
         public bool RequireUppercase { get; set; } = true;
         public int MinUppercase { get; set; } = 1;
@@ -24,13 +26,16 @@ namespace MyPasswordStrength.Validator
         public MaximumNoOfConsecutiveCharacters MaxNoOfConsecutiveAscendingCharacters { get; set; } = MaximumNoOfConsecutiveCharacters.Two;
         public bool RequireMaxNoOfConsecutiveDescendingCharacters { get; set; } = true;
         public MaximumNoOfConsecutiveCharacters MaxNoOfConsecutiveDescendingCharacters { get; set; } = MaximumNoOfConsecutiveCharacters.Two;
+        public bool RequireRepeatingSequenceCheck { get; set; } = true;
+        public int MinLengthOfRepeatingSequence { get; set; } = 2;
         public static string GetRegexPattern(int minLength, bool upper, int minUpper, bool lower, int minLower,
                                                 bool digit, int minDigit, bool special, int minSpecialCharacter, string specialCharacters,
                                                 bool requireMaxNoOfSameConsecutiveCharacters, int maxNoOfSameConsecutiveCharacters,
                                                 bool requireMaxNoOfConsecutiveAscendingDigits, MaximumNoOfConsecutiveDigits maxNoOfConsecutiveAscendingDigits,
                                                 bool requireMaxNoOfConsecutiveDescendingDigits, MaximumNoOfConsecutiveDigits maxNoOfConsecutiveDescendingDigits,
                                                 bool requireMaxNoOfConsecutiveAscendingCharacters, MaximumNoOfConsecutiveCharacters maxNoOfConsecutiveAscendingCharacters,
-                                                bool requireMaxNoOfConsecutiveDescendingCharacters, MaximumNoOfConsecutiveCharacters maxNoOfConsecutiveDescendingCharacters)
+                                                bool requireMaxNoOfConsecutiveDescendingCharacters, MaximumNoOfConsecutiveCharacters maxNoOfConsecutiveDescendingCharacters,
+                                                bool requireRepeatingSequenceCheck, int minLengthOfRepeatingSequence)
         {
             string pattern = "^";
             if (upper)
@@ -51,6 +56,8 @@ namespace MyPasswordStrength.Validator
                 pattern += "(?!^(.*?(" + GetMaxConsecutiveCharactersPattern((int)maxNoOfConsecutiveAscendingCharacters + 1) + "))+)"; // Max no of consecutive ascending digits
             if (requireMaxNoOfConsecutiveDescendingCharacters)
                 pattern += "(?!^(.*?(" + GetMaxConsecutiveCharactersPattern((int)maxNoOfConsecutiveDescendingCharacters + 1, true) + "))+)"; // Max no of consecutive descending digits
+            if (requireRepeatingSequenceCheck)
+                pattern += "(?!^(.*?(?<repeating>.{" + minLengthOfRepeatingSequence + ",})(?=(.*?\\k<repeating>)))+)"; // Repeating sequence
             pattern += $".{{{minLength},}}$"; // Minimum length
             return pattern;
         }
@@ -60,15 +67,19 @@ namespace MyPasswordStrength.Validator
             if (string.IsNullOrEmpty(password))
                 return false;
 
-            var regexPattern = GetRegexPattern(MinimumLength, RequireUppercase, MinUppercase, RequireLowercase, MinLowercase,
+            if (_regexPattern == null)
+            {
+                _regexPattern = GetRegexPattern(MinimumLength, RequireUppercase, MinUppercase, RequireLowercase, MinLowercase,
                                                 RequireDigit, MinDigit, RequireSpecialCharacter, MinSpecialCharacter, SpecialCharacters,
                                                 RequireMaxNoOfSameConsecutiveCharacters, MaxNoOfSameConsecutiveCharacters,
                                                 RequireMaxNoOfConsecutiveAscendingDigits, MaxNoOfConsecutiveAscendingDigits,
                                                 RequireMaxNoOfConsecutiveDescendingDigits, MaxNoOfConsecutiveDescendingDigits,
                                                 RequireMaxNoOfConsecutiveAscendingCharacters, MaxNoOfConsecutiveAscendingCharacters,
-                                                RequireMaxNoOfConsecutiveDescendingCharacters, MaxNoOfConsecutiveDescendingCharacters);
+                                                RequireMaxNoOfConsecutiveDescendingCharacters, MaxNoOfConsecutiveDescendingCharacters,
+                                                RequireRepeatingSequenceCheck, MinLengthOfRepeatingSequence);
+            }
 
-            return Regex.IsMatch(password, regexPattern);
+            return Regex.IsMatch(password, _regexPattern);
         }
 
         private static string GetMaxConsecutiveDigitsPattern(int length, bool isDescending = false)
