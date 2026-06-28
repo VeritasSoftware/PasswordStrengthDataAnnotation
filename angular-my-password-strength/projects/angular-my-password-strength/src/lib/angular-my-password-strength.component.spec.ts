@@ -452,6 +452,50 @@ describe('Max No Of Consecutive Ascending & Descending Characters', () => {
   });
 });
 
+describe('Repeating Sequence', () => {
+  let options = new MyPasswordStrengthOptions();
+
+  options.requireDigit = false;
+  options.requireSpecialCharacter = false;
+  options.requireMaxNoOfSameConsecutiveCharacters = false;
+  options.requireUppercase = false;
+  options.requireLowercase = false;
+  options.requireMaximumNoOfConsecutiveAscendingCharacters = false;
+  options.requireMaximumNoOfConsecutiveDescendingCharacters = false;
+  options.requireMaximumNoOfConsecutiveAscendingDigits = false;
+  options.requireMaximumNoOfConsecutiveDescendingDigits = false;
+  options.requireRepeatingSequenceCheck = true;   
+
+  it('Valid password', () => {
+    options.minimumLengthOfRepeatingSequence = 2;
+    const validatorFn = passwordStrengthValidator(options); 
+    const control = new FormControl('PassworD1!');
+    const result = validatorFn(control);
+    expect(result).toBeNull();
+  });
+  it('Valid password', () => {
+    options.minimumLengthOfRepeatingSequence = 4;
+    const validatorFn = passwordStrengthValidator(options); 
+    const control = new FormControl('P@ss1worD@ss!');
+    const result = validatorFn(control);
+    expect(result).toBeNull();
+  });
+  it('Invalid password', () => {
+    options.minimumLengthOfRepeatingSequence = 3;
+    const validatorFn = passwordStrengthValidator(options);
+    const control = new FormControl('P@ssworD@ss1!');
+    const result = validatorFn(control);
+    expect(result).not.toBeNull();
+  });
+  it('Invalid password', () => {
+    options.minimumLengthOfRepeatingSequence = 3;
+    const validatorFn = passwordStrengthValidator(options);
+    const control = new FormControl('P@ss@ssworD1!');
+    const result = validatorFn(control);
+    expect(result).not.toBeNull();
+  });
+});
+
 describe('Min No Of Lower Case', () => {
   let options = new MyPasswordStrengthOptions();
 
