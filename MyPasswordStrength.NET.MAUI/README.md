@@ -18,6 +18,7 @@ You can configure:
 * Maximum same consecutive characters - eg aaa
 * Maximum consecutive ascending and/or descending digits - eg 123 / 654
 * Maximum consecutive ascending and/or descending characters - eg aBCd / DcbA
+* Repeated sequence check - eg in P@ssword@s - @s is repeating sequence
 
 ## Background
 
@@ -59,7 +60,7 @@ You can modify this set of special characters by setting the `SpecialCharacters`
 
         <Label
             x:Name="errorLabel"
-            Text="Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars, no more than 3 consecutive ascending digits, no more than 2 consecutive descending digits, no more than 3 consecutive ascending chars, no more than 2 consecutive descending chars"
+            Text="Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars, no more than 3 consecutive ascending digits, no more than 2 consecutive descending digits, no more than 3 consecutive ascending chars, no more than 2 consecutive descending chars and no repeating sequence 2 or more chars long"
             FontSize="24"
             IsVisible="False"
             TextColor="Red"
@@ -108,7 +109,9 @@ public partial class RegistrationPage : ContentPage
                 RequireMaximumNoOfConsecutiveAscendingCharacters = true,
                 MaximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Three,
                 RequireMaximumNoOfConsecutiveDescendingCharacters = true,
-                MaximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Two
+                MaximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Two,
+                RequireRepeatingSequenceCheck = true,
+                MinimumLengthOfRepeatingSequence = 2
             };
         }
     }
@@ -180,7 +183,7 @@ public class Registration : ContentPage
 
         _errorLabel = new Label
         {
-            Text = "Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars, no more than 3 consecutive ascending digits, no more than 2 consecutive descending digits, no more than 3 consecutive ascending chars, no more than 2 consecutive descending chars",
+            Text = "Password must be at least 9 chars, 2 uppercase, 3 lowercase, 2 digit, 2 special char, no more than 2 same consecutive chars, no more than 3 consecutive ascending digits, no more than 2 consecutive descending digits, no more than 3 consecutive ascending chars, no more than 2 consecutive descending chars and no repeating sequence 2 or more chars long",
             TextColor = Colors.Red,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
@@ -217,7 +220,9 @@ public class Registration : ContentPage
                 RequireMaximumNoOfConsecutiveAscendingCharacters = true,
                 MaximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Three,
                 RequireMaximumNoOfConsecutiveDescendingCharacters = true,
-                MaximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Two
+                MaximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Two,
+                RequireRepeatingSequenceCheck = true,
+                MinimumLengthOfRepeatingSequence = 2
             };
         }
     }
