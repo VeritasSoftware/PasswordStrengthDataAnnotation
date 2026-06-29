@@ -53,6 +53,8 @@ var PasswordStrength = function PasswordStrength(_ref) {
     validator.maxNoOfConsecutiveAscendingCharacters = strengthOptions.maximumNoOfConsecutiveAscendingCharacters;
     validator.requireMaxNoOfConsecutiveDescendingCharacters = strengthOptions.requireMaximumNoOfConsecutiveDescendingCharacters;
     validator.maxNoOfConsecutiveDescendingCharacters = strengthOptions.maximumNoOfConsecutiveDescendingCharacters;
+    validator.requireRepeatingSequenceCheck = strengthOptions.requireRepeatingSequenceCheck;
+    validator.minLengthOfRepeatingSequence = strengthOptions.minimumLengthOfRepeatingSequence;
     console.log("Validator configuration: ", validator);
     var isValid = validator.passwordStrength(password);
     console.log("Password strength validation result: ", isValid);
@@ -91,6 +93,8 @@ var MyPasswordStrengthOptions = function MyPasswordStrengthOptions() {
   this.maximumNoOfConsecutiveAscendingCharacters = exports.MaximumNoOfConsecutiveCharacters.Two;
   this.requireMaximumNoOfConsecutiveDescendingCharacters = true;
   this.maximumNoOfConsecutiveDescendingCharacters = exports.MaximumNoOfConsecutiveCharacters.Two;
+  this.requireRepeatingSequenceCheck = true;
+  this.minimumLengthOfRepeatingSequence = 2;
 };
 (function (MaximumNoOfConsecutiveDigits) {
   MaximumNoOfConsecutiveDigits[MaximumNoOfConsecutiveDigits["Two"] = 2] = "Two";

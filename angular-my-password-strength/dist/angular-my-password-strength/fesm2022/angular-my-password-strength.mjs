@@ -25,6 +25,8 @@ function passwordStrengthValidator(options = new MyPasswordStrengthOptions(), er
         validator.maxNoOfConsecutiveAscendingCharacters = options.maximumNoOfConsecutiveAscendingCharacters;
         validator.requireMaxNoOfConsecutiveDescendingCharacters = options.requireMaximumNoOfConsecutiveDescendingCharacters;
         validator.maxNoOfConsecutiveDescendingCharacters = options.maximumNoOfConsecutiveDescendingCharacters;
+        validator.requireRepeatingSequenceCheck = options.requireRepeatingSequenceCheck;
+        validator.minLengthOfRepeatingSequence = options.minimumLengthOfRepeatingSequence;
         console.log("Validator configuration: ", validator);
         let isValid = validator.passwordStrength(control.value);
         console.log("Password strength validation result: ", isValid);
@@ -52,6 +54,8 @@ class MyPasswordStrengthOptions {
     maximumNoOfConsecutiveAscendingCharacters = MaximumNoOfConsecutiveCharacters.Two;
     requireMaximumNoOfConsecutiveDescendingCharacters = true;
     maximumNoOfConsecutiveDescendingCharacters = MaximumNoOfConsecutiveCharacters.Two;
+    requireRepeatingSequenceCheck = true;
+    minimumLengthOfRepeatingSequence = 2;
 }
 var MaximumNoOfConsecutiveDigits;
 (function (MaximumNoOfConsecutiveDigits) {

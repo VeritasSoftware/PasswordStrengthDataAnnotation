@@ -1,6 +1,6 @@
 {
   "name": "angular-my-password-strength",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "keywords": [
     "password",
     "strength",
@@ -20,7 +20,7 @@
   "peerDependencies": {
     "@angular/common": "^19.2.0",
     "@angular/core": "^19.2.0",
-    "ts-my-password-strength": "^2.0.0"
+    "ts-my-password-strength": "^2.1.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
