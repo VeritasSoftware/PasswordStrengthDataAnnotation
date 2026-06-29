@@ -124,12 +124,10 @@ describe('Max No Of Same Consecutive Characters', () => {
     'passwordToTest: "%s" and expectedResult: %s',
     (passwordToTest, expectedResult) => {
       // Configure password strength requirements
-      const getOptions = () : MyPasswordStrengthOptions => {
-        let options = new MyPasswordStrengthOptions();
+      let options = new MyPasswordStrengthOptions();
+      options.requireRepeatingSequenceCheck = false;
 
-        return options;
-      };
-      testBody(getOptions(), passwordToTest, expectedResult);
+      testBody(options, passwordToTest, expectedResult);
     }
   );
 });
@@ -150,22 +148,19 @@ describe('Max No Of Consecutive Ascending Digits', () => {
     'passwordToTest: "%s" maxNoOfConsecutiveDigits: "%s" and expectedResult: %s',
     (passwordToTest, maxNoOfConsecutiveDigits, expectedResult) => {
       // Configure password strength requirements
-      const getOptions = () : MyPasswordStrengthOptions => {
-        let options = new MyPasswordStrengthOptions();
+      let options = new MyPasswordStrengthOptions();
 
-        options.minimumLength = 8;
-        options.requireUppercase = false;
-        options.requireLowercase = false;
-        options.requireDigit = false;
-        options.requireSpecialCharacter = false;
-        options.requireMaxNoOfSameConsecutiveCharacters = false;
-        options.requireMaximumNoOfConsecutiveDescendingDigits = false;
-        options.requireMaximumNoOfConsecutiveAscendingDigits = true;
-        options.maximumNoOfConsecutiveAscendingDigits = maxNoOfConsecutiveDigits;
-        
-        return options;
-      };
-      testBody(getOptions(), passwordToTest, expectedResult);
+      options.minimumLength = 8;
+      options.requireUppercase = false;
+      options.requireLowercase = false;
+      options.requireDigit = false;
+      options.requireSpecialCharacter = false;
+      options.requireMaxNoOfSameConsecutiveCharacters = false;
+      options.requireMaximumNoOfConsecutiveDescendingDigits = false;
+      options.requireMaximumNoOfConsecutiveAscendingDigits = true;
+      options.maximumNoOfConsecutiveAscendingDigits = maxNoOfConsecutiveDigits;
+      
+      testBody(options, passwordToTest, expectedResult);
     }
   );
 });
@@ -186,22 +181,19 @@ describe('Max No Of Consecutive Descending Digits', () => {
     'passwordToTest: "%s" maxNoOfConsecutiveDigits: "%s" and expectedResult: %s',
     (passwordToTest, maxNoOfConsecutiveDigits, expectedResult) => {
       // Configure password strength requirements
-      const getOptions = () : MyPasswordStrengthOptions => {
-        let options = new MyPasswordStrengthOptions();
+      let options = new MyPasswordStrengthOptions();
 
-        options.minimumLength = 8;
-        options.requireUppercase = false;
-        options.requireLowercase = false;
-        options.requireDigit = false;
-        options.requireSpecialCharacter = false;
-        options.requireMaxNoOfSameConsecutiveCharacters = false;        
-        options.requireMaximumNoOfConsecutiveAscendingDigits = false;
-        options.requireMaximumNoOfConsecutiveDescendingDigits = true;
-        options.maximumNoOfConsecutiveDescendingDigits = maxNoOfConsecutiveDigits;
-        
-        return options;
-      };
-      testBody(getOptions(), passwordToTest, expectedResult);
+      options.minimumLength = 8;
+      options.requireUppercase = false;
+      options.requireLowercase = false;
+      options.requireDigit = false;
+      options.requireSpecialCharacter = false;
+      options.requireMaxNoOfSameConsecutiveCharacters = false;        
+      options.requireMaximumNoOfConsecutiveAscendingDigits = false;
+      options.requireMaximumNoOfConsecutiveDescendingDigits = true;
+      options.maximumNoOfConsecutiveDescendingDigits = maxNoOfConsecutiveDigits;
+
+      testBody(options, passwordToTest, expectedResult);
     }
   );
 });
@@ -226,23 +218,20 @@ describe('Max No Of Consecutive Ascending & Descending Digits', () => {
     'passwordToTest: "%s" maxNoOfConsecutiveAscendingDigits: "%s" maxNoOfConsecutiveDescendingDigits: "%s" and expectedResult: %s',
     (passwordToTest, maxNoOfConsecutiveAscendingDigits, maxNoOfConsecutiveDescendingDigits, expectedResult) => {
       // Configure password strength requirements
-      const getOptions = () : MyPasswordStrengthOptions => {
-        let options = new MyPasswordStrengthOptions();
+      let options = new MyPasswordStrengthOptions();
 
-        options.minimumLength = 8;
-        options.requireUppercase = false;
-        options.requireLowercase = false;
-        options.requireDigit = false;
-        options.requireSpecialCharacter = false;
-        options.requireMaxNoOfSameConsecutiveCharacters = false;        
-        options.requireMaximumNoOfConsecutiveAscendingDigits = true;
-        options.maximumNoOfConsecutiveAscendingDigits = maxNoOfConsecutiveAscendingDigits;
-        options.requireMaximumNoOfConsecutiveDescendingDigits = true;
-        options.maximumNoOfConsecutiveDescendingDigits = maxNoOfConsecutiveDescendingDigits;
-        
-        return options;
-      };
-      testBody(getOptions(), passwordToTest, expectedResult);
+      options.minimumLength = 8;
+      options.requireUppercase = false;
+      options.requireLowercase = false;
+      options.requireDigit = false;
+      options.requireSpecialCharacter = false;
+      options.requireMaxNoOfSameConsecutiveCharacters = false;        
+      options.requireMaximumNoOfConsecutiveAscendingDigits = true;
+      options.maximumNoOfConsecutiveAscendingDigits = maxNoOfConsecutiveAscendingDigits;
+      options.requireMaximumNoOfConsecutiveDescendingDigits = true;
+      options.maximumNoOfConsecutiveDescendingDigits = maxNoOfConsecutiveDescendingDigits;
+
+      testBody(options, passwordToTest, expectedResult);
     }
   );
 });
@@ -267,25 +256,51 @@ describe('Max No Of Consecutive Ascending & Descending Characters', () => {
     'passwordToTest: "%s" maxNoOfConsecutiveAscendingCharacters: %s maxNoOfConsecutiveDescendingCharacters: %s and expectedResult: %s',
     (passwordToTest, maxNoOfConsecutiveAscendingCharacters, maxNoOfConsecutiveDescendingCharacters, expectedResult) => {
       // Configure password strength requirements
-      const getOptions = () : MyPasswordStrengthOptions => {
-        let options = new MyPasswordStrengthOptions();
+      let options = new MyPasswordStrengthOptions();
 
-        options.minimumLength = 8;
-        options.requireUppercase = false;
-        options.requireLowercase = false;
-        options.requireDigit = false;
-        options.requireSpecialCharacter = false;
-        options.requireMaxNoOfSameConsecutiveCharacters = false;        
-        options.requireMaximumNoOfConsecutiveAscendingDigits = false;
-        options.requireMaximumNoOfConsecutiveDescendingDigits = false;
-        options.requireMaximumNoOfConsecutiveAscendingCharacters = true;
-        options.maximumNoOfConsecutiveAscendingCharacters = maxNoOfConsecutiveAscendingCharacters; 
-        options.requireMaximumNoOfConsecutiveDescendingCharacters = true;       
-        options.maximumNoOfConsecutiveDescendingCharacters = maxNoOfConsecutiveDescendingCharacters;
-        
-        return options;
-      };
-      testBody(getOptions(), passwordToTest, expectedResult);
+      options.minimumLength = 8;
+      options.requireUppercase = false;
+      options.requireLowercase = false;
+      options.requireDigit = false;
+      options.requireSpecialCharacter = false;
+      options.requireMaxNoOfSameConsecutiveCharacters = false;        
+      options.requireMaximumNoOfConsecutiveAscendingDigits = false;
+      options.requireMaximumNoOfConsecutiveDescendingDigits = false;
+      options.requireMaximumNoOfConsecutiveAscendingCharacters = true;
+      options.maximumNoOfConsecutiveAscendingCharacters = maxNoOfConsecutiveAscendingCharacters; 
+      options.requireMaximumNoOfConsecutiveDescendingCharacters = true;       
+      options.maximumNoOfConsecutiveDescendingCharacters = maxNoOfConsecutiveDescendingCharacters;
+
+      testBody(options, passwordToTest, expectedResult);
+    }
+  );
+});
+
+describe('Repeating Sequence', () => {
+  test.each([
+    ["PassworD1!", 2, true], // Valid password
+    ["P@ss1worD@ss!", 4, true], // Valid password
+    ["P@ssworD@ss1!", 3, false], // Invalid password
+    ["P@ss@ssworD1!", 3, false], // Invalid password
+  ])(
+    'passwordToTest: "%s" minLengthOfRepeatingSequence: %s and expectedResult: %s',
+    (passwordToTest, minLengthOfRepeatingSequence, expectedResult) => {
+      // Configure password strength requirements
+      let options = new MyPasswordStrengthOptions();
+
+      options.requireDigit = false;
+      options.requireSpecialCharacter = false;
+      options.requireMaxNoOfSameConsecutiveCharacters = false;
+      options.requireUppercase = false;
+      options.requireMaximumNoOfConsecutiveAscendingCharacters = false;
+      options.requireMaximumNoOfConsecutiveDescendingCharacters = false;
+      options.requireLowercase = false;
+      options.requireMaximumNoOfConsecutiveAscendingDigits = false;
+      options.requireMaximumNoOfConsecutiveDescendingDigits = false;
+      options.requireRepeatingSequenceCheck = true;
+      options.minimumLengthOfRepeatingSequence = minLengthOfRepeatingSequence;
+
+      testBody(options, passwordToTest, expectedResult);
     }
   );
 });
@@ -299,17 +314,15 @@ describe('Min No Of Lower Case', () => {
     (passwordToTest, expectedResult) => {
 
       // Configure password strength requirements
-      const getOptions = () : MyPasswordStrengthOptions => {
-        let options = new MyPasswordStrengthOptions();
-        options.requireDigit = false;
-        options.requireSpecialCharacter = false;
-        options.requireMaxNoOfSameConsecutiveCharacters = false;
-        options.requireUppercase = false;
-        options.requireLowercase = true;
-        options.minimumLowercase = 5;
-        return options;
-      };
-      testBody(getOptions(), passwordToTest, expectedResult);
+      let options = new MyPasswordStrengthOptions();
+      options.requireDigit = false;
+      options.requireSpecialCharacter = false;
+      options.requireMaxNoOfSameConsecutiveCharacters = false;
+      options.requireUppercase = false;
+      options.requireLowercase = true;
+      options.minimumLowercase = 5;
+
+      testBody(options, passwordToTest, expectedResult);
     }
   );
 });
@@ -322,17 +335,15 @@ describe('Min No Of Upper Case', () => {
     'passwordToTest: "%s" and expectedResult: %s',
     (passwordToTest, expectedResult) => {
       // Configure password strength requirements
-      const getOptions = () : MyPasswordStrengthOptions => {
-        let options = new MyPasswordStrengthOptions();
-        options.requireDigit = false;
-        options.requireSpecialCharacter = false;
-        options.requireMaxNoOfSameConsecutiveCharacters = false;
-        options.requireLowercase = false;
-        options.requireUppercase = true;
-        options.minimumUppercase = 5;
-        return options;
-      };
-      testBody(getOptions(), passwordToTest, expectedResult);
+      let options = new MyPasswordStrengthOptions();
+      options.requireDigit = false;
+      options.requireSpecialCharacter = false;
+      options.requireMaxNoOfSameConsecutiveCharacters = false;
+      options.requireLowercase = false;
+      options.requireUppercase = true;
+      options.minimumUppercase = 5;
+
+      testBody(options, passwordToTest, expectedResult);
     }
   );
 });
@@ -345,17 +356,15 @@ describe('Min No Of Digits', () => {
     'passwordToTest: "%s" and expectedResult: %s',
     (passwordToTest, expectedResult) => {
       // Configure password strength requirements
-      const getOptions = () : MyPasswordStrengthOptions => {
-        let options = new MyPasswordStrengthOptions();
-        options.requireUppercase = false;
-        options.requireSpecialCharacter = false;
-        options.requireMaxNoOfSameConsecutiveCharacters = false;
-        options.requireLowercase = false;
-        options.requireDigit = true;
-        options.minimumDigit = 2;
-        return options;
-      };
-      testBody(getOptions(), passwordToTest, expectedResult);
+      let options = new MyPasswordStrengthOptions();
+      options.requireUppercase = false;
+      options.requireSpecialCharacter = false;
+      options.requireMaxNoOfSameConsecutiveCharacters = false;
+      options.requireLowercase = false;
+      options.requireDigit = true;
+      options.minimumDigit = 2;
+
+      testBody(options, passwordToTest, expectedResult);
     }
   );
 });
@@ -368,17 +377,15 @@ describe('Min No Of Special Characters', () => {
     'passwordToTest: "%s" and expectedResult: %s',
     (passwordToTest, expectedResult) => {
       // Configure password strength requirements
-      const getOptions = () : MyPasswordStrengthOptions => {
-        let options = new MyPasswordStrengthOptions();
-        options.requireUppercase = false;
-        options.requireDigit = false;
-        options.requireMaxNoOfSameConsecutiveCharacters = false;
-        options.requireLowercase = false;
-        options.requireSpecialCharacter = true;
-        options.minimumSpecialCharacter = 2;
-        return options;
-      };
-      testBody(getOptions(), passwordToTest, expectedResult);
+      let options = new MyPasswordStrengthOptions();
+      options.requireUppercase = false;
+      options.requireDigit = false;
+      options.requireMaxNoOfSameConsecutiveCharacters = false;
+      options.requireLowercase = false;
+      options.requireSpecialCharacter = true;
+      options.minimumSpecialCharacter = 2;
+
+      testBody(options, passwordToTest, expectedResult);
     }
   );
 });

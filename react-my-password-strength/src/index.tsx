@@ -58,6 +58,8 @@ export const PasswordStrength = ({ name = "password",
     validator.maxNoOfConsecutiveAscendingCharacters = strengthOptions.maximumNoOfConsecutiveAscendingCharacters as unknown as MaxNoOfConsecutiveCharacters;
     validator.requireMaxNoOfConsecutiveDescendingCharacters = strengthOptions.requireMaximumNoOfConsecutiveDescendingCharacters;
     validator.maxNoOfConsecutiveDescendingCharacters = strengthOptions.maximumNoOfConsecutiveDescendingCharacters as unknown as MaxNoOfConsecutiveCharacters;
+    validator.requireRepeatingSequenceCheck = strengthOptions.requireRepeatingSequenceCheck;
+    validator.minLengthOfRepeatingSequence = strengthOptions.minimumLengthOfRepeatingSequence;
 
     console.log("Validator configuration: ", validator);
 
@@ -103,7 +105,9 @@ export class MyPasswordStrengthOptions {
   requireMaximumNoOfConsecutiveAscendingCharacters: boolean = true;
   maximumNoOfConsecutiveAscendingCharacters: MaximumNoOfConsecutiveCharacters = MaximumNoOfConsecutiveCharacters.Two;
   requireMaximumNoOfConsecutiveDescendingCharacters: boolean = true;
-  maximumNoOfConsecutiveDescendingCharacters: MaximumNoOfConsecutiveCharacters = MaximumNoOfConsecutiveCharacters.Two; 
+  maximumNoOfConsecutiveDescendingCharacters: MaximumNoOfConsecutiveCharacters = MaximumNoOfConsecutiveCharacters.Two;
+  requireRepeatingSequenceCheck: boolean = true;
+  minimumLengthOfRepeatingSequence: number = 2;   
 }
 
 export enum MaximumNoOfConsecutiveDigits {
