@@ -82,7 +82,7 @@ namespace YourNamespace.Models
             Placeholder="Please enter your password"
             OnValidation="HandleOnValidation"
             StrengthOptions="@StrengthOptions"
-            ErrorMessage="Password strength validation failed"
+            ErrorMessage="Password strength failed"
         />
         <ValidationMessage For="@(() => user.Password)" />
         <span style=@($"font-size:12px; color:{(isError == null? "black" : (isError == true ? "red" : "green" ))}")>
