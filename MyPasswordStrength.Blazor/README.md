@@ -37,7 +37,7 @@ You can modify this set of special characters by setting the `SpecialCharacters`
 
 ### The User model
 
-```
+```csharp
 using System.ComponentModel.DataAnnotations;
 
 namespace YourNamespace.Models
