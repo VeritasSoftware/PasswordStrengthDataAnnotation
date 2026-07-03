@@ -11,7 +11,7 @@ namespace PasswordStrengthTests
             public string? Password { get; set; }
         }
 
-        private void TestBody(MyPasswordStrengthOptions options, string passwordToTest, bool expectedResult)
+        private void TestBody(MyPasswordStrengthOptions options, string? passwordToTest, bool? expectedResult)
         {
             var model = new TestModel { Password = "initial" };
 
@@ -79,6 +79,15 @@ namespace PasswordStrengthTests
         [InlineData("Password11", false)] // No special character
         [InlineData("Pwd11", false)] // Less than minimum length
         public void Defaults(string passwordToTest, bool expectedResult)
+        {
+            var options = new MyPasswordStrengthOptions();
+
+            TestBody(options, passwordToTest, expectedResult);
+        }
+
+        [Theory]
+        [InlineData("", null)] // Validation should not be performed on empty password
+        public void EmptyPassword(string? passwordToTest, bool? expectedResult)
         {
             var options = new MyPasswordStrengthOptions();
 
