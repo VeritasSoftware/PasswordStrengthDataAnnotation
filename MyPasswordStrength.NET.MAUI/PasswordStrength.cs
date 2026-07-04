@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Versioning;
 using MyPasswordStrength.Validator;
 
-namespace MyPasswordStrength
+namespace MyPasswordStrength.NET.MAUI
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage(
         "Interoperability",
@@ -82,6 +82,7 @@ namespace MyPasswordStrength
             _validator.MaxNoOfConsecutiveDescendingCharacters = options.MaximumNoOfConsecutiveDescendingCharacters;
             _validator.RequireRepeatingSequenceCheck = options.RequireRepeatingSequenceCheck;
             _validator.MinLengthOfRepeatingSequence =options.MinimumLengthOfRepeatingSequence;
+            _validator.Language = options.Language;
         }
 
         private void SetTextChangedDelegate()
@@ -133,6 +134,7 @@ namespace MyPasswordStrength
         public MaximumNoOfConsecutiveCharacters MaximumNoOfConsecutiveDescendingCharacters { get; set; } = MaximumNoOfConsecutiveCharacters.Two;
         public bool RequireRepeatingSequenceCheck { get; set; } = true;
         public int MinimumLengthOfRepeatingSequence { get; set; } = 2;
+        public Language Language { get; set; } = Language.English;
     }
 
     public enum MaximumNoOfConsecutiveDigits
@@ -149,5 +151,19 @@ namespace MyPasswordStrength
         Three = 3,
         Four = 4,
         Five = 5
+    }
+
+    public enum Language
+    {
+        English,
+        Bangla,
+        Hindi,
+        Punjabi,
+        Chinese,
+        Korean,
+        Japanese,
+        Urdu,
+        Arabic,
+        Hebrew
     }
 }

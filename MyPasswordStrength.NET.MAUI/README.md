@@ -8,8 +8,13 @@
 
 > A .NET MAUI library for validating password strength based on customizable complexity requirements.
 
+Define your password strength complexity requirements with ease using the library.
+
+The Validator supports `multilingual` password strength validation too.
+
 You can configure:
 
+* Desired language
 * Minimum length
 * Minimum upper case characters
 * Minimum lower case characters
@@ -20,9 +25,7 @@ You can configure:
 * Maximum consecutive ascending and/or descending characters - eg aBCd / DcbA
 * Repeated sequence check - eg in P@ssword@s - @s is repeating sequence
 
-## Background
-
-Define your password strength complexity requirements with ease using the library. 
+## Background 
 
 The package provides a `PasswordStrengthEntry` Entry that you can use to validate passwords in your .NET MAUI applications.
 
@@ -42,7 +45,7 @@ You can modify this set of special characters by setting the `SpecialCharacters`
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:pwd="clr-namespace:MyPasswordStrength;assembly=MyPasswordStrength.NET.MAUI"
+             xmlns:pwd="clr-namespace:MyPasswordStrength.NET.MAUI;assembly=MyPasswordStrength.NET.MAUI"
              x:Class="YourNamespace.Pages.RegistrationPage"
              Title="Registration"
              x:Name="registrationPage">
@@ -71,7 +74,7 @@ You can modify this set of special characters by setting the `SpecialCharacters`
 `RegistrationPage.xaml.cs`:
 
 ```csharp
-using MyPasswordStrength;
+using MyPasswordStrength.NET.MAUI;
 
 namespace YourNamespace.Pages;
 
@@ -138,7 +141,7 @@ public partial class RegistrationPage : ContentPage
 
 ```c#
 using Microsoft.Maui.Controls.Shapes;
-using MyPasswordStrength;
+using MyPasswordStrength.NET.MAUI;
 using System.Runtime.Versioning;
 
 namespace YourNamespace.Pages;
@@ -242,6 +245,25 @@ public class Registration : ContentPage
     }
 }
 ```
+
+## Multilingual feature
+
+The component supports below languages.
+
+* English (default)
+* Bangla
+* Hindi
+* Punjabi
+* Chinese
+* Korean
+* Japanese
+* Urdu
+* Arabic
+* Hebrew
+
+You can set a property of the `MyPasswordStrengthOptions` options called `Language`.
+
+For languages other than English, properties `RequireLowercase` & `MinLowercase` do not apply.
 
 ### Initial
 

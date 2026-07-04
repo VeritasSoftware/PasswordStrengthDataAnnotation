@@ -1,4 +1,4 @@
-﻿using MyPasswordStrength;
+﻿using MyPasswordStrength.NET.MAUI;
 using System.Runtime.Versioning;
 
 namespace PasswordStrengthTests
@@ -289,10 +289,133 @@ namespace PasswordStrengthTests
         }
 
         [Theory]
+        [InlineData("Password1!", Language.English, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, true)]
+        [InlineData("তুমি কেমন আছো?কখ!খক", Language.Bangla, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, true)]
+        [InlineData("मेरा पासवर्ड है1कख!खक", Language.Hindi, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, true)]
+        [InlineData("ਤੁਹਾਡਾ ਕੀ ਹਾਲ ਹੈ?1ਤਥ!ਥਤ", Language.Punjabi, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, true)]
+        [InlineData("見到你很高興丐丑1丑丐@!", Language.Chinese, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, true)]
+        [InlineData("어떻게 지내세요?1떻떼!떼떻", Language.Korean, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, true)]
+        [InlineData("おはようございます1こご@ごこ", Language.Japanese, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, true)]
+        [InlineData("آپ سے مل کے اچھا لگا", Language.Urdu, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, true)]
+        [InlineData("صباح الخير@حخ!", Language.Arabic, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, true)]
+        [InlineData("נעים להכיר אות@אב1בא@", Language.Hebrew, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, true)]
+        [InlineData("PaBcwordC1!", Language.English, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("তুমি কেমন আছো?কখগ!", Language.Bangla, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("তুমি কেমন আছো?গখক!", Language.Bangla, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("मेरा पासवर्ड है1कखग!", Language.Hindi, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("मेरा पासवर्ड है1गखक!", Language.Hindi, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("ਤੁਹਾਡਾ ਕੀ ਹਾਲ ਹੈ?1ਤਥਦ!", Language.Punjabi, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("ਤੁਹਾਡਾ ਕੀ ਹਾਲ ਹੈ?1ਦਥਤ!", Language.Punjabi, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("어떻게 지내세요?1떻떼떽!", Language.Korean, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("어떻게 지내세요?1떽떼떻!", Language.Korean, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("見到你很高興1丐丑丒@!", Language.Chinese, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("見到你很高興1丒丑丐@!", Language.Chinese, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("おはようございます1こごさ@", Language.Japanese, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("おはようございます1さごこ@", Language.Japanese, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("آپ سے سشص مل کے اچھا لگا", Language.Urdu, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("آپ سے صشس مل کے اچھا لگا", Language.Urdu, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("صباح الخير@حخد!", Language.Arabic, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("صباح الخير@دخح!", Language.Arabic, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("נעים להכיר אותך1 גבא", Language.Hebrew, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false)]
+        [InlineData("נעים להכיר אותך1 אבג", Language.Hebrew, MaximumNoOfConsecutiveCharacters.Two, MaximumNoOfConsecutiveCharacters.Two, false)]
+        public void MultiLingualMaxNoOfConsecutiveAscendingDescendingCharacters(string passwordToTest, Language language,
+                                                                    MaximumNoOfConsecutiveCharacters maxConsecutiveAscendingCharacters,
+                                                                    MaximumNoOfConsecutiveCharacters maxConsecutiveDescendingCharacters,
+                                                                    bool expectedResult)
+        {
+            var options = new MyPasswordStrengthOptions
+            {
+                MinimumLength = 8,
+                RequireUppercase = false,
+                RequireLowercase = false,
+                RequireDigit = false,
+                RequireSpecialCharacter = false,
+                RequireMaximumNoOfSameConsecutiveCharacters = false,
+                RequireMaximumNoOfConsecutiveAscendingDigits = false,
+                RequireMaximumNoOfConsecutiveDescendingDigits = false,
+                RequireRepeatingSequenceCheck = false,
+                RequireMaximumNoOfConsecutiveAscendingCharacters = true,
+                MaximumNoOfConsecutiveAscendingCharacters = maxConsecutiveAscendingCharacters,
+                RequireMaximumNoOfConsecutiveDescendingCharacters = true,
+                MaximumNoOfConsecutiveDescendingCharacters = maxConsecutiveDescendingCharacters,
+                Language = language
+            };
+
+            bool? result = null;
+
+            var entry = new PasswordStrengthEntry((pwd, isValid) =>
+            {
+                result = isValid;
+            }, options);
+
+            // Set the entry text so the entry runs.
+            entry.Text = passwordToTest;
+
+            Assert.True(result.HasValue);
+            Assert.True(result.Value == expectedResult);
+        }
+
+        [Theory]
+        [InlineData("তুমি কেমন আ1@1", Language.Bangla, true)] //Valid
+        [InlineData("তুমি 1@!", Language.Bangla, false)] //Invalid
+        [InlineData("मेरा पासवर्ड है1@1", Language.Hindi, true)] //Valid
+        [InlineData("मेरा1@1", Language.Hindi, false)] //Invalid
+        [InlineData("ਤੁਹਾਡਾ ਕੀ ਹਾਲ ਹੈ?1@1", Language.Punjabi, true)] //Valid
+        [InlineData("ਤੁਹਾ1@1", Language.Punjabi, false)] //Invalid
+        [InlineData("見到你很高興1@!", Language.Chinese, true)] //Valid
+        [InlineData("見到你很1@!", Language.Chinese, false)] //Invalid
+        [InlineData("어떻게 지내세요?1!", Language.Korean, true)] //Valid
+        [InlineData("어떻게 지?1!", Language.Korean, false)] //Invalid
+        [InlineData("おはようございます1@", Language.Japanese, true)] //Valid
+        [InlineData("おはよう1@!", Language.Japanese, false)] //Invalid
+        [InlineData("آپ سے مل کے اچھا لگا1@1", Language.Urdu, true)] //Valid
+        [InlineData("پ سے م1314", Language.Urdu, false)] //Invalid
+        [InlineData("صباح الخيرح1!1", Language.Arabic, true)] //Valid
+        [InlineData("صباح1!1", Language.Arabic, false)] //Invalid
+        [InlineData("1!נעים להכיר אות@אב1@", Language.Hebrew, true)] //Valid
+        [InlineData("אב1בא@3", Language.Hebrew, false)] //Invalid
+        public void MultilingualMinNoOfCharacters(string passwordToTest, Language language, bool expectedResult)
+        {
+            var options = new MyPasswordStrengthOptions
+            {
+                MinimumLength = 6,
+                RequireDigit = false,
+                RequireSpecialCharacter = false,
+                RequireMaximumNoOfSameConsecutiveCharacters = false,
+                RequireMaximumNoOfConsecutiveAscendingDigits = false,
+                RequireMaximumNoOfConsecutiveAscendingCharacters = false,
+                RequireMaximumNoOfConsecutiveDescendingDigits = false,
+                RequireMaximumNoOfConsecutiveDescendingCharacters = false,
+                RequireRepeatingSequenceCheck = false,
+                RequireLowercase = false,
+                RequireUppercase = true,
+                MinimumUppercase = 5,
+                Language = language
+            };
+
+            bool? result = null;
+
+            var entry = new PasswordStrengthEntry((pwd, isValid) =>
+            {
+                result = isValid;
+            }, options);
+
+            // Set the entry text so the entry runs.
+            entry.Text = passwordToTest;
+
+            Assert.True(result.HasValue);
+            Assert.True(result.Value == expectedResult);
+        }
+
+        [Theory]
         [InlineData("PassworD1!", 2, true)] // Valid password
         [InlineData("P@ss1worD@ss!", 4, true)] // Valid password
+        [InlineData("मेरा पासवर्ड हैप1!", 2, true)] // Valid password
+        [InlineData("נעים להכיר אותך1", 2, true)] // Valid password
         [InlineData("P@ssworD@ss1!", 3, false)] // Invalid password
         [InlineData("P@ss@ssworD1!", 3, false)] // Invalid password
+        [InlineData("मेरा पासवर्ड है पास1!", 2, false)] // Invalid password
+        [InlineData("נעים להכיר אותך1 אבגך1", 2, false)] // Invalid password
         public void RepeatingSequence(string passwordToTest, int minLengthOfRepeatingSequence, bool expectedResult)
         {
             var options = new MyPasswordStrengthOptions
