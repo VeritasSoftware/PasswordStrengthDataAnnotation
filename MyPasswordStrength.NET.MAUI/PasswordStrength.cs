@@ -1,5 +1,5 @@
 ﻿using System.Runtime.Versioning;
-using MyPasswordStrength.Validator;
+using MyPasswordStrength.NET.MAUI.Validator;
 
 namespace MyPasswordStrength.NET.MAUI
 {

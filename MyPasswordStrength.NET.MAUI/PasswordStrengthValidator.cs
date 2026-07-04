@@ -1,8 +1,7 @@
-﻿using MyPasswordStrength.NET.MAUI;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace MyPasswordStrength.Validator
+namespace MyPasswordStrength.NET.MAUI.Validator
 {
     public class PasswordStrengthValidator
     {
