@@ -179,15 +179,15 @@ For languages other than English, properties `RequireLowercase` & `MinLowercase`
 
 ### Initial
 
-![Initial](PasswordStrengthInitial.jpeg)
+![Initial](../Docs/Blazor/PasswordStrengthInitial.jpeg)
 
 ### Invalid
 
-![Invalid](PasswordStrengthError.jpeg)
+![Invalid](../Docs/Blazor/PasswordStrengthError.jpeg)
 
 ### Valid
 
-![Valid](PasswordStrength.jpeg)
+![Valid](../Docs/Blazor/PasswordStrength.jpeg)
 
 ## License
 

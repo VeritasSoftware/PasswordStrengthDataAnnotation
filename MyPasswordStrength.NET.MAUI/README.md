@@ -245,15 +245,15 @@ public class Registration : ContentPage
 
 ### Initial
 
-![Initial](PasswordStrengthInitial.jpeg)
+![Initial](../Docs/MAUI/PasswordStrengthInitial.jpeg)
 
 ### Invalid
 
-![Invalid](PasswordStrengthError.jpeg)
+![Invalid](../Docs/MAUI/PasswordStrengthError.jpeg)
 
 ### Valid
 
-![Valid](PasswordStrength.jpeg)
+![Valid](../Docs/MAUI/PasswordStrength.jpeg)
 
 ## License
 
