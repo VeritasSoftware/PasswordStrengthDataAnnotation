@@ -205,20 +205,6 @@ namespace MyPasswordStrength
         private static string GetMaxConsecutiveCharactersPattern(int length, Language language = Language.English, bool isDescending = false)
         {
             if (length <= 0) return string.Empty;
-
-            List<(string, string)> startEndCharsList = new List<(string, string)>();
-            IEnumerable<int> range = new List<int>();
-            
-            if (language != Language.English)
-            {
-                startEndCharsList = GetStartEnd(language);
-
-                range = startEndCharsList.Select(x => new
-                {
-                    Start = ConvertUnicodeToHexNumber(x.Item1),
-                    End = ConvertUnicodeToHexNumber(x.Item2)
-                }).SelectMany(x => GetUTF16Range(x.Start, x.End));
-            }
             
             var sequences = new List<string>();
 
@@ -249,6 +235,14 @@ namespace MyPasswordStrength
             }
             else
             {
+                var startEndCharsList = GetStartEnd(language);
+
+                var range = startEndCharsList.Select(x => new
+                {
+                    Start = ConvertUnicodeToHexNumber(x.Item1),
+                    End = ConvertUnicodeToHexNumber(x.Item2)
+                }).SelectMany(x => GetUTF16Range(x.Start, x.End));
+
                 sequences = range.If(isDescending, list => list.Reverse())
                                         .Select(st =>
                                         {
