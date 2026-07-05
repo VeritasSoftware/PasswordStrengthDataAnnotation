@@ -206,57 +206,60 @@ namespace MyPasswordStrength.NET.MAUI.Validator
 
             var sequences = new List<string>();
 
+            IEnumerable<int> range = new List<int>();
+
             if (language == Language.English)
             {
-                sequences = Enumerable.Range('A', 26).If(isDescending, list => list.Reverse())
-                                        .Select(st => {
-                                            var upperRange = Enumerable.Range(st, length)
-                                                                        .If(isDescending, list => list.Reverse())
-                                                                        .Select(x => $"{(char)x}");
-
-                                            var upperLowerRange = upperRange.Select(c => $"({c}|{c.ToLower()})");
-                                            var lowerUpperRange = upperRange.Select(c => $"({c.ToLower()}|{c})");
-
-                                            var upperLower = string.Concat(upperLowerRange);
-                                            var lowerUpper = string.Concat(lowerUpperRange);
-
-                                            var values = new
-                                            {
-                                                UpperLower = upperLower,
-                                                LowerUpper = lowerUpper
-                                            };
-
-                                            return values;
-                                        })
-                                        .Select(x => string.Join("|", x.UpperLower, x.LowerUpper))
-                                        .ToList();
+                range = Enumerable.Range('A', 26);
             }
             else
             {
                 var startEndCharsList = GetStartEnd(language);
-
-                var range = startEndCharsList.Select(x => new
+                range = startEndCharsList.Select(x => new
                 {
                     Start = ConvertUnicodeToHexNumber(x.Item1),
                     End = ConvertUnicodeToHexNumber(x.Item2)
                 }).SelectMany(x => GetUTF16Range(x.Start, x.End));
+            }
 
-                sequences = range.If(isDescending, list => list.Reverse())
-                                        .Select(st =>
+            var rawSequences = range.If(isDescending, list => list.Reverse())
+                                    .Select(st => {
+                                        var upperRange = Enumerable.Range(st, length)
+                                                                    .If(isDescending, list => list.Reverse())
+                                                                    .Select(x => $"{(char)x}");
+
+                                        if (language != Language.English)
                                         {
-                                            var charRange = Enumerable.Range(st, length)
-                                                                        .If(isDescending, list => list.Reverse())
-                                                                        .Select(x => $"{(char)x}");
-
-                                            var values = new
+                                            var valuesNotEnglish = new
                                             {
-                                                Value = string.Concat(charRange),
+                                                Range1 = string.Concat(upperRange),
+                                                Range2 = ""
                                             };
+                                            return valuesNotEnglish;
+                                        }
 
-                                            return values;
-                                        })
-                                        .Select(x => string.Join("|", x.Value))
-                                        .ToList();
+                                        var upperLowerRange = upperRange.Select(c => $"({c}|{c.ToLower()})");
+                                        var lowerUpperRange = upperRange.Select(c => $"({c.ToLower()}|{c})");
+
+                                        var upperLower = string.Concat(upperLowerRange);
+                                        var lowerUpper = string.Concat(lowerUpperRange);
+
+                                        var values = new
+                                        {
+                                            Range1 = upperLower,
+                                            Range2 = lowerUpper
+                                        };
+
+                                        return values;
+                                    });
+
+            if (language == Language.English)
+            {
+                sequences = rawSequences.Select(x => string.Join("|", x.Range1, x.Range2)).ToList();
+            }
+            else
+            {
+                sequences = rawSequences.Select(x => string.Join("|", x.Range1)).ToList();
             }
 
             var validSequences = isDescending ? sequences.Skip(length).Take(sequences.Count() - length)

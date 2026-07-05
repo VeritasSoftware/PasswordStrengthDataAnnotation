@@ -205,16 +205,40 @@ namespace MyPasswordStrength
         private static string GetMaxConsecutiveCharactersPattern(int length, Language language = Language.English, bool isDescending = false)
         {
             if (length <= 0) return string.Empty;
-            
+
             var sequences = new List<string>();
+
+            IEnumerable<int> range = new List<int>();
 
             if (language == Language.English)
             {
-                sequences = Enumerable.Range('A', 26).If(isDescending, list => list.Reverse())
+                range = Enumerable.Range('A', 26);
+            }
+            else
+            {
+                var startEndCharsList = GetStartEnd(language);
+                range = startEndCharsList.Select(x => new
+                {
+                    Start = ConvertUnicodeToHexNumber(x.Item1),
+                    End = ConvertUnicodeToHexNumber(x.Item2)
+                }).SelectMany(x => GetUTF16Range(x.Start, x.End));
+            }
+
+            var rawSequences = range.If(isDescending, list => list.Reverse())
                                         .Select(st => {
                                             var upperRange = Enumerable.Range(st, length)
                                                                         .If(isDescending, list => list.Reverse())
                                                                         .Select(x => $"{(char)x}");
+
+                                            if (language != Language.English)
+                                            {
+                                                var valuesNotEnglish = new
+                                                {
+                                                    Range1 = string.Concat(upperRange),
+                                                    Range2 = ""
+                                                };
+                                                return valuesNotEnglish;
+                                            }
 
                                             var upperLowerRange = upperRange.Select(c => $"({c}|{c.ToLower()})");
                                             var lowerUpperRange = upperRange.Select(c => $"({c.ToLower()}|{c})");
@@ -224,44 +248,24 @@ namespace MyPasswordStrength
 
                                             var values = new
                                             {
-                                                UpperLower = upperLower,
-                                                LowerUpper = lowerUpper
+                                                Range1 = upperLower,
+                                                Range2 = lowerUpper
                                             };
 
                                             return values;
                                         })
-                                        .Select(x => string.Join("|", x.UpperLower, x.LowerUpper))
                                         .ToList();
+
+            if (language == Language.English)
+            {
+                sequences = rawSequences.Select(x => string.Join("|", x.Range1, x.Range2)).ToList();
             }
             else
             {
-                var startEndCharsList = GetStartEnd(language);
-
-                var range = startEndCharsList.Select(x => new
-                {
-                    Start = ConvertUnicodeToHexNumber(x.Item1),
-                    End = ConvertUnicodeToHexNumber(x.Item2)
-                }).SelectMany(x => GetUTF16Range(x.Start, x.End));
-
-                sequences = range.If(isDescending, list => list.Reverse())
-                                        .Select(st =>
-                                        {
-                                            var charRange = Enumerable.Range(st, length)
-                                                                        .If(isDescending, list => list.Reverse())
-                                                                        .Select(x => $"{(char)x}");
-
-                                            var values = new
-                                            {
-                                                Value = string.Concat(charRange),
-                                            };
-
-                                            return values;
-                                        })
-                                        .Select(x => string.Join("|", x.Value))
-                                        .ToList();
+                sequences = rawSequences.Select(x => string.Join("|", x.Range1)).ToList();
             }
-            
-            var validSequences = isDescending ? sequences.Skip(length).Take(sequences.Count() - length) 
+
+            var validSequences = isDescending ? sequences.Skip(length).Take(sequences.Count() - length)
                                               : sequences.Take(sequences.Count() - length);
 
             var result = string.Join("|", validSequences);
