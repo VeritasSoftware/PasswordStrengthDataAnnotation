@@ -218,38 +218,7 @@ export class PasswordStrengthValidator {
             }
         }
         else {
-            let startEndCharsList:string[][] = [];
-
-            switch (this.language)
-            {
-                case Language.Bangla:
-                    startEndCharsList = this.getStartEnd(Language.Bangla);
-                    break;
-                case Language.Hindi:
-                    startEndCharsList = this.getStartEnd(Language.Hindi);
-                    break;
-                case Language.Punjabi:
-                    startEndCharsList = this.getStartEnd(Language.Punjabi);
-                    break;
-                case Language.Chinese:
-                    startEndCharsList = this.getStartEnd(Language.Chinese);
-                    break;
-                case Language.Korean:
-                    startEndCharsList = this.getStartEnd(Language.Korean);
-                    break;
-                case Language.Japanese:
-                    startEndCharsList = this.getStartEnd(Language.Japanese);
-                    break;
-                case Language.Urdu:
-                    startEndCharsList = this.getStartEnd(Language.Urdu);
-                    break;
-                case Language.Arabic:
-                    startEndCharsList = this.getStartEnd(Language.Arabic);
-                    break;
-                case Language.Hebrew:
-                    startEndCharsList = this.getStartEnd(Language.Hebrew);
-                    break;
-            }
+            let startEndCharsList = this.getStartEnd(this.language);;
 
             let range:number[] = 
             startEndCharsList.map(x => [{ Start: this.convertUnicodeToHexNumber(x[0]), End: this.convertUnicodeToHexNumber(x[1]) }])
