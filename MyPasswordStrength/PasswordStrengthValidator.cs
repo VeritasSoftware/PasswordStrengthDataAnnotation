@@ -211,36 +211,7 @@ namespace MyPasswordStrength
             
             if (language != Language.English)
             {
-                switch (language)
-                {
-                    case Language.Bangla:
-                        startEndCharsList = GetStartEnd(Language.Bangla);
-                        break;
-                    case Language.Hindi:
-                        startEndCharsList = GetStartEnd(Language.Hindi);
-                        break;
-                    case Language.Punjabi:
-                        startEndCharsList = GetStartEnd(Language.Punjabi);
-                        break;
-                    case Language.Chinese:
-                        startEndCharsList = GetStartEnd(Language.Chinese);
-                        break;
-                    case Language.Korean:
-                        startEndCharsList = GetStartEnd(Language.Korean);
-                        break;
-                    case Language.Japanese:
-                        startEndCharsList = GetStartEnd(Language.Japanese);
-                        break;
-                    case Language.Urdu:
-                        startEndCharsList = GetStartEnd(Language.Urdu);
-                        break;
-                    case Language.Arabic:
-                        startEndCharsList = GetStartEnd(Language.Arabic);
-                        break;
-                    case Language.Hebrew:
-                        startEndCharsList = GetStartEnd(Language.Hebrew);
-                        break;
-                }
+                startEndCharsList = GetStartEnd(language);
 
                 range = startEndCharsList.Select(x => new
                 {
