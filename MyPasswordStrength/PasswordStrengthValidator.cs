@@ -175,7 +175,7 @@ namespace MyPasswordStrength
             return result;
         }
 
-        private static List<(string, string)> GetStartEnd(Language language)
+        private static List<(string start, string end)> GetStartEnd(Language language)
         {            
             switch(language)
             {
@@ -215,8 +215,8 @@ namespace MyPasswordStrength
                 :
                 GetStartEnd(language).Select(x => new
                 {
-                    Start = ConvertUnicodeToHexNumber(x.Item1),
-                    End = ConvertUnicodeToHexNumber(x.Item2)
+                    Start = ConvertUnicodeToHexNumber(x.start),
+                    End = ConvertUnicodeToHexNumber(x.end)
                 }).SelectMany(x => GetUTF16Range(x.Start, x.End));
 
             var rawSequences = range.If(isDescending, list => list.Reverse())
