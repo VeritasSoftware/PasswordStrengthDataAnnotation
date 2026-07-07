@@ -205,27 +205,22 @@ namespace MyPasswordStrength.Blazor
             
             var sequences = new List<string>();
 
-            IEnumerable<int> range = new List<int>();
-
-            if (language == Language.English)
-            {
-                range = Enumerable.Range('A', 26);
-            }
-            else
-            {
-                var startEndCharsList = GetStartEnd(language);
-                range = startEndCharsList.Select(x => new
+            var range =
+                language == Language.English
+                ?
+                Enumerable.Range('A', 26)
+                :
+                GetStartEnd(language).Select(x => new
                 {
                     Start = ConvertUnicodeToHexNumber(x.Item1),
                     End = ConvertUnicodeToHexNumber(x.Item2)
                 }).SelectMany(x => GetUTF16Range(x.Start, x.End));
-            }
 
             var rawSequences = range.If(isDescending, list => list.Reverse())
                                         .Select(st => {
                                             var upperRange = Enumerable.Range(st, length)
-                                                                        .If(isDescending, list => list.Reverse())
-                                                                        .Select(x => $"{(char)x}");
+                                                                       .If(isDescending, list => list.Reverse())
+                                                                       .Select(x => $"{(char)x}");
 
                                             if (language != Language.English)
                                             {
