@@ -15,12 +15,12 @@
 
 Library versions are available for multiple platforms:
 
-* [**Typescript Library**](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/tree/master/ts-my-password-strength)
-* [**Angular Library**](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/tree/master/angular-my-password-strength)
-* [**ReactJS Library**](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/tree/master/react-my-password-strength)
-* [**.NET Library**](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/tree/master/MyPasswordStrength)
-* [**.NET MAUI Library**](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/tree/master/MyPasswordStrength.NET.MAUI)
-* [**Blazor Library**](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/tree/master/MyPasswordStrength.Blazor)
+* [**Typescript**](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/tree/master/ts-my-password-strength)
+* [**Angular**](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/tree/master/angular-my-password-strength)
+* [**ReactJS**](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/tree/master/react-my-password-strength)
+* [**.NET**](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/tree/master/MyPasswordStrength)
+* [**.NET MAUI**](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/tree/master/MyPasswordStrength.NET.MAUI)
+* [**Blazor**](https://github.com/VeritasSoftware/PasswordStrengthDataAnnotation/tree/master/MyPasswordStrength.Blazor)
 
 Define your password strength complexity requirements with ease using the library. 
 
