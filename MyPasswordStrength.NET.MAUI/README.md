@@ -27,7 +27,9 @@ You can configure:
 
 ## Background 
 
-The package provides a `PasswordStrengthEntry` Entry that you can use to validate passwords in your .NET MAUI applications.
+The package provides a `PasswordStrengthEntry` Entry and a `PasswordStrengthAttribute` data annotation that you can use to validate passwords in your .NET MAUI applications.
+
+## Entry
 
 You can set the password strength requirements through the properties of the `MyPasswordStrengthOptions` class and pass the options to the Entry.
 
@@ -242,6 +244,45 @@ public class Registration : ContentPage
             _border.Stroke = Colors.Red;
             _errorLabel.IsVisible = true;
         }
+    }
+}
+```
+
+## Data Annotation
+
+The data annotation hooks into .NET MAUI's form validation system and provides real-time feedback on password strength as the user types.
+
+Just decorate your model's password property with the annotation.
+
+## Sample Usage
+
+### The User model
+
+```csharp
+using MyPasswordStrength.NET.MAUI;
+using System.ComponentModel.DataAnnotations;
+
+namespace YourNamespace.Models
+{
+    public class UserModel
+    {
+        [Required(ErrorMessage = "Username is required")]
+        public string Username { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Password is required")]
+        [PasswordStrength(minimumLength: 9,
+                    minUppercase: 2,
+                    minLowercase: 3,
+                    minDigit: 2,
+                    minSpecialCharacter: 2,
+                    maxNoOfSameConsecutiveCharacters: 2,
+                    maxNoOfConsecutiveAscendingDigits: MaximumNoOfConsecutiveDigits.Three,
+                    maxNoOfConsecutiveDescendingDigits: MaximumNoOfConsecutiveDigits.Three,
+                    maxNoOfConsecutiveAscendingCharacters: MaximumNoOfConsecutiveCharacters.Three,
+                    maxNoOfConsecutiveDescendingCharacters: MaximumNoOfConsecutiveCharacters.Two,
+                    minLengthOfRepeatingSequence: 2,
+                    ErrorMessage = "Invalid password strength")]
+        public string Password { get; set; } = string.Empty;
     }
 }
 ```

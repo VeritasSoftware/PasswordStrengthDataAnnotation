@@ -23,7 +23,9 @@ You can configure:
 
 ## Background
 
-The package provides a `PasswordStrength` Component that you can use to validate passwords in your .NET Blazor applications.
+The package provides a `PasswordStrength` Component and a `PasswordStrengthAttribute` data annotation that you can use to validate passwords in your .NET Blazor applications.
+
+## Component
 
 The Component hooks into Blazor's form validation system and provides real-time feedback on password strength as the user types.
 
@@ -154,6 +156,45 @@ namespace YourNamespace.Models
     {
         // Handle registration logic here
         //Console.WriteLine($"Username: {user.Username}, Password: {user.Password}");
+    }
+}
+```
+
+## Data Annotation
+
+The data annotation hooks into Blazor's form validation system and provides real-time feedback on password strength as the user types.
+
+Just decorate your model's password property with the annotation.
+
+## Sample Usage
+
+### The User model
+
+```csharp
+using MyPasswordStrength.Blazor;
+using System.ComponentModel.DataAnnotations;
+
+namespace YourNamespace.Models
+{
+    public class UserModel
+    {
+        [Required(ErrorMessage = "Username is required")]
+        public string Username { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Password is required")]
+        [PasswordStrength(minimumLength: 9,
+                    minUppercase: 2,
+                    minLowercase: 3,
+                    minDigit: 2,
+                    minSpecialCharacter: 2,
+                    maxNoOfSameConsecutiveCharacters: 2,
+                    maxNoOfConsecutiveAscendingDigits: MaximumNoOfConsecutiveDigits.Three,
+                    maxNoOfConsecutiveDescendingDigits: MaximumNoOfConsecutiveDigits.Three,
+                    maxNoOfConsecutiveAscendingCharacters: MaximumNoOfConsecutiveCharacters.Three,
+                    maxNoOfConsecutiveDescendingCharacters: MaximumNoOfConsecutiveCharacters.Two,
+                    minLengthOfRepeatingSequence: 2,
+                    ErrorMessage = "Invalid password strength")]
+        public string Password { get; set; } = string.Empty;
     }
 }
 ```

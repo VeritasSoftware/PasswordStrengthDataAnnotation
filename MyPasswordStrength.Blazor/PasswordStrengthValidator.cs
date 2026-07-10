@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace MyPasswordStrength.Blazor
+namespace MyPasswordStrength.Blazor.Validator
 {
     public class PasswordStrengthValidator
     {
