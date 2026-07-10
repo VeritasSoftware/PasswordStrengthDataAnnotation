@@ -10,7 +10,7 @@
 
 Define your password strength complexity requirements with ease using the library.
 
-The Validator supports `multilingual` password strength validation too.
+The library supports [`multilingual`](#multilingual-feature) password strength validation too.
 
 You can configure:
 
@@ -27,7 +27,7 @@ You can configure:
 
 ## Background 
 
-The package provides a `PasswordStrengthEntry` Entry and a `PasswordStrengthAttribute` data annotation that you can use to validate passwords in your .NET MAUI applications.
+The package provides a `PasswordStrengthEntry` Entry and a [`PasswordStrengthAttribute`](#data-annotation) that you can use to validate passwords in your .NET MAUI applications.
 
 ## Entry
 
@@ -277,7 +277,7 @@ namespace YourNamespace.Models
                     minSpecialCharacter: 2,
                     maxNoOfSameConsecutiveCharacters: 2,
                     maxNoOfConsecutiveAscendingDigits: MaximumNoOfConsecutiveDigits.Three,
-                    maxNoOfConsecutiveDescendingDigits: MaximumNoOfConsecutiveDigits.Three,
+                    maxNoOfConsecutiveDescendingDigits: MaximumNoOfConsecutiveDigits.Two,
                     maxNoOfConsecutiveAscendingCharacters: MaximumNoOfConsecutiveCharacters.Three,
                     maxNoOfConsecutiveDescendingCharacters: MaximumNoOfConsecutiveCharacters.Two,
                     minLengthOfRepeatingSequence: 2,
@@ -289,7 +289,7 @@ namespace YourNamespace.Models
 
 ## Multilingual feature
 
-The component supports below languages.
+The library supports below languages.
 
 * English (default)
 * Bangla
@@ -303,6 +303,8 @@ The component supports below languages.
 * Hebrew
 
 You can set a property of the `MyPasswordStrengthOptions` options called `Language`.
+
+You can set the `language` constructor parameter of the `PasswordStrengthAttribute` attribute.
 
 For languages other than English, properties `RequireLowercase` & `MinLowercase` do not apply.
 
