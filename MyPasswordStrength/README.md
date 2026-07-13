@@ -6,7 +6,7 @@ Define your password strength complexity requirements with ease using the librar
 
 The package provides a Validator class that you can use to validate passwords programmatically.
 
-The Validator supports `multilingual` password strength validation too.
+The Validator supports [`multilingual`](#multilingual-feature) password strength validation too.
 
 You can configure:
 
@@ -101,7 +101,8 @@ namespace YourNamespace
                                             bool requireMaxNoOfConsecutiveDescendingDigits = true, MaxNoOfConsecutiveDigits maxNoOfConsecutiveDescendingDigits = MaxNoOfConsecutiveDigits.Two,
                                             bool requireMaxNoOfConsecutiveAscendingCharacters = true, MaxNoOfConsecutiveCharacters maxNoOfConsecutiveAscendingCharacters = MaxNoOfConsecutiveCharacters.Two,
                                             bool requireMaxNoOfConsecutiveDescendingCharacters = true, MaxNoOfConsecutiveCharacters maxNoOfConsecutiveDescendingCharacters = MaxNoOfConsecutiveCharacters.Two,
-                                            bool requireRepeatingSequenceCheck = true, int minLengthOfRepeatingSequence = 2)
+                                            bool requireRepeatingSequenceCheck = true, int minLengthOfRepeatingSequence = 2,
+                                            Language language = Language.English)
             : base(PasswordStrengthValidator.GetRegexPattern(minimumLength, requireUppercase, minUppercase, requireLowercase, minLowercase,
                                                                 requireDigit, minDigit, requireSpecialCharacter, minSpecialCharacter, specialCharacters,
                                                                 requireMaxNoOfSameConsecutiveCharacters, maxNoOfSameConsecutiveCharacters,
@@ -109,7 +110,8 @@ namespace YourNamespace
                                                                 requireMaxNoOfConsecutiveDescendingDigits, maxNoOfConsecutiveDescendingDigits,
                                                                 requireMaxNoOfConsecutiveAscendingCharacters, maxNoOfConsecutiveAscendingCharacters,
                                                                 requireMaxNoOfConsecutiveDescendingCharacters, maxNoOfConsecutiveDescendingCharacters,
-                                                                requireRepeatingSequenceCheck, minLengthOfRepeatingSequence))
+                                                                requireRepeatingSequenceCheck, minLengthOfRepeatingSequence,
+                                                                language))
         {
         }
     }

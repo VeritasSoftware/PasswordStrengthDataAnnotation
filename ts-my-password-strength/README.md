@@ -10,7 +10,7 @@ Define your password strength complexity requirements with ease using the librar
 
 The package provides a `PasswordStrengthValidator` class that you can use to validate passwords programmatically.
 
-The Validator supports `multilingual` password strength validation too.
+The Validator supports [`multilingual`](#multilingual-feature) password strength validation too.
 
 You can configure:
 
